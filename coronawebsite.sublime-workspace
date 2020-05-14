@@ -1,0 +1,333 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"backgroun",
+				"background-color\tproperty"
+			],
+			[
+				"border",
+				"border-style\tproperty"
+			],
+			[
+				"myL",
+				"myLineChart\t⟠"
+			],
+			[
+				"my",
+				"myLineChart\t⟠"
+			],
+			[
+				"ne",
+				"newEntry\t⟠"
+			],
+			[
+				"countr",
+				"countries"
+			],
+			[
+				"coun",
+				"countries"
+			],
+			[
+				"co",
+				"country"
+			],
+			[
+				"process",
+				"processDataDaily\t⟠"
+			],
+			[
+				"get",
+				"getDailyChange"
+			],
+			[
+				"conver",
+				"convert2dData"
+			],
+			[
+				"tim",
+				"timeseries.length\t⟠"
+			],
+			[
+				"labe",
+				"label"
+			],
+			[
+				"table",
+				"table_cases"
+			],
+			[
+				"mous",
+				"mouseY"
+			],
+			[
+				"y",
+				"y_angle"
+			],
+			[
+				"p1",
+				"p1_proj"
+			],
+			[
+				"pro",
+				"proj"
+			],
+			[
+				"rotat",
+				"rotateY"
+			],
+			[
+				"z",
+				"z_offset"
+			],
+			[
+				"W",
+				"W_ext"
+			],
+			[
+				"g",
+				"g_ext"
+			],
+			[
+				"random",
+				"randomGaussian"
+			],
+			[
+				"W_",
+				"W_ext"
+			],
+			[
+				"g_",
+				"g_value_html"
+			],
+			[
+				"shadow",
+				"shadow_height"
+			],
+			[
+				"x_",
+				"x_in_temp"
+			],
+			[
+				"n_",
+				"n_split"
+			],
+			[
+				"x",
+				"x_drops"
+			],
+			[
+				"T",
+				"T_anim"
+			],
+			[
+				"cre",
+				"createElement"
+			],
+			[
+				"di",
+				"div\tTag"
+			],
+			[
+				"margin",
+				"margin-right\tproperty"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/fabian/work/repos/CoronaWebsite"
+	],
+	"file_history":
+	[
+		"/home/fabian/Nextcloud/repos/DrivenRandNetworkCriticality/code/ESN_code/plotting/plot_alt_hom_regulation_check_conv_cond.py",
+		"/home/fabian/Nextcloud/repos/DrivenRandNetworkCriticality/code/ESN_code/plotting/plot_alt_hom_regulation_corr_act.py",
+		"/home/fabian/js_scripts/plot_data/script.js",
+		"/home/fabian/js_scripts/plot_data/style.css",
+		"/home/fabian/js_scripts/plot_data/dropdown.js",
+		"/home/fabian/js_scripts/plot_data/index.html",
+		"/home/fabian/js_scripts/plot_data/links.txt",
+		"/home/fabian/js_scripts/plot_data/script_old.js",
+		"/home/fabian/js_scripts/network_dynamics/index.html",
+		"/home/fabian/js_scripts/network_dynamics/styles.css",
+		"/home/fabian/js_scripts/network_dynamics/sketch.js",
+		"/home/fabian/js_scripts/dyn_sys_plotter/index.html",
+		"/home/fabian/js_scripts/dyn_sys_plotter/sketch.js",
+		"/home/fabian/riddle.txt",
+		"/home/fabian/riddle.html",
+		"/home/fabian/js_scripts/midi_test/index.html",
+		"/home/fabian/js_scripts/midi_test/styles.css",
+		"/home/fabian/js_scripts/midi_test/sketch.js",
+		"/home/fabian/js_scripts/dyn_sys_plotter/styles.css",
+		"/home/fabian/js_scripts/index.html",
+		"/home/fabian/js_scripts/styles.css",
+		"/home/fabian/js_scripts/sketch.js",
+		"/home/fabian/Nextcloud/cns_2020_abstract/echo_paper.bib",
+		"/home/fabian/desmos_test/desmos.html",
+		"/home/fabian/.config/autostart/nextcloud.desktop",
+		"/home/fabian/Nextcloud/bibtex_libraries/echo_paper.bib",
+		"/home/fabian/Nextcloud/cns_2020_abstract/abstract.txt",
+		"/home/fabian/.config/autostart/libinput-gestures.desktop",
+		"/home/fabian/.local/share/applications/nextcloud.desktop",
+		"/home/fabian/blender-2.82a-linux64/blender.desktop",
+		"/home/fabian/applications/squashfs-root/nextcloud.desktop",
+		"/home/fabian/test.py",
+		"/tmp/kite_tutorial.py"
+	],
+	"find":
+	{
+		"height": 44.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "coronawebsite.sublime-project",
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 244.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

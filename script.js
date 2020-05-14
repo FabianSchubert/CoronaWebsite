@@ -9,7 +9,10 @@ var nCols;
 var countries;
 var provinces;
 
-var nPlots = 1;
+var nPlots = 0;
+var colCicleState = 0;
+
+var addPlotCounter = 0;
 
 const colCicle = [
 'rgba(76, 114, 176,255)',
@@ -75,26 +78,96 @@ function transpose(x){
    return y;
 }
 
-function updatePlot(idx){
+function addPlot(idx){
    
    nPlots++;
+   
+   addPlotCounter++;
    
    let plotdata = {
          label: countries[idx],
          data: processDataDailyVsTotal(idx),
          lineTension: 0.,
          backgroundColor: 'rgba(0,0,0,.0)',
-         borderColor: colCicle[(nPlots-1)%nColors],
-         pointBackgroundColor: colCicle[(nPlots-1)%nColors]
+         borderColor: colCicle[colCicleState],
+         pointBackgroundColor: colCicle[colCicleState]
       };
    
    myLineChart.data.datasets.push(plotdata);
    
    myLineChart.update();
    
-   console.log(myLineChart.data.datasets);
+   let newCountryBox = document.createElement("div");
+   
+   newCountryBox.setAttribute("class","countryBox");
+   newCountryBox.style.backgroundColor = colCicle[colCicleState];
+   newCountryBox.setAttribute("id","countryBox" + addPlotCounter);
+   
+   
+   
+   let countryHeader = document.createElement("div")
+   countryHeader.innerHTML = countries[idx];
+   newCountryBox.appendChild(countryHeader);
+   
+   newCountryBox.innerHTML += "</br><span> x-Scale: </span>";
+   
+   
+   let xScaleValue = document.createElement("span");
+   xScaleValue.setAttribute("id",newCountryBox.id + ".xScaleValue");
+   xScaleValue.setAttribute("class","xScaleValue");
+   xScaleValue.innerHTML="1.0";
+   
+   newCountryBox.appendChild(xScaleValue);
+   
+   
+   let xScaleSlider = document.createElement("input");
+   xScaleSlider.setAttribute("type","range");
+   xScaleSlider.setAttribute("min","1");
+   xScaleSlider.setAttribute("max","200");
+   xScaleSlider.setAttribute("value","100");
+   xScaleSlider.setAttribute("class","slider");
+   
+   xScaleSlider.oninput = function() {
       
-     
+      let scalefact = this.value/100.;
+      
+      
+      
+      let idx_node = $(this).parent().index();
+            
+      let total=tableArray[idx].slice(4);
+      
+      for(i=0;i<myLineChart.data.datasets[idx_node].data.length;i++){
+         myLineChart.data.datasets[idx_node].data[i].x = scalefact * total.slice(4).slice(1,total.length-1)[i];
+         
+      }
+      
+      $(this).parent().find('.xScaleValue')[0].innerHTML = scalefact;
+      
+      myLineChart.update();            
+   }
+   
+   newCountryBox.appendChild(xScaleSlider);
+   
+   let newCloseButton = document.createElement("input");
+   newCloseButton.setAttribute("type","image");
+   newCloseButton.setAttribute("src","closeicon.svg");
+   newCloseButton.setAttribute("class","closeCountryBox");
+   newCloseButton.onclick=function(){
+      let idx_node = $(this).parent().index();
+      myLineChart.data.datasets.splice(idx_node,1);
+      $(this).parent().remove();
+      myLineChart.update();
+      nPlots--;
+   }
+   
+   newCountryBox.appendChild(newCloseButton);
+   
+   
+   $("#countryBoxContainer").append(newCountryBox);
+      
+   colCicleState++;
+   colCicleState = colCicleState%nColors;
    
 }
 
@@ -132,17 +205,12 @@ function setup() {
       newEntry.id = countries[i] + "DropdownEntry";
       newEntry.onclick = function(){
          let findidx = countries.indexOf(this.innerHTML);
-         updatePlot(findidx);
+         addPlot(findidx);
          document.getElementById("myDropdown").classList.toggle("show");
       };
       dropdown.appendChild(newEntry);
    }
-   
-   
-   let start_idx = 120;
-   
-   
-   
+      
    //updatePlot(test_idx);
    let ctx = document.getElementById('chart');
    
@@ -150,14 +218,7 @@ function setup() {
       type: 'scatter',
    
       data: {
-         datasets:[{
-         label: countries[start_idx],
-         data: processDataDailyVsTotal(start_idx),
-         lineTension: 0.,
-         backgroundColor: 'rgba(0,0,0,.0)',
-         borderColor: colCicle[(nPlots-1)%nColors],
-         pointBackgroundColor: colCicle[(nPlots-1)%nColors]
-      }]
+         datasets:[]
       },
       options:{
          scales:{
@@ -180,6 +241,9 @@ function setup() {
       }
    });
    
+   
+   let start_idx = 120;
+   addPlot(start_idx);
    
    /*let country = tableArray[test_idx][1];
    

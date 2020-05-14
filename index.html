@@ -5,29 +5,42 @@
 	<meta charset="UTF-8">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-	<script src="script.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
    <link rel="stylesheet" type="text/css" href="style.css">
-   <script src="dropdown.js"></script>
+   
+   
 </head>
 <body>
-   <div id = "chartcontainer">
-   <canvas id="chart" width="4" height="3"></canvas>
-   </div>
+   <div id="outerFrame">
+   <div id="ChartDropdown">
+      <div id = "chartcontainer">
+      <canvas id="chart" width="4" height="3"></canvas>
+      </div>
 
-   <div class="dropdown">
-      <button onclick="showCountries()" class="dropbtn">Choose Country</button>
-      <div id="myDropdown" class="dropdown-content">
-         <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-         <!--
-         <a href="#about">About</a>
-         <a href="#base">Base</a>
-         <a href="#blog">Blog</a>
-         <a href="#contact">Contact</a>
-         <a href="#custom">Custom</a>
-         <a href="#support">Support</a>
-         <a href="#tools">Tools</a>-->
+      <div class="dropdown">
+         <button onclick="showCountries()" class="dropbtn">Add Country</button>
+         <div id="myDropdown" class="dropdown-content">
+            <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+            <!--
+            <a href="#about">About</a>
+            <a href="#base">Base</a>
+            <a href="#blog">Blog</a>
+            <a href="#contact">Contact</a>
+            <a href="#custom">Custom</a>
+            <a href="#support">Support</a>
+            <a href="#tools">Tools</a>-->
+         </div>
       </div>
    </div>
+   <div id="countryBoxContainer">
+            
+   </div>
    
+   </div>
+   
+   
+   <script src="script.js"></script>
+   <script src="dropdown.js"></script>
 </body>
 </html>
