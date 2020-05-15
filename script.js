@@ -1,6 +1,10 @@
-var table;
+let tab;
 
-var tableArray;
+const linkJohnsHopkins = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
+
+var countries;
+var times;
+var tabArr;
 
 var myLineChart;
 
@@ -30,14 +34,16 @@ const colCicle = [
 const nColors = colCicle.length
 
 function preload() {
-   //my table is comma separated value "csv"
-   //and has a header specifying the columns labels
-   table = loadTable(
-      'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv',
-       'csv', 'header');
-   // loadTable returns a p5.js - Table object, which has some
-   // neat additional functions. A raw 2d-nested array with the data
-   // can be retrieved via table.getArray()
+   
+   // load table from Johns Hopkins University
+   tab = loadTable(linkJohnsHopkins,'csv','header');   
+   /*
+   // load table from European Centre for Disease Prevention and Control
+   table = loadJSON(
+      'https://opendata.ecdc.europa.eu/covid19/casedistribution/json/');
+   
+   // loadTable returns a p5.js - Table object
+   */
 }
 
 
@@ -45,11 +51,7 @@ function preload() {
 function setup() {
    //console.log(table.columns);
    
-   let countries;
-   let times;
-   let tabArr;
-   
-   [countries, times, tabArr] = processDataJohnsHopkins(table);
+   [countries, times, tabArr] = processDataJohnsHopkins(tab);
    
    let nRows = tabArr.length;
    /*
@@ -68,6 +70,7 @@ function setup() {
    
    let times=table.columns.slice(4);
    */
+   
    
    let dropdown = document.getElementById("myDropdown");
    var newEntry;
