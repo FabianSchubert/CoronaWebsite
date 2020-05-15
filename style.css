@@ -10,36 +10,30 @@ body {
   width: 985px;
   height: auto;
   padding: 50px;
-  background-color: #e6e6e6;
-}
-
-#ChartDropdown {
-  height:500px;
-  width:990px;
-  border-style: none;
+  /*background-color: #e6e6e6;*/
 }
 
 #chartcontainer{
-  position: absolute;
-  left: 50px;
-  top: 50px;
-  width: 600px;
+  
+  width: 100%;
   border-style: none;
   background-color: #ffffff;
 } 
 
 
 .dropbtn {
-  background-color: #0066cc;
+  background-color: #777777;
   color: white;
   padding: 16px;
   font-size: 16px;
   border: none;
   cursor: pointer;
+  
+  border-radius: 10px;
 }
 
 .dropbtn:hover, .dropbtn:focus {
-  background-color: #004080;
+  background-color: #444444;
 }
 
 #myInput {
@@ -56,10 +50,12 @@ body {
 #myInput:focus {outline: 3px solid #ddd;}
 
 .dropdown {
-  position: absolute;
-  left: 700px;*/
+  /*position: absolute;
+  left: 700px;
   top: 0px;*/
-  border-style: solid;
+  border-style: none;
+  margin-top: 25px;
+  margin-bottom: 25px;
 }
 
 .dropdown-content {
@@ -106,7 +102,12 @@ body {
 
 .countryBox p {
   margin-top: 0px;
-  margin-bottom: 0px;
+  margin-bottom: 5px;
+}
+
+.countryBox span {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .closeCountryBox {
@@ -133,6 +134,8 @@ body {
   opacity: 0.9;
   -webkit-transition: .2s;
   transition: opacity .2s;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .slider:hover {

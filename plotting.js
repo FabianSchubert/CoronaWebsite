@@ -3,11 +3,10 @@ function addPlot(idx,countries,times,tabArr){
    
    window.addPlotCounter++;
    
-   let n_avg = 3;
    
    let plotdata = {
          label: countries[idx],
-         data: processDataDailyVsTotal(idx,tabArr,n_avg),
+         data: processDataDailyVsTotal(idx,tabArr,3,1,1),
          lineTension: 0.,
          backgroundColor: 'rgba(0,0,0,.0)',
          borderColor: colCicle[colCicleState],
@@ -26,7 +25,7 @@ function addPlot(idx,countries,times,tabArr){
    
    
    
-   let countryHeader = document.createElement("div")
+   let countryHeader = document.createElement("p")
    countryHeader.innerHTML = countries[idx];
    newCountryBox.appendChild(countryHeader);
    
@@ -55,30 +54,17 @@ function addPlot(idx,countries,times,tabArr){
    
    xScaleSlider.oninput = function() {
       
-      let scalefact = this.value/100.;
-      
-      
+      let xScale = this.value/100.;
+      let yScale = document.getElementById($(this).parent().attr('id') + "_yScaleSlider").value/100.;      
+      let n_avg = document.getElementById($(this).parent().attr('id') + "_averageWindowSlider").value;
       
       let idx_node = $(this).parent().index();
             
-      //let total=tabArr[idx];
+      let new_data = processDataDailyVsTotal(idx,tabArr,n_avg,xScale,yScale);
       
-      //console.log($(this).parent().find('averageWindowSlider'));
+      myLineChart.data.datasets[idx_node].data = new_data;      
       
-      let n_avg = document.getElementById($(this).parent().attr('id') + "_averageWindowSlider").value;
-      
-      let new_data = processDataDailyVsTotal(idx,tabArr,n_avg);
-      
-      myLineChart.data.datasets[idx_node].data = new_data;
-      
-      for(i=0;i<myLineChart.data.datasets[idx_node].data.length;i++){
-         myLineChart.data.datasets[idx_node].data[i].x = scalefact * new_data[i].x;  
-      }
-      
-      
-      document.getElementById($(this).parent().attr('id') + "_xScaleValue").innerHTML = scalefact;
-      
-      //$()[0].innerHTML = scalefact;
+      document.getElementById($(this).parent().attr('id') + "_xScaleValue").innerHTML = xScale;
       
       myLineChart.update();            
    }
@@ -109,28 +95,21 @@ function addPlot(idx,countries,times,tabArr){
    yScaleSlider.setAttribute("max","500");
    yScaleSlider.setAttribute("value","100");
    yScaleSlider.setAttribute("class","slider");
-   yScaleSlider.setAttribute("id",newCountryBox.id + "_xScaleSlider");
+   yScaleSlider.setAttribute("id",newCountryBox.id + "_yScaleSlider");
    
    yScaleSlider.oninput = function() {
       
-      let scalefact = this.value/100.;
-      
-      
-      
-      let idx_node = $(this).parent().index();
-      
+      let xScale = document.getElementById($(this).parent().attr('id') + "_xScaleSlider").value/100.;
+      let yScale = this.value/100.;      
       let n_avg = document.getElementById($(this).parent().attr('id') + "_averageWindowSlider").value;
       
-      let new_data = processDataDailyVsTotal(idx,tabArr,n_avg);
+      let idx_node = $(this).parent().index();
+            
+      let new_data = processDataDailyVsTotal(idx,tabArr,n_avg,xScale,yScale);
       
       myLineChart.data.datasets[idx_node].data = new_data;      
       
-      for(i=0;i<myLineChart.data.datasets[idx_node].data.length;i++){
-         myLineChart.data.datasets[idx_node].data[i].y = scalefact * new_data[i].y;
-         
-      }
-      
-      document.getElementById($(this).parent().attr('id') + "_yScaleValue").innerHTML = scalefact;
+      document.getElementById($(this).parent().attr('id') + "_yScaleValue").innerHTML = yScale;
       
       myLineChart.update();            
    }
@@ -165,26 +144,17 @@ function addPlot(idx,countries,times,tabArr){
    
    averageWindowSlider.oninput = function() {
       
-      let n_avg_new = this.value;      
+      let xScale = document.getElementById($(this).parent().attr('id') + "_xScaleSlider").value/100.;
+      let yScale = document.getElementById($(this).parent().attr('id') + "_yScaleSlider").value/100.;      
+      let n_avg = this.value;
       
       let idx_node = $(this).parent().index();
             
-      let new_data = processDataDailyVsTotal(idx,tabArr,n_avg_new);
+      let new_data = processDataDailyVsTotal(idx,tabArr,n_avg,xScale,yScale);
       
-      myLineChart.data.datasets[idx_node].data = new_data;
-      xScaleSlider.oninput();
-      yScaleSlider.oninput();
+      myLineChart.data.datasets[idx_node].data = new_data;      
       
-      /*
-      for(i=0;i<myLineChart.data.datasets[idx_node].data.length;i++){
-         
-         myLineChart.data.datasets[idx_node].data[i].x = scalefact * new_data[i].y;
-         myLineChart.data.datasets[idx_node].data[i].y = scalefact * new_data[i].y;
-         
-         
-      }*/
-      
-      document.getElementById($(this).parent().attr('id') + "_averageWindowValue").innerHTML = n_avg_new*2+1;
+      document.getElementById($(this).parent().attr('id') + "_averageWindowValue").innerHTML = n_avg*2+1;
       
       myLineChart.update();            
    }

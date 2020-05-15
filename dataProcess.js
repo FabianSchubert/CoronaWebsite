@@ -51,6 +51,17 @@ function convert2dData(datArray){
    return convArray; 
 }
 
+function convertPointData(pointList){
+   // convert back
+   let n_points = pointList.length;
+   convArray = Array(n_points);
+   for(let i=0;i<n_points;i++){
+      convArray[i] = [pointList[i].x,pointList[i].y];
+   }
+   
+   return convArray;
+}
+
 // calculate backward difference (difference to previous day)
 function getDailyChange(timeseries){
    let n = timeseries.length;
@@ -94,7 +105,16 @@ function transpose(x){
    return y;
 }
 
-function processDataDailyVsTotal(idx,tabArr,smooth_n){
+function scaleArr(x,s){
+   let res = Array(x.length);
+   for(let i=0;i<x.length;i++){
+      res[i] = x[i]*s;
+   }
+   
+   return res;
+}
+
+function processDataDailyVsTotal(idx,tabArr,smooth_n,xscale,yscale){
    let total=tabArr[idx];
    let total_cut = total.slice(1,total.length);
    let daily_change = getDailyChange(total)
@@ -112,7 +132,52 @@ function processDataDailyVsTotal(idx,tabArr,smooth_n){
    
    
    let datapoints = convert2dData(
-      transpose([smooth_filter(total_cut,smooth_n),smooth_filter(daily_change,smooth_n)]));
+      transpose([scaleArr(smooth_filter(total_cut,smooth_n),xscale),
+         scaleArr(smooth_filter(daily_change,smooth_n),yscale)]));
    
    return datapoints;
+}
+
+function I(x,g0,a){
+   if(x<0 || x >= 1.){
+      return 0.;
+   } else {
+      return Math.max(0.,Math.max(x*(g0+a)/g0 + Math.log(1-x)*(1.+a)/g0,0));
+   }
+}
+
+function dIdg0(x,g0,a){
+   return -x*a/g0**2. - Math.log(1-x)*(1.+a)/g0**2.;
+}
+
+function dIda(x,g0,a){
+   return x/g0 + Math.log(1-x)/g0;
+}
+
+function fitI(x,y){
+   let n = x.length;
+   
+   let eps = 1e-3;
+   
+   let n_it = 1;
+   
+   let g0 = 1.;
+   let a = 1.;
+   
+   let dg0;
+   let da;
+   
+   for(let i=0;i<n_it;i++){
+      dg0 = 0;
+      da = 0;
+      
+      for(let j=0;j<n;j++){
+         dg0 += -(y[j]-I(x[j],g0,a))*dIdg0(x[j],g0,a);
+         da += -(y[j]-I(x[j],g0,a))*dIda(x[j],g0,a);
+      }
+      g0 += eps * dg0;
+      a += eps * da;
+   }
+   
+   return [g0,a];
 }

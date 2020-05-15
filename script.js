@@ -31,7 +31,11 @@ const colCicle = [
 'rgba(100, 181, 205,255)'
 ];
 
+Chart.defaults.global.defaultFontSize = 16;
+
 const nColors = colCicle.length
+
+
 
 function preload() {
    
