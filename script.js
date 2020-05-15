@@ -40,148 +40,19 @@ function preload() {
    // can be retrieved via table.getArray()
 }
 
-function convert2dData(datArray){
-   // convert nested 2d array into list of of objects with x and y property,
-   // as required by the scatter plot 
-   let n_points = datArray.length;
-   convArray = [];
-   for(let i=0;i<n_points;i++){
-      convArray.push({x: parseFloat(datArray[i][0]), y: parseFloat(datArray[i][1])});
-   }
-
-   return convArray; 
-}
-
-
-function getDailyChange(timeseries){
-   let n = timeseries.length;
-   change = Array(n-2);
-   for(i=1;i<n-1;i++){
-      change[i-1] = (timeseries[i+1] - timeseries[i-1])/2.;
-   }
-   
-   return change;
-}
-
-function transpose(x){
-   let m = x.length;
-   let n = x[0].length;
-   
-   let y = Array(n);
-   
-   for(i=0;i<n;i++){
-      y[i] = Array(m);
-      for(j=0;j<m;j++){
-         y[i][j] = x[j][i];
-      }
-   }   
-   return y;
-}
-
-function addPlot(idx){
-   
-   nPlots++;
-   
-   addPlotCounter++;
-   
-   let plotdata = {
-         label: countries[idx],
-         data: processDataDailyVsTotal(idx),
-         lineTension: 0.,
-         backgroundColor: 'rgba(0,0,0,.0)',
-         borderColor: colCicle[colCicleState],
-         pointBackgroundColor: colCicle[colCicleState]
-      };
-   
-   myLineChart.data.datasets.push(plotdata);
-   
-   myLineChart.update();
-   
-   let newCountryBox = document.createElement("div");
-   
-   newCountryBox.setAttribute("class","countryBox");
-   newCountryBox.style.backgroundColor = colCicle[colCicleState];
-   newCountryBox.setAttribute("id","countryBox" + addPlotCounter);
-   
-   
-   
-   let countryHeader = document.createElement("div")
-   countryHeader.innerHTML = countries[idx];
-   newCountryBox.appendChild(countryHeader);
-   
-   newCountryBox.innerHTML += "</br><span> x-Scale: </span>";
-   
-   
-   let xScaleValue = document.createElement("span");
-   xScaleValue.setAttribute("id",newCountryBox.id + ".xScaleValue");
-   xScaleValue.setAttribute("class","xScaleValue");
-   xScaleValue.innerHTML="1.0";
-   
-   newCountryBox.appendChild(xScaleValue);
-   
-   
-   let xScaleSlider = document.createElement("input");
-   xScaleSlider.setAttribute("type","range");
-   xScaleSlider.setAttribute("min","1");
-   xScaleSlider.setAttribute("max","200");
-   xScaleSlider.setAttribute("value","100");
-   xScaleSlider.setAttribute("class","slider");
-   
-   xScaleSlider.oninput = function() {
-      
-      let scalefact = this.value/100.;
-      
-      
-      
-      let idx_node = $(this).parent().index();
-            
-      let total=tableArray[idx].slice(4);
-      
-      for(i=0;i<myLineChart.data.datasets[idx_node].data.length;i++){
-         myLineChart.data.datasets[idx_node].data[i].x = scalefact * total.slice(4).slice(1,total.length-1)[i];
-         
-      }
-      
-      $(this).parent().find('.xScaleValue')[0].innerHTML = scalefact;
-      
-      myLineChart.update();            
-   }
-   
-   newCountryBox.appendChild(xScaleSlider);
-   
-   let newCloseButton = document.createElement("input");
-   newCloseButton.setAttribute("type","image");
-   newCloseButton.setAttribute("src","closeicon.svg");
-   newCloseButton.setAttribute("class","closeCountryBox");
-   newCloseButton.onclick=function(){
-      let idx_node = $(this).parent().index();
-      myLineChart.data.datasets.splice(idx_node,1);
-      $(this).parent().remove();
-      myLineChart.update();
-      nPlots--;
-   }
-   
-   newCountryBox.appendChild(newCloseButton);
-   
-   
-   $("#countryBoxContainer").append(newCountryBox);
-      
-   colCicleState++;
-   colCicleState = colCicleState%nColors;
-   
-}
-
-function processDataDailyVsTotal(idx){
-   let total=tableArray[idx].slice(4);
-   let datapoints = convert2dData(
-      transpose([total.slice(1,total.length-1),getDailyChange(total)]));
-   return datapoints;
-}
 
 
 function setup() {
    //console.log(table.columns);
    
+   let countries;
+   let times;
+   let tabArr;
+   
+   [countries, times, tabArr] = processDataJohnsHopkins(table);
+   
+   let nRows = tabArr.length;
+   /*
    tableArray = table.getArray()
    
    nRows = tableArray.length;
@@ -196,6 +67,7 @@ function setup() {
    }
    
    let times=table.columns.slice(4);
+   */
    
    let dropdown = document.getElementById("myDropdown");
    var newEntry;
@@ -205,7 +77,7 @@ function setup() {
       newEntry.id = countries[i] + "DropdownEntry";
       newEntry.onclick = function(){
          let findidx = countries.indexOf(this.innerHTML);
-         addPlot(findidx);
+         addPlot(findidx,countries,times,tabArr);
          document.getElementById("myDropdown").classList.toggle("show");
       };
       dropdown.appendChild(newEntry);
@@ -243,7 +115,7 @@ function setup() {
    
    
    let start_idx = 120;
-   addPlot(start_idx);
+   addPlot(start_idx,countries,times,tabArr);
    
    /*let country = tableArray[test_idx][1];
    
