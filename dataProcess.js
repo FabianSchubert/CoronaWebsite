@@ -29,7 +29,7 @@ function processDataJohnsHopkins(tab){
 }
 
 function processDataECDC(tab){
-   console.log(tab);
+   //console.log(tab);
    
    let tabArr = tab.getArray();
    
@@ -39,8 +39,6 @@ function processDataECDC(tab){
    let countries = [];
    let population = [];
    let times = [];
-   
-   
    
    // Rows are clustered by country and sorted by days, starting with the most recent day.
    // Therefore, we can extract all dates and countries by simply scanning the table
@@ -53,11 +51,11 @@ function processDataECDC(tab){
       //Country Name is in row 6 (starting zero)
       country = tabArr[i][6];
       //replace underscores in country names with spaces
-      country = country.replace(/_/g," ");
+      //country = country.replace(/_/g," ");
       
       if(!(countries.includes(country))){
          countries.push(country);
-         population.push(tabArr[i][9]);
+         population.push(parseFloat(tabArr[i][9]));
       }
       
       datestr = tabArr[i][2] + "/" + tabArr[i][1] + "/" + tabArr[i][3];
@@ -67,20 +65,57 @@ function processDataECDC(tab){
       }
    }
    
+   times = times.reverse();
+   
    let nCountries = countries.length;
    let nTimes = times.length;
    
+   /*console.log(nCountries);
+   console.log(nTimes);
+   console.log(tabArr.length);
+   console.log(nCountries*nTimes);*/
+   
    let procArr = Array(nCountries);
+   let procArrDeaths = Array(nCountries);
    
+   for(let i=0;i<nCountries;i++){
+      procArr[i] = Array(nTimes).fill(0.);
+      procArrDeaths[i] = Array(nTimes).fill(0.);
+   }
    
-   console.log(countries);
-   console.log(times);
+   let timeIdx;
+   let countryIdx;
+   
+   for(let i=0; i<nRows; i++){
+      datestr = tabArr[i][2] + "/" + tabArr[i][1] + "/" + tabArr[i][3];
+      country = tabArr[i][6];
+      
+      timeIdx = times.indexOf(datestr);
+      countryIdx = countries.indexOf(country);
+      
+      procArr[countryIdx][timeIdx] = parseFloat(tabArr[i][4])*1e5/population[countryIdx];
+      procArrDeaths[countryIdx][timeIdx] = parseFloat(tabArr[i][5])*1e5/population[countryIdx];
+   }
+   
+   for(let i=0; i<nCountries;i++){
+      for(let j=1; j<nTimes;j++){
+         procArr[i][j] = procArr[i][j-1] + procArr[i][j];
+         procArrDeaths[i][j] = procArrDeaths[i][j-1] + procArrDeaths[i][j];
+      }
+   }
+   
+   console.log(countries.indexOf("Germany"));
+   
+   for(let i=0;i<nCountries;i++){
+      //replace underscores in country names with spaces
+      countries[i] = countries[i].replace(/_/g," ");
+   }
+   
+   return [countries, times, procArr, procArrDeaths, population];
    
    
 }
 
-
-https://opendata.ecdc.europa.eu/covid19/casedistribution/csv
 
 function convert2dData(datArray){
    // convert nested 2d array into list of of objects with x and y property,

@@ -7,6 +7,8 @@ const linkECDC = 'ecdc.csv';
 var countries;
 var times;
 var tabArr;
+var tabArrDeaths;
+var population;
 
 var myLineChart;
 
@@ -60,7 +62,7 @@ function preload() {
 function setup() {
    //console.log(table.columns);
    
-   processDataECDC(tab);
+   [countries, times, tabArr, tabArrDeaths, population] = processDataECDC(tab);
    
    //[countries, times, tabArr] = processDataJohnsHopkins(tab);
    
@@ -112,7 +114,7 @@ function setup() {
                type: 'linear',
                scaleLabel: {
                   display: true,
-                  labelString: "Daily new Cases"
+                  labelString: "Daily new Cases per 100000 Inhabitants"
                }
             }],
             
@@ -120,7 +122,7 @@ function setup() {
                type: 'linear',
                scaleLabel: {
                   display: true,
-                  labelString: "Total Cases"
+                  labelString: "Total Confirmed Cases per 100000 Inhabitants"
                }   
             }]
          }
@@ -128,7 +130,7 @@ function setup() {
    });
    
    
-   let start_idx = 120;
+   let start_idx = 75; //Data Row for Germany...
    addPlot(start_idx,countries,times,tabArr);
    
    /*let country = tableArray[test_idx][1];
