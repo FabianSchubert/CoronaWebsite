@@ -28,14 +28,57 @@ function processDataJohnsHopkins(tab){
    
 }
 
-
-
-
 function processDataECDC(tab){
    console.log(tab);
    
-   return [0,0,0];
+   let tabArr = tab.getArray();
+   
+   let nRows = tabArr.length;
+   let nCols = tabArr[0].length;
+   
+   let countries = [];
+   let population = [];
+   let times = [];
+   
+   
+   
+   // Rows are clustered by country and sorted by days, starting with the most recent day.
+   // Therefore, we can extract all dates and countries by simply scanning the table
+   // top to bottom and extracting unique values.
+   
+   let datestr;
+   let country;
+      
+   for(let i=0;i<nRows;i++){
+      //Country Name is in row 6 (starting zero)
+      country = tabArr[i][6];
+      //replace underscores in country names with spaces
+      country = country.replace(/_/g," ");
+      
+      if(!(countries.includes(country))){
+         countries.push(country);
+         population.push(tabArr[i][9]);
+      }
+      
+      datestr = tabArr[i][2] + "/" + tabArr[i][1] + "/" + tabArr[i][3];
+      
+      if(!(times.includes(datestr))){
+         times.push(datestr);
+      }
+   }
+   
+   let nCountries = countries.length;
+   let nTimes = times.length;
+   
+   let procArr = Array(nCountries);
+   
+   
+   console.log(countries);
+   console.log(times);
+   
+   
 }
+
 
 https://opendata.ecdc.europa.eu/covid19/casedistribution/csv
 

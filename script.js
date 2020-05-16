@@ -2,6 +2,8 @@ let tab;
 
 const linkJohnsHopkins = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
 
+const linkECDC = 'ecdc.csv';
+
 var countries;
 var times;
 var tabArr;
@@ -40,7 +42,10 @@ const nColors = colCicle.length
 function preload() {
    
    // load table from Johns Hopkins University
-   tab = loadTable(linkJohnsHopkins,'csv','header');   
+   //tab = loadTable(linkJohnsHopkins,'csv','header');
+   tab = loadTable(linkECDC,'csv','header');
+   
+   
    /*
    // load table from European Centre for Disease Prevention and Control
    table = loadJSON(
@@ -55,7 +60,9 @@ function preload() {
 function setup() {
    //console.log(table.columns);
    
-   [countries, times, tabArr] = processDataJohnsHopkins(tab);
+   processDataECDC(tab);
+   
+   //[countries, times, tabArr] = processDataJohnsHopkins(tab);
    
    let nRows = tabArr.length;
    /*
