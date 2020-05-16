@@ -1,3 +1,13 @@
+//zero-padding for numbers
+
+Number.prototype.pad = function(size) {
+  var s = String(this);
+  while (s.length < (size || 2)) {s = "0" + s;}
+  return s;
+}
+
+
+
 function processDataJohnsHopkins(tab){
       
    let tabArr = tab.getArray();
@@ -44,7 +54,7 @@ function processDataECDC(tab){
    // Therefore, we can extract all dates and countries by simply scanning the table
    // top to bottom and extracting unique values.
    
-   let datestr;
+   let date;
    let country;
       
    for(let i=0;i<nRows;i++){
@@ -58,14 +68,14 @@ function processDataECDC(tab){
          population.push(parseFloat(tabArr[i][9]));
       }
       
-      datestr = tabArr[i][2] + "/" + tabArr[i][1] + "/" + tabArr[i][3];
+      date = (parseInt(tabArr[i][3])).pad(4) + "/" + (parseInt(tabArr[i][2])).pad(2) + "/" + (parseInt(tabArr[i][1])).pad(2);
       
-      if(!(times.includes(datestr))){
-         times.push(datestr);
+      if(!(times.includes(date))){
+         times.push(date);
       }
    }
    
-   times = times.reverse();
+   times.sort();
    
    let nCountries = countries.length;
    let nTimes = times.length;
@@ -87,10 +97,10 @@ function processDataECDC(tab){
    let countryIdx;
    
    for(let i=0; i<nRows; i++){
-      datestr = tabArr[i][2] + "/" + tabArr[i][1] + "/" + tabArr[i][3];
+      date = (parseInt(tabArr[i][3])).pad(4) + "/" + (parseInt(tabArr[i][2])).pad(2) + "/" + (parseInt(tabArr[i][1])).pad(2);
       country = tabArr[i][6];
       
-      timeIdx = times.indexOf(datestr);
+      timeIdx = times.indexOf(date);
       countryIdx = countries.indexOf(country);
       
       procArr[countryIdx][timeIdx] = parseFloat(tabArr[i][4])*1e5/population[countryIdx];
@@ -104,7 +114,7 @@ function processDataECDC(tab){
       }
    }
    
-   console.log(countries.indexOf("Germany"));
+   console.log(times);
    
    for(let i=0;i<nCountries;i++){
       //replace underscores in country names with spaces
