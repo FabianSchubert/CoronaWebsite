@@ -4,6 +4,58 @@
 		"selected_items":
 		[
 			[
+				"nC",
+				"nCountries;i\t⟠"
+			],
+			[
+				"country",
+				"countryIdx"
+			],
+			[
+				"time",
+				"timeIdx\t⟠"
+			],
+			[
+				"countr",
+				"countryIdx"
+			],
+			[
+				"proc",
+				"procArrDeaths"
+			],
+			[
+				"n",
+				"nCountries"
+			],
+			[
+				"margin",
+				"margin-bottom\tproperty"
+			],
+			[
+				"aver",
+				"averageWindowSlider"
+			],
+			[
+				"ySc",
+				"yScaleSlider\t⟠"
+			],
+			[
+				"new",
+				"new_data"
+			],
+			[
+				"smoo",
+				"smooth_n"
+			],
+			[
+				"daily",
+				"daily_change"
+			],
+			[
+				"dail",
+				"daily_change"
+			],
+			[
 				"John",
 				"linkJohnsHopkins"
 			],
@@ -76,10 +128,6 @@
 				"colCicleState"
 			],
 			[
-				"countr",
-				"countryBox_"
-			],
-			[
 				"newClo",
 				"newCloseButton\t⟠"
 			],
@@ -90,14 +138,6 @@
 			[
 				"close",
 				"closeCountryBox"
-			],
-			[
-				"country",
-				"countryBox\t⟠"
-			],
-			[
-				"new",
-				"newCountry"
 			],
 			[
 				"inlin",
@@ -114,10 +154,6 @@
 			[
 				"height",
 				"min-height\tproperty"
-			],
-			[
-				"margin",
-				"margin-bottom\tproperty"
 			],
 			[
 				"background",
@@ -243,16 +279,8 @@
 			"file": "index.html",
 			"settings":
 			{
-				"buffer_size": 1438,
+				"buffer_size": 1411,
 				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "dropdown.js",
-			"settings":
-			{
-				"buffer_size": 687,
 				"line_ending": "Unix"
 			}
 		},
@@ -260,7 +288,7 @@
 			"file": "style.css",
 			"settings":
 			{
-				"buffer_size": 2481,
+				"buffer_size": 2551,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -269,34 +297,34 @@
 			"file": "script.js",
 			"settings":
 			{
-				"buffer_size": 3758,
+				"buffer_size": 4076,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "test.csv",
-			"settings":
-			{
-				"buffer_size": 19,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "ecdc.csv",
-			"settings":
-			{
-				"buffer_size": 982827,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
 			}
 		},
 		{
 			"file": "plotting.js",
 			"settings":
 			{
-				"buffer_size": 4341,
+				"buffer_size": 6507,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "links.txt",
+			"settings":
+			{
+				"buffer_size": 343,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/fabian/test.html",
+			"settings":
+			{
+				"buffer_size": 457,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -305,7 +333,7 @@
 			"file": "dataProcess.js",
 			"settings":
 			{
-				"buffer_size": 1841,
+				"buffer_size": 6319,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -355,6 +383,8 @@
 	],
 	"file_history":
 	[
+		"/home/fabian/work/repos/CoronaWebsite/test.csv",
+		"/home/fabian/work/repos/CoronaWebsite/ecdc.csv",
 		"/home/fabian/.config/sublime-text-3/Packages/nRepeat/Default (Linux).sublime-keymap",
 		"/home/fabian/work/repos/CoronaWebsite/coronawebsite.sublime-project",
 		"/home/fabian/Nextcloud/repos/DrivenRandNetworkCriticality/code/ESN_code/plotting/plot_alt_hom_regulation_check_conv_cond.py",
@@ -407,6 +437,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"https",
+			"yScaleSlider",
+			"yScaleValue",
 			"xScaleSlider",
 			"yScaleSlider",
 			"xScaleSlider",
@@ -428,7 +461,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -437,15 +470,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1438,
+						"buffer_size": 1411,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1345,
-								1345
+								349,
+								349
 							]
 						],
 						"settings":
@@ -455,57 +488,27 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 359.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "dropdown.js",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 687,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								191,
-								191
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
 					"file": "style.css",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2481,
+						"buffer_size": 2551,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1700,
-								1700
+								1561,
+								1561
 							]
 						],
 						"settings":
@@ -515,31 +518,27 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1932.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 2,
 					"file": "script.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3758,
+						"buffer_size": 4076,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1154,
-								1154
-							],
-							[
-								1176,
-								1176
+								761,
+								761
 							]
 						],
 						"settings":
@@ -549,60 +548,34 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1018.0,
+						"translation.y": 434.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "test.csv",
+					"buffer": 3,
+					"file": "plotting.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 19,
+						"buffer_size": 6507,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								19,
-								19
+								445,
+								445
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "ecdc.csv",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 982827,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -612,50 +585,77 @@
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "plotting.js",
+					"buffer": 4,
+					"file": "links.txt",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4341,
+						"buffer_size": 343,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2854,
-								2854
+								281,
+								281
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 3,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
-					"file": "dataProcess.js",
+					"buffer": 5,
+					"file": "/home/fabian/test.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1841,
+						"buffer_size": 457,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								735,
-								735
+								335,
+								335
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/HTML/HTML.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "dataProcess.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6319,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2921,
+								2921
 							]
 						],
 						"settings":
@@ -665,7 +665,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2331.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
