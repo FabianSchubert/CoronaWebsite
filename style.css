@@ -7,7 +7,7 @@ body {
   /*border-style: solid;*/
   position: relative;
   margin: auto;
-  width: 985px;
+  max-width: 985px;
   height: auto;
   padding: 50px;
   /*background-color: #e6e6e6;*/
@@ -82,14 +82,14 @@ body {
 
 #countryBoxContainer {
   position: relative;
-  width: 990px;
+  /*max-width: 995px;*/
   border-style: none;
   /*background-color: #ffffff;*/
 }
 
 .countryBox {
   position: relative;
-  width: 300px;
+  width: 290px;
   min-height: 100px;
   padding: 10px;
   border-radius: 10px;
