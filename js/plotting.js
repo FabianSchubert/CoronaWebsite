@@ -214,7 +214,7 @@ function addPlot(idx,countries,times){
    
    let newCloseButton = document.createElement("input");
    newCloseButton.setAttribute("type","image");
-   newCloseButton.setAttribute("src","../img/closeicon.svg");
+   newCloseButton.setAttribute("src","./img/closeicon.svg");
    newCloseButton.setAttribute("class","closeCountryBox");
    newCloseButton.onclick=function(){
       let idx_node = $(this).parent().index();
