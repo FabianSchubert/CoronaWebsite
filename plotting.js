@@ -23,7 +23,10 @@ function addPlot(idx,countries,times,tabArr){
    newCountryBox.style.backgroundColor = colCicle[colCicleState];
    newCountryBox.setAttribute("id","countryBox" + addPlotCounter);
    
-   
+   // stores the ratio yScale/xScale so that yScale = xyScaleRatio * xScale
+   newCountryBox.setAttribute("xyScaleRatio","1");
+   // initially, scales are not locked
+   newCountryBox.setAttribute("lockScales","false");
    
    let countryHeader = document.createElement("p")
    countryHeader.innerHTML = countries[idx];
@@ -47,16 +50,24 @@ function addPlot(idx,countries,times,tabArr){
    let xScaleSlider = document.createElement("input");
    xScaleSlider.setAttribute("type","range");
    xScaleSlider.setAttribute("min","1");
-   xScaleSlider.setAttribute("max","500");
-   xScaleSlider.setAttribute("value","100");
+   xScaleSlider.setAttribute("max","50");
+   xScaleSlider.setAttribute("value","10");
    xScaleSlider.setAttribute("class","slider");
    xScaleSlider.setAttribute("id",newCountryBox.id + "_xScaleSlider");
    
    xScaleSlider.oninput = function() {
       
-      let xScale = this.value/100.;
-      let yScale = document.getElementById($(this).parent().attr('id') + "_yScaleSlider").value/100.;      
+      let xScale = this.value/10.;
+      let yScale = document.getElementById($(this).parent().attr('id') + "_yScaleSlider").value/10.;      
       let n_avg = document.getElementById($(this).parent().attr('id') + "_averageWindowSlider").value;
+      
+      if($(this).parent().attr("lockScales") == "true"){
+         yScale = xScale * parseFloat($(this).parent().attr("xyScaleRatio"));
+         document.getElementById($(this).parent().attr('id') + "_yScaleSlider").value = yScale * 10.;
+         yScaleValue.innerHTML = yScale.toFixed(1);;
+      }
+      
+      
       
       let idx_node = $(this).parent().index();
             
@@ -92,16 +103,22 @@ function addPlot(idx,countries,times,tabArr){
    let yScaleSlider = document.createElement("input");
    yScaleSlider.setAttribute("type","range");
    yScaleSlider.setAttribute("min","1");
-   yScaleSlider.setAttribute("max","500");
-   yScaleSlider.setAttribute("value","100");
+   yScaleSlider.setAttribute("max","50");
+   yScaleSlider.setAttribute("value","10");
    yScaleSlider.setAttribute("class","slider");
    yScaleSlider.setAttribute("id",newCountryBox.id + "_yScaleSlider");
    
    yScaleSlider.oninput = function() {
       
-      let xScale = document.getElementById($(this).parent().attr('id') + "_xScaleSlider").value/100.;
-      let yScale = this.value/100.;      
+      let xScale = document.getElementById($(this).parent().attr('id') + "_xScaleSlider").value/10.;
+      let yScale = this.value/10.;      
       let n_avg = document.getElementById($(this).parent().attr('id') + "_averageWindowSlider").value;
+      
+      if($(this).parent().attr("lockScales") == "true"){
+         xScale = yScale / parseFloat($(this).parent().attr("xyScaleRatio"));
+         document.getElementById($(this).parent().attr('id') + "_xScaleSlider").value = xScale * 10.;
+         xScaleValue.innerHTML = xScale.toFixed(1);
+      }
       
       let idx_node = $(this).parent().index();
             
@@ -144,8 +161,8 @@ function addPlot(idx,countries,times,tabArr){
    
    averageWindowSlider.oninput = function() {
       
-      let xScale = document.getElementById($(this).parent().attr('id') + "_xScaleSlider").value/100.;
-      let yScale = document.getElementById($(this).parent().attr('id') + "_yScaleSlider").value/100.;      
+      let xScale = document.getElementById($(this).parent().attr('id') + "_xScaleSlider").value/10.;
+      let yScale = document.getElementById($(this).parent().attr('id') + "_yScaleSlider").value/10.;      
       let n_avg = this.value;
       
       let idx_node = $(this).parent().index();
@@ -182,6 +199,35 @@ function addPlot(idx,countries,times,tabArr){
    newCountryBox.appendChild(newCloseButton);
    
    //########## end section add close button
+   
+   //########## section add lock scale button
+   
+   
+   
+   let newScaleLock = document.createElement("input");
+   newScaleLock.setAttribute("type","image");
+   newScaleLock.setAttribute("src","lock_open.svg");
+   newScaleLock.setAttribute("class","scaleLock");
+   newScaleLock.onclick=function(){
+      if($(this).parent().attr("lockScales") == "false"){
+         $(this).attr("src","lock_closed.svg");
+         $(this).parent().attr("lockScales","true");
+         
+         let xScale = document.getElementById($(this).parent().attr('id') + "_xScaleSlider").value;
+         let yScale = document.getElementById($(this).parent().attr('id') + "_yScaleSlider").value;
+         //console.log(yScale/xScale);
+         $(this).parent().attr("xyScaleRatio",String(yScale/xScale));
+         
+      } else {
+         $(this).attr("src","lock_open.svg");
+         $(this).parent().attr("lockScales","false");
+      }
+   }
+   
+   newCountryBox.appendChild(newScaleLock);
+   
+   //########## end section add close button
+   
    
    $("#countryBoxContainer").append(newCountryBox);
       

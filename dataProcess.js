@@ -114,7 +114,7 @@ function processDataECDC(tab){
       }
    }
    
-   console.log(times);
+   //console.log(times);
    
    for(let i=0;i<nCountries;i++){
       //replace underscores in country names with spaces
