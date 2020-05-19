@@ -1,4 +1,4 @@
-function addPlot(idx,countries,times,tabArr){
+function addPlot(idx,countries,times){
    window.nPlots++;
    
    window.addPlotCounter++;
@@ -25,8 +25,15 @@ function addPlot(idx,countries,times,tabArr){
    
    // stores the ratio yScale/xScale so that yScale = xyScaleRatio * xScale
    newCountryBox.setAttribute("xyScaleRatio","1");
+   
    // initially, scales are not locked
    newCountryBox.setAttribute("lockScales","false");
+   
+   // stores whether to display cases or deaths
+   newCountryBox.setAttribute("displayData","cases");
+   
+   newCountryBox.setAttribute("idx",String(idx));
+   
    
    let countryHeader = document.createElement("p")
    countryHeader.innerHTML = countries[idx];
@@ -70,8 +77,15 @@ function addPlot(idx,countries,times,tabArr){
       
       
       let idx_node = $(this).parent().index();
-            
-      let new_data = processDataDailyVsTotal(idx,tabArr,n_avg,xScale,yScale);
+      
+      let idx = parseFloat($(this).parent().attr("idx"))
+      
+      let new_data
+      if($(this).parent().attr("displayData") == "cases"){
+         new_data = processDataDailyVsTotal(idx,tabArr,n_avg,xScale,yScale);
+      } else {
+         new_data = processDataDailyVsTotal(idx,tabArrDeaths,n_avg,xScale,yScale);
+      }
       
       myLineChart.data.datasets[idx_node].data = new_data;      
       
@@ -121,8 +135,15 @@ function addPlot(idx,countries,times,tabArr){
       }
       
       let idx_node = $(this).parent().index();
-            
-      let new_data = processDataDailyVsTotal(idx,tabArr,n_avg,xScale,yScale);
+      
+      let idx = parseFloat($(this).parent().attr("idx"))
+      
+      let new_data
+      if($(this).parent().attr("displayData") == "cases"){
+         new_data = processDataDailyVsTotal(idx,tabArr,n_avg,xScale,yScale);
+      } else {
+         new_data = processDataDailyVsTotal(idx,tabArrDeaths,n_avg,xScale,yScale);
+      }
       
       myLineChart.data.datasets[idx_node].data = new_data;      
       
@@ -166,8 +187,15 @@ function addPlot(idx,countries,times,tabArr){
       let n_avg = this.value;
       
       let idx_node = $(this).parent().index();
-            
-      let new_data = processDataDailyVsTotal(idx,tabArr,n_avg,xScale,yScale);
+      
+      let idx = parseFloat($(this).parent().attr("idx"))
+       
+      let new_data
+      if($(this).parent().attr("displayData") == "cases"){
+         new_data = processDataDailyVsTotal(idx,tabArr,n_avg,xScale,yScale);
+      } else {
+         new_data = processDataDailyVsTotal(idx,tabArrDeaths,n_avg,xScale,yScale);
+      }
       
       myLineChart.data.datasets[idx_node].data = new_data;      
       
@@ -228,6 +256,67 @@ function addPlot(idx,countries,times,tabArr){
    
    //########## end section add close button
    
+   // add text "Cases" before toggle
+   let casesSpan = document.createElement("span");
+   casesSpan.innerHTML = "<span>Display: Cases  </span>";
+   newCountryBox.appendChild(casesSpan);
+   
+   //########## begin section add cases / deaths toggle
+   
+   let casesToggle = document.createElement("label");
+   casesToggle.setAttribute("class","switch");
+      
+   let casesCheckbox = document.createElement("input");
+   casesCheckbox.setAttribute("type","checkbox");
+   casesCheckbox.onclick = function(){
+      
+      if(this.checked){
+         $(this).parent().parent().attr("displayData","deaths");
+      } else {
+         $(this).parent().parent().attr("displayData","cases");
+      }
+      
+      let idx_node = $(this).parent().parent().index();
+      
+      let idx = parseFloat($(this).parent().parent().attr("idx"))
+      //console.log(idx);
+      
+      let xScale = document.getElementById($(this).parent().parent().attr('id') + "_xScaleSlider").value/10.;
+      let yScale = document.getElementById($(this).parent().parent().attr('id') + "_yScaleSlider").value/10.;      
+      let n_avg = document.getElementById($(this).parent().parent().attr('id') + "_averageWindowSlider").value;
+      
+      let new_data
+      if($(this).parent().parent().attr("displayData") == "cases"){
+         new_data = processDataDailyVsTotal(idx,tabArr,n_avg,xScale,yScale);
+         myLineChart.data.datasets[idx_node].pointBackgroundColor 
+         = myLineChart.data.datasets[idx_node].borderColor
+      } else {
+         
+         new_data = processDataDailyVsTotal(idx,tabArrDeaths,n_avg,xScale,yScale);
+         myLineChart.data.datasets[idx_node].pointBackgroundColor = 'rgba(0,0,0,0)'
+      }
+      
+      myLineChart.data.datasets[idx_node].data = new_data;
+      
+      
+      myLineChart.update();
+      
+   }
+   
+   let casesSlider = document.createElement("span");
+   casesSlider.setAttribute("class","switchSlider round");
+   
+   casesToggle.appendChild(casesCheckbox);
+   casesToggle.appendChild(casesSlider);
+   
+   newCountryBox.appendChild(casesToggle);
+   
+   //########## end secion add cases /deaths toggle
+   
+   // add text "Cases" before toggle
+   let deathsSpan = document.createElement("span");
+   deathsSpan.innerHTML = "<span>  Deaths  </span>";
+   newCountryBox.appendChild(deathsSpan);
    
    $("#countryBoxContainer").append(newCountryBox);
       

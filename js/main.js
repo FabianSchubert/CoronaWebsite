@@ -64,6 +64,7 @@ function setup() {
    
    [countries, times, tabArr, tabArrDeaths, population] = processDataECDC(tab);
    
+   
    //[countries, times, tabArr] = processDataJohnsHopkins(tab);
    
    let nRows = tabArr.length;
@@ -114,7 +115,7 @@ function setup() {
                type: 'linear',
                scaleLabel: {
                   display: true,
-                  labelString: "Daily new Cases per 100000 Inhabitants"
+                  labelString: "Daily new Cases / Deaths per 100000 Inhabitants"
                }
             }],
             
@@ -122,7 +123,7 @@ function setup() {
                type: 'linear',
                scaleLabel: {
                   display: true,
-                  labelString: "Total Confirmed Cases per 100000 Inhabitants"
+                  labelString: "Total Confirmed Cases / Deaths per 100000 Inhabitants"
                }   
             }]
          }
@@ -131,7 +132,7 @@ function setup() {
    
    
    let start_idx = 75; //Data Row for Germany...
-   addPlot(start_idx,countries,times,tabArr);
+   addPlot(start_idx,countries,times,tabArr,tabArrDeaths);
    
    /*let country = tableArray[test_idx][1];
    

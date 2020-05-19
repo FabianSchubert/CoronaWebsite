@@ -1,0 +1,48 @@
+#countryBoxContainer {
+  position: relative;
+  /*max-width: 995px;*/
+  border-style: none;
+  /*background-color: #ffffff;*/
+}
+
+.countryBox {
+  position: relative;
+  width: 290px;
+  min-height: 100px;
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  margin-bottom: 7px;
+  margin-right: 10px;
+  /*float: left;*/
+  display: inline-block;
+}
+
+.countryBox p {
+  margin-top: 0px;
+  margin-bottom: 5px;
+  font-size: 16pt;
+}
+
+.countryBox span:not(.switchSlider) {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.closeCountryBox {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  /*background-color: #4c72b0;*/
+  
+  padding: none;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.scaleLock {
+  position: absolute;
+  top: 65px;
+  right: 10px;
+}

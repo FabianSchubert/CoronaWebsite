@@ -1,0 +1,23 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+#outerFrame{
+  /*border-style: solid;*/
+  position: relative;
+  margin: auto;
+  max-width: 985px;
+  height: auto;
+  padding: 50px;
+  padding-top: 5px;
+  /*background-color: #e6e6e6;*/
+}
+
+#chartcontainer{
+  
+  width: 100%;
+  border-style: none;
+  background-color: #ffffff;
+} 
+
