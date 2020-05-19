@@ -7,39 +7,16 @@
    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	
-   <link rel="stylesheet" type="text/css" href="style.css">
+   <link rel="stylesheet" type="text/css" href="./sty/style.css">
    
    
 </head>
 <body>
    
    <?php
-   // --- -------------- ---
-   // --- variable names ---
-   // --- -------------- ---
-   $fileName_ECDC             = "ecdc.csv";
-   $url_ECDC   = "https://opendata.ecdc.europa.eu/covid19/casedistribution/csv";
-   $seconds_download_interval = 3600;
-   // --- ------------------------ ---
-   // --- time since last modified ---
-   // --- ------------------------ ---
-   $time_ECDC_lastUpdated = filemtime($fileName_ECDC);
-   $time_now = time();
-   // --- ------------------------- ---
-   // --- test output (comment out) ---
-   // --- ------------------------- ---
-   $logfile = fopen("ecdc_download.log","w");
-   fwrite($logfile,"time since last modified: ");
-   fwrite($logfile,$time_now - $time_ECDC_lastUpdated);
-   fwrite($logfile," seconds\n");
-   fclose($logfile);
-   // --- -------------------------- ---
-   // --- download new Covid-19 data ---
-   // --- -------------------------- ---
-   if ( ($time_now-$time_ECDC_lastUpdated) > $seconds_download_interval )
-     file_put_contents($fileName_ECDC, file_get_contents($url_ECDC));
+   include('./php/downloadData.php');
    ?>
-   
+      
    <div id="outerFrame">
    <div id="ChartDropdown">
       <div id = "chartcontainer">
@@ -70,9 +47,9 @@
    
    </div>
    
-   <script src="dataProcess.js"></script>
-   <script src="plotting.js"></script>
-   <script src="script.js"></script>
-   <script src="dropdown.js"></script>
+   <script src="./js/dataProcess.js"></script>
+   <script src="./js/plotting.js"></script>
+   <script src="./js/dropdown.js"></script>
+   <script src="./js/main.js"></script>
 </body>
 </html>
