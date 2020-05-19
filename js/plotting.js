@@ -214,7 +214,7 @@ function addPlot(idx,countries,times){
    
    let newCloseButton = document.createElement("input");
    newCloseButton.setAttribute("type","image");
-   newCloseButton.setAttribute("src","../img/closeicon.svg");
+   newCloseButton.setAttribute("src","/img/closeicon.svg");
    newCloseButton.setAttribute("class","closeCountryBox");
    newCloseButton.onclick=function(){
       let idx_node = $(this).parent().index();
@@ -234,11 +234,11 @@ function addPlot(idx,countries,times){
    
    let newScaleLock = document.createElement("input");
    newScaleLock.setAttribute("type","image");
-   newScaleLock.setAttribute("src","../img/lock_open.svg");
+   newScaleLock.setAttribute("src","/img/lock_open.svg");
    newScaleLock.setAttribute("class","scaleLock");
    newScaleLock.onclick=function(){
       if($(this).parent().attr("lockScales") == "false"){
-         $(this).attr("src","../img/lock_closed.svg");
+         $(this).attr("src","/img/lock_closed.svg");
          $(this).parent().attr("lockScales","true");
          
          let xScale = document.getElementById($(this).parent().attr('id') + "_xScaleSlider").value;
@@ -247,7 +247,7 @@ function addPlot(idx,countries,times){
          $(this).parent().attr("xyScaleRatio",String(yScale/xScale));
          
       } else {
-         $(this).attr("src","../img/lock_open.svg");
+         $(this).attr("src","/img/lock_open.svg");
          $(this).parent().attr("lockScales","false");
       }
    }
