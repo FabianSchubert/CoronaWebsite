@@ -65,7 +65,9 @@
          displayData="cases"
          idx="0"
          style="background-color: #ff0000;">
-            <p id="countryBox_Init_Header">TemplateCountry</p>
+            <p class="countryBoxHeader">
+            TemplateCountry
+            </p>
             
             <!-- close button -->
             <input type="image"
@@ -76,32 +78,44 @@
             <!-- x-scale -->
             <span>x-Scale: </span>
             
-            <span id="countryBox_Init_xScaleValue"
-            class="xScaleValue">1</span>
+            <span class="xScaleValue">1</span>
+            <div class="rangeContainer">
+               <input type="text"
+               class="sliderRangeField min">
+               <span>
+                  <input type="range"
+                  min="1"
+                  max="50"
+                  value="10"
+                  class="slider xScale"
+                  oninput="xScaleSliderInput(this);">
+                  </span>
+               <input type="text"
+               class="sliderRangeField max">
+            </div>
             
-            <input type="range"
-            min="1"
-            max="50"
-            value="10"
-            class="slider xScale"
-            id="countryBox_Init_xScaleSlider"
-            oninput="xScaleSliderInput(this);">
             
             <!-- y-scale -->
             <span>y-Scale: </span>
             
-            <span id="countryBox_Init_yScaleValue"
-            class="yScaleValue">1</span>
+            <span class="yScaleValue">1</span>
             
             <br>
-            <input type="text">
-            <input type="range"
-            min="1"
-            max="50"
-            value="10"
-            class="slider yScale"
-            id="countryBox_Init_yScaleSlider"
-            oninput="yScaleSliderInput(this);">
+            <div class="rangeContainer">
+               <input type="text"
+               class="sliderRangeField min">
+               <span>
+                  <input type="range"
+                  min="1"
+                  max="50"
+                  value="10"
+                  class="slider yScale"
+                  oninput="yScaleSliderInput(this);">
+               </span>
+               <input type="text"
+               class="sliderRangeField max">
+            </div>
+            
             
             <!-- lock scale button -->
             <input type="image"
@@ -112,16 +126,18 @@
             <!-- averaging window-->
             <span>averaging window (days): </span>
             
-            <span id="countryBox_Init_averageWindowValue"
-            class="averageWindowValue">7</span>
+            <span class="averageWindowValue">7</span>
             
-            <input type="range"
-            min="0"
-            max="5"
-            value="3"
-            class="slider averageWindow"
-            id="countryBox_Init_averageWindowSlider"
-            oninput="averageWindowSliderInput(this);">
+            <div class="rangeContainer"
+            style="padding-top: 10px;
+            padding-bottom: 10px;">
+               <input type="range"
+               min="0"
+               max="5"
+               value="3"
+               class="slider averageWindow"
+               oninput="averageWindowSliderInput(this);">
+            </div>
             
             <!-- switch between cases /deaths -->
             <span>Display: Cases </span>

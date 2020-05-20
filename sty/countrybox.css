@@ -46,3 +46,25 @@
   top: 65px;
   right: 10px;
 }
+
+.rangeContainer {
+  width: 90%;
+}
+
+.rangeContainer span{
+  display: inline-block;
+  width:70%;
+}
+
+.sliderRangeField {
+  width: 8%;
+}
+/*
+.sliderRangeField.min{
+  float: left;
+}
+
+.sliderRangeField.max{
+  float: right;
+}
+*/
