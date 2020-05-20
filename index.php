@@ -37,18 +37,11 @@
       <button onclick="showCountries()" class="dropbtn">Add Country</button>
       <div id="myDropdown" class="dropdown-content">
          <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-         <!--
-         <a href="#about">About</a>
-         <a href="#base">Base</a>
-         <a href="#blog">Blog</a>
-         <a href="#contact">Contact</a>
-         <a href="#custom">Custom</a>
-         <a href="#support">Support</a>
-         <a href="#tools">Tools</a>-->
+         <!--list of countries goes here-->
       </div>
    </div>
    <div id="countryBoxContainer">
-            
+       
    </div>
    
    
@@ -59,5 +52,89 @@
    <script src="./js/plotting.js"></script>
    <script src="./js/dropdown.js"></script>
    <script src="./js/main.js"></script>
+   
+   <!--country box template-->
+   <template id="countryBoxTmpl">
+         <div class="countryBox"
+         id="countryBox_Init"
+         xyScaleRatio="1"
+         xScale="1.0"
+         yScale="1.0"
+         n_avg="7"
+         lockScales="true"
+         displayData="cases"
+         idx="0"
+         style="background-color: #ff0000;">
+            <p id="countryBox_Init_Header">TemplateCountry</p>
+            
+            <!-- close button -->
+            <input type="image"
+            src="./img/closeicon.svg"
+            class="closeCountryBox"
+            onclick="closeButtonClick(this);">
+            
+            <!-- x-scale -->
+            <span>x-Scale: </span>
+            
+            <span id="countryBox_Init_xScaleValue"
+            class="xScaleValue">1</span>
+            
+            <input type="range"
+            min="1"
+            max="50"
+            value="10"
+            class="slider xScale"
+            id="countryBox_Init_xScaleSlider"
+            oninput="xScaleSliderInput(this);">
+            
+            <!-- y-scale -->
+            <span>y-Scale: </span>
+            
+            <span id="countryBox_Init_yScaleValue"
+            class="yScaleValue">1</span>
+            
+            <br>
+            <input type="text">
+            <input type="range"
+            min="1"
+            max="50"
+            value="10"
+            class="slider yScale"
+            id="countryBox_Init_yScaleSlider"
+            oninput="yScaleSliderInput(this);">
+            
+            <!-- lock scale button -->
+            <input type="image"
+            src="./img/lock_closed.svg"
+            class="scaleLock"
+            onclick="scaleLockClick(this);">
+                         
+            <!-- averaging window-->
+            <span>averaging window (days): </span>
+            
+            <span id="countryBox_Init_averageWindowValue"
+            class="averageWindowValue">7</span>
+            
+            <input type="range"
+            min="0"
+            max="5"
+            value="3"
+            class="slider averageWindow"
+            id="countryBox_Init_averageWindowSlider"
+            oninput="averageWindowSliderInput(this);">
+            
+            <!-- switch between cases /deaths -->
+            <span>Display: Cases </span>
+            
+            <label class="switch">
+               <input type="checkbox"
+               onclick="casesCheckBoxClick(this);">
+               <span class="switchSlider round"></span>
+            </label>
+            
+            <span> Deaths</span>
+         </div>
+      </template>  
+   
 </body>
 </html>
