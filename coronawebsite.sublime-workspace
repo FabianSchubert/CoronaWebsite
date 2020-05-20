@@ -4,20 +4,92 @@
 		"selected_items":
 		[
 			[
+				"padding",
+				"padding-bottom\tproperty"
+			],
+			[
+				"padd",
+				"padding-top\tproperty"
+			],
+			[
+				"margin",
+				"margin-top\tproperty"
+			],
+			[
+				"paddin",
+				"padding-right\tproperty"
+			],
+			[
+				"fl",
+				"inline-flex\tdisplay"
+			],
+			[
+				"inlin",
+				"inline\tdisplay"
+			],
+			[
+				"scale",
+				"scaleLock"
+			],
+			[
+				"country",
+				"countryBox0"
+			],
+			[
+				"coun",
+				"countryBox0"
+			],
+			[
+				"countr",
+				"countryBox"
+			],
+			[
+				"count",
+				"countryBoxContainer"
+			],
+			[
+				"self",
+				"selfCountryBox"
+			],
+			[
+				"update",
+				"updateData"
+			],
+			[
+				"dis",
+				"displayData\t⟠"
+			],
+			[
+				"check",
+				"checked\t⟠"
+			],
+			[
+				"new",
+				"newCountryBox"
+			],
+			[
+				"cases",
+				"casesCheckbox"
+			],
+			[
+				"font",
+				"font-size\tproperty"
+			],
+			[
+				"newC",
+				"newCasesCheckbox\t⟠"
+			],
+			[
+				"lock",
+				"lockScales"
+			],
+			[
 				"nC",
 				"nCountries;i\t⟠"
 			],
 			[
-				"country",
-				"countryIdx"
-			],
-			[
 				"time",
 				"timeIdx\t⟠"
-			],
-			[
-				"countr",
-				"countryIdx"
 			],
 			[
 				"proc",
@@ -28,20 +100,12 @@
 				"nCountries"
 			],
 			[
-				"margin",
-				"margin-bottom\tproperty"
-			],
-			[
 				"aver",
 				"averageWindowSlider"
 			],
 			[
 				"ySc",
 				"yScaleSlider\t⟠"
-			],
-			[
-				"new",
-				"new_data"
 			],
 			[
 				"smoo",
@@ -108,10 +172,6 @@
 				"addPlotCounter"
 			],
 			[
-				"scale",
-				"scaleSlider\t⟠"
-			],
-			[
 				"appen",
 				"appendChild"
 			],
@@ -132,16 +192,8 @@
 				"newCloseButton\t⟠"
 			],
 			[
-				"newC",
-				"newCountryBox"
-			],
-			[
 				"close",
 				"closeCountryBox"
-			],
-			[
-				"inlin",
-				"inline-block\tdisplay"
 			],
 			[
 				"inln",
@@ -178,10 +230,6 @@
 			[
 				"ne",
 				"newEntry\t⟠"
-			],
-			[
-				"coun",
-				"countries"
 			],
 			[
 				"co",
@@ -276,64 +324,82 @@
 	"buffers":
 	[
 		{
-			"file": "index.html",
+			"file": "php/downloadData.php",
 			"settings":
 			{
-				"buffer_size": 1411,
+				"buffer_size": 1063,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "style.css",
+			"file": "index.php",
 			"settings":
 			{
-				"buffer_size": 2551,
+				"buffer_size": 4768,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "script.js",
+			"file": "js/plotting.js",
 			"settings":
 			{
-				"buffer_size": 4076,
+				"buffer_size": 5140,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "plotting.js",
+			"file": "sty/main.css",
 			"settings":
 			{
-				"buffer_size": 6507,
+				"buffer_size": 333,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "links.txt",
+			"file": "js/main.js",
 			"settings":
 			{
-				"buffer_size": 343,
+				"buffer_size": 4117,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/home/fabian/test.html",
+			"file": "sty/switch.css",
 			"settings":
 			{
-				"buffer_size": 457,
+				"buffer_size": 932,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "dataProcess.js",
+			"file": "sty/slider.css",
 			"settings":
 			{
-				"buffer_size": 6319,
+				"buffer_size": 578,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "sty/countrybox.css",
+			"settings":
+			{
+				"buffer_size": 970,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "sty/dropdown.css",
+			"settings":
+			{
+				"buffer_size": 1062,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -352,7 +418,7 @@
 		[
 			[
 				"Package Control: ",
-				"Package Control: Install Package"
+				"Package Control: Disable Package"
 			],
 			[
 				"packa",
@@ -379,10 +445,25 @@
 	},
 	"expanded_folders":
 	[
-		"/home/fabian/work/repos/CoronaWebsite"
+		"/home/fabian/work/repos/CoronaWebsite",
+		"/home/fabian/work/repos/CoronaWebsite/js",
+		"/home/fabian/work/repos/CoronaWebsite/php",
+		"/home/fabian/work/repos/CoronaWebsite/sty"
 	],
 	"file_history":
 	[
+		"/home/fabian/work/repos/CoronaWebsite/sty/style.css",
+		"/home/fabian/work/repos/CoronaWebsite/js/script.js",
+		"/home/fabian/work/repos/CoronaWebsite/js/jquery-3.5.1.min.js",
+		"/home/fabian/work/repos/CoronaWebsite/dataProcess.js",
+		"/home/fabian/test.html",
+		"/home/fabian/work/repos/CoronaWebsite/links.txt",
+		"/home/fabian/work/repos/CoronaWebsite/plotting.js",
+		"/home/fabian/work/repos/CoronaWebsite/downloadData.php",
+		"/home/fabian/work/repos/CoronaWebsite/script.js",
+		"/home/fabian/work/repos/CoronaWebsite/index.php",
+		"/home/fabian/work/repos/CoronaWebsite/style.css",
+		"/home/fabian/work/repos/CoronaWebsite/index.html",
 		"/home/fabian/work/repos/CoronaWebsite/test.csv",
 		"/home/fabian/work/repos/CoronaWebsite/ecdc.csv",
 		"/home/fabian/.config/sublime-text-3/Packages/nRepeat/Default (Linux).sublime-keymap",
@@ -437,6 +518,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			".svg",
+			"toFixed",
 			"https",
 			"yScaleSlider",
 			"yScaleValue",
@@ -461,54 +544,112 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "index.html",
+					"file": "php/downloadData.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1411,
+						"buffer_size": 1063,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								349,
-								349
+								604,
+								604
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 3,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "style.css",
+					"file": "index.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2551,
+						"buffer_size": 4768,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1561,
-								1561
+								2918,
+								2918
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2373.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "js/plotting.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5140,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3726,
+								3726
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2550.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "sty/main.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 333,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								203,
+								203
 							]
 						],
 						"settings":
@@ -518,92 +659,34 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1932.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "script.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4076,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								761,
-								761
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 3,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 434.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "plotting.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6507,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								445,
-								445
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 3,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "links.txt",
+					"file": "js/main.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 343,
+						"buffer_size": 4117,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								281,
-								281
+								297,
+								297
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -614,61 +697,122 @@
 				},
 				{
 					"buffer": 5,
-					"file": "/home/fabian/test.html",
+					"file": "sty/switch.css",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 457,
+						"buffer_size": 932,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								335,
-								335
+								83,
+								83
 							]
 						],
 						"settings":
 						{
-							"auto_name": "",
-							"syntax": "Packages/HTML/HTML.sublime-syntax"
+							"syntax": "Packages/CSS/CSS.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 683.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "sty/slider.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 578,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								213,
+								213
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "dataProcess.js",
+					"buffer": 7,
+					"file": "sty/countrybox.css",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6319,
+						"buffer_size": 970,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2921,
-								2921
+								781,
+								781
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 3,
+							"syntax": "Packages/CSS/CSS.sublime-syntax",
+							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2331.0,
+						"translation.y": 854.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "sty/dropdown.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1062,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								283,
+								283
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 150.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
 					"type": "text"
 				}
 			]
@@ -680,7 +824,7 @@
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 46.0
 	},
 	"layout":
 	{
@@ -746,12 +890,17 @@
 	"selected_group": 0,
 	"settings":
 	{
+		"_vintageous_reset_during_init": true,
+		"vintage":
+		{
+			"_cmdline_cd": "/home/fabian/.config/sublime-text-3/Packages"
+		}
 	},
 	"show_minimap": true,
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 244.0,
+	"side_bar_width": 258.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
