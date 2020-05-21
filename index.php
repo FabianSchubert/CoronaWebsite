@@ -80,12 +80,9 @@
             
             <span class="xScaleValue">1</span>
             <div class="rangeContainer">
-               <input type="text"
-               class="sliderRangeField min"
-               value="0">
                <span>
                   <input type="range"
-                  min="0"
+                  min="1"
                   max="50"
                   value="10"
                   class="slider xScale"
@@ -104,12 +101,9 @@
             
             <br>
             <div class="rangeContainer">
-               <input type="text"
-               class="sliderRangeField min"
-               value="0">
                <span>
                   <input type="range"
-                  min="0"
+                  min="1"
                   max="50"
                   value="10"
                   class="slider yScale"

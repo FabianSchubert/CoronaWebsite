@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"xSc",
+				"xScaleMax\t⟠"
+			],
+			[
+				"xSca",
+				"xScaleMax"
+			],
+			[
 				"padding",
 				"padding-bottom\tproperty"
 			],
@@ -336,7 +344,7 @@
 			"file": "index.php",
 			"settings":
 			{
-				"buffer_size": 4768,
+				"buffer_size": 4560,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -345,7 +353,7 @@
 			"file": "js/plotting.js",
 			"settings":
 			{
-				"buffer_size": 5140,
+				"buffer_size": 5467,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -544,7 +552,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -581,15 +589,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4768,
+						"buffer_size": 4560,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2918,
-								2918
+								2742,
+								2742
 							]
 						],
 						"settings":
@@ -599,10 +607,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2373.0,
+						"translation.y": 2051.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -611,15 +619,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5140,
+						"buffer_size": 5467,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3726,
-								3726
+								2303,
+								2303
 							]
 						],
 						"settings":
@@ -629,10 +637,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2550.0,
+						"translation.y": 1710.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
