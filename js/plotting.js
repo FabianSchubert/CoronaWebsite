@@ -58,7 +58,7 @@ function updateData(countryBox){ //countryBox should be a jquery object
 }
 
 function closeButtonClick(self){
-   let selfCountryBox = $(self).parent().parent().parent();
+   let selfCountryBox = $(self).parent();
    
    let idx_node = selfCountryBox.index();
    
@@ -90,7 +90,6 @@ function xScaleSliderInput(selfDOM){
          selfCountryBox.find(".sliderRangeField.max")[1].value = yScaleMax;
       }
       
-      console.log(yScaleMax);
       
       let yScaleSlider = selfCountryBox.find(".slider.yScale")[0]
       
@@ -130,7 +129,6 @@ function yScaleSliderInput(selfDOM){
          selfCountryBox.find(".sliderRangeField.max")[0].value = xScaleMax;
       }
       
-      console.log(xScaleMax);
       
       let xScaleSlider = selfCountryBox.find(".slider.xScale")[0]
       
@@ -197,5 +195,19 @@ function casesCheckBoxClick(selfDOM){
 }
 
 function scaleMaxInput(selfDOM){
+     
+   let self = $(selfDOM);
+   let selfCountryBox = self.parent().parent();
    
+   let xScaleMax = parseFloat(selfCountryBox.find(".sliderRangeField.max")[0].value);
+   let yScaleMax = parseFloat(selfCountryBox.find(".sliderRangeField.max")[1].value);
+   
+   let xScale = selfCountryBox.attr("xScale");   
+   let yScale = selfCountryBox.attr("yScale"); 
+   
+   let xScaleSlider = selfCountryBox.find(".slider.xScale")[0]
+   let yScaleSlider = selfCountryBox.find(".slider.yScale")[0]
+   
+   xScaleSlider.value = (xScale / xScaleMax) * xScaleSlider.max;
+   yScaleSlider.value = (yScale / yScaleMax) * yScaleSlider.max;   
 }

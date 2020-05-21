@@ -90,7 +90,8 @@
                   </span>
                <input type="text"
                class="sliderRangeField max"
-               value="5">
+               value="5"
+               oninput="scaleMaxInput(this);">
             </div>
             
             
@@ -111,7 +112,8 @@
                </span>
                <input type="text"
                class="sliderRangeField max"
-               value="5">
+               value="5"
+               oninput="scaleMaxInput(this);">
             </div>
             
             
