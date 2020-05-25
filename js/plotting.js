@@ -6,7 +6,7 @@ function addPlot(idx,countries,times){
    
    let plotdata = {
          label: countries[idx],
-         data: processDataDailyVsTotal(idx,tabArr,3,1,1),
+         data: [],
          lineTension: 0.,
          backgroundColor: 'rgba(0,0,0,.0)',
          borderColor: colCicle[colCicleState],
@@ -14,9 +14,7 @@ function addPlot(idx,countries,times){
       };
    
    myLineChart.data.datasets.push(plotdata);
-   
-   myLineChart.update();
-   
+      
    let countryBoxTmpl = $("#countryBoxTmpl")[0];
    
    let newCountryBoxCont = countryBoxTmpl.content.cloneNode(true);
@@ -32,6 +30,8 @@ function addPlot(idx,countries,times){
      
    window.colCicleState++;
    window.colCicleState = colCicleState%nColors;
+   
+   updateData($(newCountryBox));
    
 }
 

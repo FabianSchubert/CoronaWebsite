@@ -218,7 +218,6 @@ function processDataDailyVsTotal(idx,tabArr,smooth_n,xscale,yscale){
       }
    }
    
-   
    let datapoints = convert2dData(
       transpose([scaleArr(smooth_filter(total_cut,smooth_n),xscale),
          scaleArr(smooth_filter(daily_change,smooth_n),yscale)]));

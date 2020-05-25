@@ -60,7 +60,7 @@
          xyScaleRatio="1"
          xScale="1.0"
          yScale="1.0"
-         n_avg="7"
+         n_avg="3"
          lockScales="true"
          displayData="cases"
          idx="0"
@@ -133,7 +133,7 @@
             padding-bottom: 10px;">
                <input type="range"
                min="0"
-               max="5"
+               max="10"
                value="3"
                class="slider averageWindow"
                oninput="averageWindowSliderInput(this);">
