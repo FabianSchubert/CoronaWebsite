@@ -43,7 +43,7 @@
 
 .scaleLock {
   position: absolute;
-  top: 65px;
+  top: 73px;
   right: 10px;
 }
 
@@ -53,11 +53,16 @@
 
 .rangeContainer span{
   display: inline-block;
-  width:70%;
+  width:87%;
 }
 
 .sliderRangeField {
-  width: 8%;
+  width: 9.5%;
+  height: 21px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border-style: none;
+  text-align: center;
 }
 /*
 .sliderRangeField.min{
