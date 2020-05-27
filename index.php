@@ -39,7 +39,7 @@
       --><button class="dataTypeButton yAx Middle"
       onclick="yAxMode = 'total';
             updateAxes();"><span
-      style="margin: 17px 3px 17px 2px;">Total</span></button><!--
+      style="margin: 17px 3px 17px 1px;">Total</span></button><!--
       --><button class="dataTypeButton yAx Right"
       onclick="yAxMode = 'time';
             updateAxes();"><span
