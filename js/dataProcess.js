@@ -68,7 +68,7 @@ function processDataECDC(tab){
          population.push(parseFloat(tabArr[i][9]));
       }
       
-      date = (parseInt(tabArr[i][3])).pad(4) + "/" + (parseInt(tabArr[i][2])).pad(2) + "/" + (parseInt(tabArr[i][1])).pad(2);
+      date = (parseInt(tabArr[i][3])).pad(4) + "-" + (parseInt(tabArr[i][2])).pad(2) + "-" + (parseInt(tabArr[i][1])).pad(2);
       
       if(!(times.includes(date))){
          times.push(date);
@@ -97,7 +97,7 @@ function processDataECDC(tab){
    let countryIdx;
    
    for(let i=0; i<nRows; i++){
-      date = (parseInt(tabArr[i][3])).pad(4) + "/" + (parseInt(tabArr[i][2])).pad(2) + "/" + (parseInt(tabArr[i][1])).pad(2);
+      date = (parseInt(tabArr[i][3])).pad(4) + "-" + (parseInt(tabArr[i][2])).pad(2) + "-" + (parseInt(tabArr[i][1])).pad(2);
       country = tabArr[i][6];
       
       timeIdx = times.indexOf(date);
@@ -119,6 +119,11 @@ function processDataECDC(tab){
    for(let i=0;i<nCountries;i++){
       //replace underscores in country names with spaces
       countries[i] = countries[i].replace(/_/g," ");
+   }
+   
+   // convert times to list of integers denoting absolute time
+   for(let i=0;i<times.length;i++){
+      times[i] = Math.abs(new Date(times[i]));
    }
    
    return [countries, times, procArr, procArrDeaths, population];
@@ -193,16 +198,16 @@ function transpose(x){
    return y;
 }
 
-function scaleArr(x,s){
+function scaleArr(x,s,x0=0){
    let res = Array(x.length);
    for(let i=0;i<x.length;i++){
-      res[i] = x[i]*s;
+      res[i] = (x[i]-x0)*s+x0;
    }
    
    return res;
 }
 
-function processDataDailyVsTotal(idx,tabArr,smooth_n,xscale,yscale){
+function processDataDailyVsTotal(idx,tabArr,times,smooth_n,xscale,yscale,xMode,yMode){
    let total=tabArr[idx];
    let total_cut = total.slice(1,total.length);
    let daily_change = getDailyChange(total)
@@ -218,9 +223,45 @@ function processDataDailyVsTotal(idx,tabArr,smooth_n,xscale,yscale){
       }
    }
    
+   let xData;
+   let yData;
+   
+   if(xMode == "daily"){
+      xData = scaleArr(smooth_filter(daily_change,smooth_n),xscale);
+   } else if(xMode == "total"){
+      xData = scaleArr(smooth_filter(total_cut,smooth_n),xscale);
+   } else if(xMode == "time"){
+      xData = scaleArr(smooth_filter(times.slice(1,times.length),
+                     smooth_n),
+                     xscale,times[1]);
+      //times.slice(1+smooth_n,times.length-smooth_n);
+      /*
+      console.log("length of sliced time array:")
+      console.log(xData.length);
+      console.log("length it should have:")
+      console.log(smooth_filter(total_cut,smooth_n).length);
+      console.log("length of initial total_arr:");
+      console.log(total.length);
+      console.log("length of initial time_arr:");
+      console.log(times.length);*/
+   } else{
+      console.log("Error: Wrong x-axis mode specified");
+   }
+   
+   if(yMode == "daily"){
+      yData = scaleArr(smooth_filter(daily_change,smooth_n),yscale);
+   } else if(yMode == "total"){
+      yData = scaleArr(smooth_filter(total_cut,smooth_n),yscale);
+   } else if(yMode == "time"){
+      yData = scaleArr(smooth_filter(times.slice(1,times.length),
+                     smooth_n),
+                     yscale,times[1]);
+   } else{
+      console.log("Error: Wrong y-axis mode specified");
+   }
+   
    let datapoints = convert2dData(
-      transpose([scaleArr(smooth_filter(total_cut,smooth_n),xscale),
-         scaleArr(smooth_filter(daily_change,smooth_n),yscale)]));
+      transpose([xData,yData]));
    
    return datapoints;
 }

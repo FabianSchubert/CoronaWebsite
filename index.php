@@ -4,6 +4,7 @@
 	<title>Goethe Interactive COVID-19 Analyzer</title>
 	<meta charset="UTF-8">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	
@@ -27,12 +28,45 @@
    <h1>Goethe Interactive COVID-19 Analyzer</h1>
    
    <div id="ChartDropdown">
-      <div id = "chartcontainer">
-      <canvas id="chart" width="4" height="2"></canvas>
-      </div>
-
       
+      
+      <div id = "chartcontainer">
+      <div class="axDataTypeSwitch yAx"><!--
+      --><button class="dataTypeButton yAx Left"
+      onclick="yAxMode = 'daily';
+            updateAxes();"><span
+      style="margin: 20px 5px 17px 0px;">Daily</span></button><!--
+      --><button class="dataTypeButton yAx Middle"
+      onclick="yAxMode = 'total';
+            updateAxes();"><span
+      style="margin: 17px 3px 17px 2px;">Total</span></button><!--
+      --><button class="dataTypeButton yAx Right"
+      onclick="yAxMode = 'time';
+            updateAxes();"><span
+      style="margin: 17px 5px 20px 0px;">Time</span></button>
+      </div>
+      
+      
+      <div style="width:calc(100% - 70px); float: right;">
+         <canvas id="chart" width="400" height="200"></canvas>
+      </div>
+      </div>
+      
+      <div class="axDataTypeSwitch xAx">
+         <button class="dataTypeButton xAx Left"
+      onclick="xAxMode = 'daily';
+            updateAxes();">Daily</button><!--
+      --><button class="dataTypeButton xAx Middle"
+      onclick="xAxMode = 'total';
+            updateAxes();">Total</button><!--
+      --><button class="dataTypeButton xAx Right"
+      onclick="xAxMode = 'time';
+            updateAxes();">Time</button>
+      </div>
    </div>
+   
+   <hr style = "height:2px;border-width:0;color:#AAAAAA;background-color:#AAAAAA">
+   
    <div class="dropdown">
       <button onclick="showCountries()" class="dropbtn">Add Country</button>
       <div id="myDropdown" class="dropdown-content">
@@ -40,6 +74,7 @@
          <!--list of countries goes here-->
       </div>
    </div>
+   
    <div id="countryBoxContainer">
        
    </div>

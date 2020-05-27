@@ -32,6 +32,9 @@
   /*position: absolute;
   left: 700px;
   top: 0px;*/
+  display: block;
+  width: 126px;
+  margin: auto;
   border-style: none;
   margin-top: 25px;
   margin-bottom: 25px;

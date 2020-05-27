@@ -1,4 +1,4 @@
-function addPlot(idx,countries,times){
+function addPlot(idx){
    window.nPlots++;
    
    window.addPlotCounter++;
@@ -47,9 +47,9 @@ function updateData(countryBox){ //countryBox should be a jquery object
    
    let new_data
    if(countryBox.attr("displayData") == "cases"){
-      new_data = processDataDailyVsTotal(idx,tabArr,n_avg,xScale,yScale);
+      new_data = processDataDailyVsTotal(idx,tabArr,times,n_avg,xScale,yScale,xAxMode,yAxMode);
    } else {
-      new_data = processDataDailyVsTotal(idx,tabArrDeaths,n_avg,xScale,yScale);
+      new_data = processDataDailyVsTotal(idx,tabArrDeaths,times,n_avg,xScale,yScale,xAxMode,yAxMode);
    }
    
    myLineChart.data.datasets[idx_node].data = new_data;
@@ -210,4 +210,94 @@ function scaleMaxInput(selfDOM){
    
    xScaleSlider.value = (xScale / xScaleMax) * xScaleSlider.max;
    yScaleSlider.value = (yScale / yScaleMax) * yScaleSlider.max;   
+}
+
+function updateAxes(){
+   
+   countryBoxList = $('.countryBox');
+   
+   for(let k=0;k<countryBoxList.length;k++){
+      updateData($(countryBoxList[k]));
+   }
+   
+   // Update the x axis...
+   if(xAxMode == "time"){
+      myLineChart.options.scales.xAxes[0] = {
+               type: 'time',
+               time: {
+                  unit: 'day'
+               },
+               
+               scaleLabel: {
+                  display: true,
+                  labelString: "Time"
+               }   
+            }
+   } else if (xAxMode == "total"){
+      myLineChart.options.scales.xAxes[0] = {
+               type: 'linear',
+               time: {
+                  unit: 'day'
+               },
+               
+               scaleLabel: {
+                  display: true,
+                  labelString: "Total Confirmed Cases / Deaths per 100000 Inhabitants"
+               }   
+            }
+   } else {
+      myLineChart.options.scales.xAxes[0] = {
+               type: 'linear',
+               time: {
+                  unit: 'day'
+               },
+               
+               scaleLabel: {
+                  display: true,
+                  labelString: "Daily Cases / Deaths per 100000 Inhabitants"
+               }   
+            }
+   }
+   // The whole thing for the y axis...
+   if(yAxMode == "time"){
+      myLineChart.options.scales.yAxes[0] = {
+               type: 'time',
+               time: {
+                  unit: 'day'
+               },
+               
+               scaleLabel: {
+                  display: true,
+                  labelString: "Time"
+               }   
+            }
+   } else if (yAxMode == "total"){
+      myLineChart.options.scales.yAxes[0] = {
+               type: 'linear',
+               time: {
+                  unit: 'day'
+               },
+               
+               scaleLabel: {
+                  display: true,
+                  labelString: "Total Confirmed Cases / Deaths per 100000 Inh."
+               }   
+            }
+   } else {
+      myLineChart.options.scales.yAxes[0] = {
+               type: 'linear',
+               time: {
+                  unit: 'day'
+               },
+               
+               scaleLabel: {
+                  display: true,
+                  labelString: "Daily Cases / Deaths per 100000 Inh."
+               }   
+            }
+   }
+   
+   myLineChart.update();
+      
+   
 }

@@ -15,9 +15,105 @@ body {
 }
 
 #chartcontainer{
-  
+  position: relative;
   width: 100%;
   border-style: none;
   background-color: #ffffff;
-} 
+  display: inline-block;
+}
+
+#ChartDropdown{
+  display:block;
+  border-style: none;
+}
+
+.axDataTypeSwitch{
+  /*border-style: solid;*/
+  padding: 0px;
+}
+
+.axDataTypeSwitch.yAx{
+  /*-webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  transform: rotate(-90deg);*/
+  /*position: absolute;
+  left:-35px;
+  top: 260px; */
+  display: block;
+  border-style: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);*/
+}
+
+.axDataTypeSwitch.xAx{
+  display: flex;
+  justify-content: center;
+  border-style: none;
+  
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.dataTypeButton{
+  padding: 10px;
+  font-size: 16px;
+  background-color: #777777;
+  border: none;
+  cursor: pointer;
+  color: white;
+}
+
+.dataTypeButton.xAx.Left{
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.dataTypeButton.xAx.Middle{
+  border-radius: 0px;
+}
+
+.dataTypeButton.xAx.Right{
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.dataTypeButton.yAx{
+  display: block;
+  padding: 0px;
+}
+
+.dataTypeButton span{
+  display: inline-block;
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+}
+
+.dataTypeButton.yAx.Left{
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.dataTypeButton.yAx.Middle{
+  border-radius: 0px;
+}
+
+.dataTypeButton.yAx.Right{
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+
+
+
+
+
+.dataTypeButton:hover, .dataTypeButton:focus {
+  background-color: #444444;
+}
 

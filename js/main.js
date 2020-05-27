@@ -10,6 +10,10 @@ var tabArr;
 var tabArrDeaths;
 var population;
 
+// mode is 'daily', 'total' or 'time'
+var xAxMode = "total";
+var yAxMode = "daily";
+
 var myLineChart;
 
 var nRows;
@@ -94,7 +98,7 @@ function setup() {
       newEntry.id = countries[i] + "DropdownEntry";
       newEntry.onclick = function(){
          let findidx = countries.indexOf(this.innerHTML);
-         addPlot(findidx,countries,times,tabArr);
+         addPlot(findidx);
          document.getElementById("myDropdown").classList.toggle("show");
       };
       dropdown.appendChild(newEntry);
@@ -115,12 +119,16 @@ function setup() {
                type: 'linear',
                scaleLabel: {
                   display: true,
-                  labelString: "Daily new Cases / Deaths per 100000 Inhabitants"
+                  labelString: "Daily new Cases / Deaths per 100000 Inh."
                }
             }],
             
             xAxes: [{
-               type: 'linear',
+               type: 'linear', //'linear' or 'time'
+               time: {
+                  unit: 'day'
+               },
+               
                scaleLabel: {
                   display: true,
                   labelString: "Total Confirmed Cases / Deaths per 100000 Inhabitants"
@@ -132,7 +140,7 @@ function setup() {
    
    
    let start_idx = 75; //Data Row for Germany...
-   addPlot(start_idx,countries,times,tabArr,tabArrDeaths);
+   addPlot(start_idx);
    
    /*let country = tableArray[test_idx][1];
    
