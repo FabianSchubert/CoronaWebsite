@@ -71,7 +71,7 @@
       position: absolute;
       right: 65px;"
       onclick="var url = myLineChart.toBase64Image();
-      location.href=url;">
+      window.open(url);">
       
       </div>
       
