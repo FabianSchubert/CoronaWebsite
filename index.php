@@ -48,7 +48,7 @@
       
       
       <div style="width:calc(100% - 70px); float: right;">
-         <canvas id="chart" width="400" height="200"></canvas>
+         <canvas id="chart" width="1280" height="720"></canvas>
       </div>
       </div>
       
@@ -62,7 +62,19 @@
       --><button class="dataTypeButton xAx Right"
       onclick="xAxMode = 'time';
             updateAxes();">Time</button>
+      
+      
+      <input type="image"
+            src="./img/download.svg"
+      id = "downloadButton"
+      style="
+      position: absolute;
+      right: 65px;"
+      onclick="var url = myLineChart.toBase64Image();
+      location.href=url;">
+      
       </div>
+      
    </div>
    
    <hr style = "height:2px;border-width:0;color:#AAAAAA;background-color:#AAAAAA">

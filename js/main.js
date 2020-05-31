@@ -114,6 +114,7 @@ function setup() {
          datasets:[]
       },
       options:{
+         devicePixelRatio: 2,
          scales:{
             yAxes: [{
                type: 'linear',
