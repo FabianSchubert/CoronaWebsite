@@ -32,6 +32,7 @@ function addPlot(idx){
    window.colCicleState = colCicleState%nColors;
    
    updateData($(newCountryBox));
+   updateAxes();
    
 }
 
@@ -40,16 +41,21 @@ function updateData(countryBox){ //countryBox should be a jquery object
    let xScale = parseFloat(countryBox.attr("xScale"));
    let yScale = parseFloat(countryBox.attr("yScale"));      
    let n_avg = parseFloat(countryBox.attr("n_avg"));
-      
+   let timeShift = parseFloat(countryBox.attr("timeShift"));
+   
+   
+   
    let idx_node = countryBox.index();
    
    let idx = parseFloat(countryBox.attr("idx"))
    
    let new_data
    if(countryBox.attr("displayData") == "cases"){
-      new_data = processDataDailyVsTotal(idx,tabArr,times,n_avg,xScale,yScale,xAxMode,yAxMode);
+      new_data = processDataDailyVsTotal(idx,tabArr,times,n_avg,xScale,yScale,
+         timeShift,xAxMode,yAxMode);
    } else {
-      new_data = processDataDailyVsTotal(idx,tabArrDeaths,times,n_avg,xScale,yScale,xAxMode,yAxMode);
+      new_data = processDataDailyVsTotal(idx,tabArrDeaths,times,n_avg,xScale,yScale,
+         timeShift,xAxMode,yAxMode);
    }
    
    myLineChart.data.datasets[idx_node].data = new_data;
@@ -155,6 +161,14 @@ function averageWindowSliderInput(selfDOM){
    //document.getElementById(selfCountryBox.attr('id') + "_averageWindowValue").innerHTML = selfDOM.value*2+1;
 }
 
+function timeShiftSliderInput(selfDOM){
+   let self = $(selfDOM);
+   let selfCountryBox = self.parent().parent().parent();
+   selfCountryBox.attr("timeShift",selfDOM.value);
+   updateData(selfCountryBox);
+   selfCountryBox.find(".timeShiftValue")[0].innerHTML = selfDOM.value;
+}
+
 function scaleLockClick(selfDOM){
    
    let self = $(selfDOM);
@@ -220,8 +234,14 @@ function updateAxes(){
       updateData($(countryBoxList[k]));
    }
    
+   $(".dataTypeButton.xAx").attr("style","background-color: #777777;");
+   $(".dataTypeButton.yAx").attr("style","background-color: #777777;");
+   
    // Update the x axis...
    if(xAxMode == "time"){
+      
+      $(".dataTypeButton.xAx.Right").attr("style","background-color: #333333;");
+      
       myLineChart.options.scales.xAxes[0] = {
                type: 'time',
                time: {
@@ -234,6 +254,9 @@ function updateAxes(){
                }   
             }
    } else if (xAxMode == "total"){
+      
+      $(".dataTypeButton.xAx.Middle").attr("style","background-color: #333333;");
+      
       myLineChart.options.scales.xAxes[0] = {
                type: 'linear',
                time: {
@@ -246,6 +269,9 @@ function updateAxes(){
                }   
             }
    } else {
+      
+      $(".dataTypeButton.xAx.Left").attr("style","background-color: #333333;");
+      
       myLineChart.options.scales.xAxes[0] = {
                type: 'linear',
                time: {
@@ -260,6 +286,9 @@ function updateAxes(){
    }
    // The whole thing for the y axis...
    if(yAxMode == "time"){
+      
+      $(".dataTypeButton.yAx.Right").attr("style","background-color: #333333;");
+      
       myLineChart.options.scales.yAxes[0] = {
                type: 'time',
                time: {
@@ -272,6 +301,9 @@ function updateAxes(){
                }   
             }
    } else if (yAxMode == "total"){
+      
+      $(".dataTypeButton.yAx.Middle").attr("style","background-color: #333333;");
+      
       myLineChart.options.scales.yAxes[0] = {
                type: 'linear',
                time: {
@@ -284,6 +316,9 @@ function updateAxes(){
                }   
             }
    } else {
+      
+      $(".dataTypeButton.yAx.Left").attr("style","background-color: #333333;");
+      
       myLineChart.options.scales.yAxes[0] = {
                type: 'linear',
                time: {

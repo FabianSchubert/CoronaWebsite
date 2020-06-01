@@ -41,6 +41,8 @@ function processDataJohnsHopkins(tab){
 function processDataECDC(tab){
    //console.log(tab);
    
+   
+   
    let tabArr = tab.getArray();
    
    let nRows = tabArr.length;
@@ -207,7 +209,16 @@ function scaleArr(x,s,x0=0){
    return res;
 }
 
-function processDataDailyVsTotal(idx,tabArr,times,smooth_n,xscale,yscale,xMode,yMode){
+function addArrScal(x,s){
+   let res = Array(x.length);
+   for(let i=0;i<x.length;i++){
+      res[i] = x[i]+s;
+   }
+   
+   return res;
+}
+
+function processDataDailyVsTotal(idx,tabArr,times,smooth_n,xscale,yscale,timeShift,xMode,yMode){
    let total=tabArr[idx];
    let total_cut = total.slice(1,total.length);
    let daily_change = getDailyChange(total)
@@ -226,14 +237,16 @@ function processDataDailyVsTotal(idx,tabArr,times,smooth_n,xscale,yscale,xMode,y
    let xData;
    let yData;
    
+   // 1 day = 86 400 000 ms
+   
    if(xMode == "daily"){
       xData = scaleArr(smooth_filter(daily_change,smooth_n),xscale);
    } else if(xMode == "total"){
       xData = scaleArr(smooth_filter(total_cut,smooth_n),xscale);
    } else if(xMode == "time"){
-      xData = scaleArr(smooth_filter(times.slice(1,times.length),
+      xData = addArrScal(scaleArr(smooth_filter(times.slice(1,times.length),
                      smooth_n),
-                     xscale,times[1]);
+                     xscale,times[1]),timeShift*864e5);
       //times.slice(1+smooth_n,times.length-smooth_n);
       /*
       console.log("length of sliced time array:")
@@ -253,9 +266,9 @@ function processDataDailyVsTotal(idx,tabArr,times,smooth_n,xscale,yscale,xMode,y
    } else if(yMode == "total"){
       yData = scaleArr(smooth_filter(total_cut,smooth_n),yscale);
    } else if(yMode == "time"){
-      yData = scaleArr(smooth_filter(times.slice(1,times.length),
+      yData = addArrScal(scaleArr(smooth_filter(times.slice(1,times.length),
                      smooth_n),
-                     yscale,times[1]);
+                     yscale,times[1]),timeShift*864e5);
    } else{
       console.log("Error: Wrong y-axis mode specified");
    }

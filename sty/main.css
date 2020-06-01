@@ -2,6 +2,47 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.centerBox {
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 25px;
+  background: #73AD21;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+}
+.rightBox {
+  margin-right: -40px;
+  float: right;
+  border-radius: 25px;
+  padding: 0px;
+  text-align: right;
+  width: 60%;
+  line-height: 1.5;
+  border-style: none;
+  font-size: 14pt;
+}
+.explainBox {
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 25px;
+  border: 5px solid #666666;
+  background: #FFFFFF;
+  padding: 20px;
+  text-align: left;
+  width: 100%;
+}
+
+a.whiteText:link    {color: #FFFFFF; text-decoration: none;}
+a.whiteText:visited {color: #FFFFFF; text-decoration: none;}
+a.whiteText:hover   {color: #FF3333; background: #FFFFFF; text-decoration: none;}
+
+a.blackText:link    {color: #000000; text-decoration: none;}
+a.blackText:visited {color: #000000; text-decoration: none;}
+a.blackText:hover   {color: #FF3333; background: #FFFFFF; text-decoration: none;}
+
+
+
 
 #outerFrame{
   /*border-style: solid;*/
@@ -30,6 +71,7 @@ body {
 .axDataTypeSwitch{
   /*border-style: solid;*/
   padding: 0px;
+  
 }
 
 .axDataTypeSwitch.yAx{
@@ -64,6 +106,7 @@ body {
   border: none;
   cursor: pointer;
   color: white;
+  border-color: #333333;
 }
 
 .dataTypeButton.xAx.Left{
@@ -100,7 +143,9 @@ body {
 }
 
 .dataTypeButton.yAx.Middle{
-  border-radius: 0px;
+  /*border-radius: 0px;*/
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .dataTypeButton.yAx.Right{
