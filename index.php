@@ -124,6 +124,7 @@
    <li> n-day centered moving averages are provided; examples: <br>
      n=3: mean of previous-, current- and subsequent day<br>
      n=1: raw data
+   <li> Pick a custom color by clicking the color wheel.
    <li> For support please contact Fabian Schubert:
    <font color="#990000">
    <span onclick="this.innerHTML='fschubert';
@@ -202,6 +203,14 @@
             src="./img/closeicon.svg"
             class="closeCountryBox"
             onclick="closeButtonClick(this);">
+            
+            <input type="color" style='opacity:0;width:100px;position:absolute;'
+            class="colorPicker"
+            onchange="setColor(this);" />            
+            <input type="image"
+            src="./img/colorwheel.png"
+            class="colorWheel"
+            onclick="openColorPicker(this);">
             
             <!-- x-scale -->
             <span>x-Scale: </span>
