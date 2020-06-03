@@ -71,13 +71,23 @@
       </div>
       </div>
       
-      <div class="dropdown">
+      <div class="dropdown" id="countryDropdown">
       <button onclick="showCountries()" class="dropbtn">Add Country</button>
       <div id="myDropdown" class="dropdown-content">
          <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
          <!--list of countries goes here-->
       </div>
       </div>
+      
+      <div class="dropdown" id="dataDropdown">
+      <button onclick="showDataSets()" class="dropbtn">Choose Dataset</button>
+      <div id="myDropdown" class="dropdown-content">
+         
+         <!--list of countries goes here-->
+      </div>
+      </div>
+      
+      
       
       <div class="axDataTypeSwitch xAx">
          <button class="dataTypeButton xAx Left"
@@ -97,7 +107,7 @@
       style="
       border-style: none;
       position: absolute;
-      right: 65px;"
+      right: 5px;"
       onclick="var url = myLineChart.toBase64Image();
       window.open(url);">
       

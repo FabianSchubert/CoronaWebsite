@@ -66,6 +66,7 @@ a.blackText:hover   {color: #FF3333; background: #FFFFFF; text-decoration: none;
 #ChartDropdown{
   display:block;
   border-style: none;
+  position: relative;
 }
 
 .axDataTypeSwitch{
