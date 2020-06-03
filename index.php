@@ -71,6 +71,14 @@
       </div>
       </div>
       
+      <div class="dropdown">
+      <button onclick="showCountries()" class="dropbtn">Add Country</button>
+      <div id="myDropdown" class="dropdown-content">
+         <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+         <!--list of countries goes here-->
+      </div>
+      </div>
+      
       <div class="axDataTypeSwitch xAx">
          <button class="dataTypeButton xAx Left"
       onclick="xAxMode = 'daily';
@@ -87,6 +95,7 @@
             src="./img/download.svg"
       id = "downloadButton"
       style="
+      border-style: none;
       position: absolute;
       right: 65px;"
       onclick="var url = myLineChart.toBase64Image();
@@ -99,13 +108,6 @@
    
    <hr style = "height:2px;border-width:0;color:#AAAAAA;background-color:#AAAAAA">
    
-   <div class="dropdown">
-      <button onclick="showCountries()" class="dropbtn">Add Country</button>
-      <div id="myDropdown" class="dropdown-content">
-         <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-         <!--list of countries goes here-->
-      </div>
-   </div>
    
    <div id="countryBoxContainer">
        
@@ -262,8 +264,8 @@
             <div class="rangeContainer">
                <span>
                   <input type="range"
-                  min="-30"
-                  max="30"
+                  min="-60"
+                  max="60"
                   value="0"
                   class="slider timeShift"
                   oninput="timeShiftSliderInput(this);">

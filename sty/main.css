@@ -95,8 +95,8 @@ a.blackText:hover   {color: #FF3333; background: #FFFFFF; text-decoration: none;
   justify-content: center;
   border-style: none;
   
-  margin-top: 25px;
-  margin-bottom: 25px;
+  margin-top: 15px;
+  margin-bottom: 5px;
 }
 
 .dataTypeButton{

@@ -16,7 +16,10 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
-   sodipodi:docname="colorwheel.svg">
+   sodipodi:docname="colorwheel.svg"
+   inkscape:export-filename="/home/fabian/work/repos/CoronaWebsite/img/colorwheel.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
   <defs
      id="defs2">
     <linearGradient
@@ -163,9 +166,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8"
-     inkscape:cx="94.219623"
-     inkscape:cy="85.345647"
+     inkscape:zoom="22.4"
+     inkscape:cx="19.541776"
+     inkscape:cy="11.481762"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"

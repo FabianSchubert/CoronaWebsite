@@ -51,6 +51,8 @@ function preload() {
    //tab = loadTable(linkJohnsHopkins,'csv','header');
    tab = loadTable(linkECDC,'csv','header');
    
+   tab_johns_hopkins = loadTable(linkJohnsHopkins,'csv','header');
+   tab_us_states = loadTable('./dat/us_states_population.csv','csv','header');
    
    /*
    // load table from European Centre for Disease Prevention and Control
@@ -114,6 +116,34 @@ function setup() {
          datasets:[]
       },
       options:{
+         
+         tooltips: {
+            callbacks: {
+               label: function(tooltipItem, data) {
+                  var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+                  if (label) {
+                     label += ' ( ';
+                  }
+                  
+                  
+                  
+                  if (myLineChart.options.scales.xAxes[0].type == 'linear'){
+                     label += Math.round(tooltipItem.xLabel * 100) / 100;
+                  } else if (myLineChart.options.scales.xAxes[0].type == 'time'){
+                     label += tooltipItem.xLabel.substring(0,
+                     tooltipItem.xLabel.length - 12);
+                  }
+                  
+                  label += ' | ';
+                  
+                  label += Math.round(tooltipItem.yLabel * 100) / 100;
+                  label += ' )'
+                  return label;
+               }
+            }
+         },
+         
          devicePixelRatio: 2,
          scales:{
             yAxes: [{

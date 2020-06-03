@@ -164,9 +164,9 @@ function averageWindowSliderInput(selfDOM){
 function timeShiftSliderInput(selfDOM){
    let self = $(selfDOM);
    let selfCountryBox = self.parent().parent().parent();
-   selfCountryBox.attr("timeShift",selfDOM.value);
+   selfCountryBox.attr("timeShift",selfDOM.value/2.);
    updateData(selfCountryBox);
-   selfCountryBox.find(".timeShiftValue")[0].innerHTML = selfDOM.value;
+   selfCountryBox.find(".timeShiftValue")[0].innerHTML = selfDOM.value/2.;
 }
 
 function scaleLockClick(selfDOM){

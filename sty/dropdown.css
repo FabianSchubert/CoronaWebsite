@@ -32,12 +32,14 @@
   /*position: absolute;
   left: 700px;
   top: 0px;*/
-  display: block;
+  bottom: 0px;
+  display: inline-block;
   width: 126px;
-  margin: auto;
+  /*margin: auto;*/
   border-style: none;
-  margin-top: 25px;
-  margin-bottom: 25px;
+  /*margin-top: 25px;*/
+  margin-bottom: -50px;
+  float: left;
 }
 
 .dropdown-content {
