@@ -52,6 +52,8 @@ function preload() {
    tab = loadTable(linkECDC,'csv','header');
    
    tab_johns_hopkins = loadTable(linkJohnsHopkins,'csv','header');
+   
+   //https://www.census.gov/data/tables/time-series/demo/popest/2010s-state-total.html
    tab_us_states = loadTable('./dat/us_states_population.csv','csv','header');
    
    /*
