@@ -1,7 +1,7 @@
 .dropbtn {
   background-color: #777777;
   color: white;
-  padding: 12px;
+  padding: 10px;
   font-size: 16px;
   border: none;
   cursor: pointer;
@@ -24,6 +24,9 @@
   width: 100%;
   border: none;
   border-bottom: 1px solid #ddd;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
 }
 
 #myInput:focus {outline: 3px solid #ddd;}
@@ -32,15 +35,14 @@
   position: absolute;
   left: 0px;
   bottom: 0px;
-  width: 126px; 
+  width: 84px;
 }
 
 #dataDropdown{
   position: absolute;
   left: 17%;
   bottom: 0px;
-  width: 142px;
-  border-style: none; 
+  width: 138px;
 }
 
 .dropdown {
@@ -58,10 +60,18 @@
   background-color: #f6f6f6;
   min-width: 230px;
   overflow: auto;
-  height: 200px;
   border: 1px solid #ddd;
   z-index: 1;
 }
+
+#countryDropdownContent{
+  height: 250px;
+}
+
+#dataDropdownContent{
+  height: 105px;
+}
+
 
 .dropdown-content a {
   color: black;

@@ -72,8 +72,8 @@
       </div>
       
       <div class="dropdown" id="countryDropdown">
-      <button onclick="showCountries()" class="dropbtn">Add Country</button>
-      <div id="myDropdown" class="dropdown-content">
+      <button onclick="showCountries()" class="dropbtn">Add Plot</button>
+      <div id="countryDropdownContent" class="dropdown-content">
          <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
          <!--list of countries goes here-->
       </div>
@@ -81,9 +81,9 @@
       
       <div class="dropdown" id="dataDropdown">
       <button onclick="showDataSets()" class="dropbtn">Choose Dataset</button>
-      <div id="myDropdown" class="dropdown-content">
-         
-         <!--list of countries goes here-->
+      <div id="dataDropdownContent" class="dropdown-content">
+         <a>World Countries (ECDC)</a>
+         <a>US States (Johns Hopkins University)</a>
       </div>
       </div>
       

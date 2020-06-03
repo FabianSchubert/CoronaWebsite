@@ -94,7 +94,7 @@ function setup() {
    */
    
    
-   let dropdown = document.getElementById("myDropdown");
+   let dropdown = document.getElementById("countryDropdownContent");
    var newEntry;
    for(i=0;i<nRows;i++){
       newEntry = document.createElement('a');
@@ -103,7 +103,7 @@ function setup() {
       newEntry.onclick = function(){
          let findidx = countries.indexOf(this.innerHTML);
          addPlot(findidx);
-         document.getElementById("myDropdown").classList.toggle("show");
+         document.getElementById("countryDropdownContent").classList.toggle("show");
       };
       dropdown.appendChild(newEntry);
    }
