@@ -384,11 +384,3 @@ function openColorPicker(selfDOM){
    colorPicker.value = selfCountryBox.css("backgroundColor");
    colorPicker.click();
 }
-
-function setDataUSStates(){
-   
-}
-
-function setDataECDC(){
-   
-}

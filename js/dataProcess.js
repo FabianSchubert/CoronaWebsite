@@ -29,10 +29,10 @@ function processDataJohnsHopkinsConfirmed(tab){
    
    for(let i=0;i<nRows;i++){
       
-      country_idx = countries.indexOf(tabArr[i][6]);
+      country_idx = countries.indexOf("USA \\ " + tabArr[i][6]);
       
       if(country_idx == -1){
-         countries.push(tabArr[i][6]);
+         countries.push("USA \\ " + tabArr[i][6]);
          procArr.push(tabArr[i].slice(11));
          
          for(let j=0;j<nCols;j++){
@@ -81,10 +81,10 @@ function processDataJohnsHopkinsDeaths(tab){
    
    for(let i=0;i<nRows;i++){
       
-      country_idx = countries.indexOf(tabArr[i][6]);
+      country_idx = countries.indexOf("USA \\ " + tabArr[i][6]);
       
       if(country_idx == -1){
-         countries.push(tabArr[i][6]);
+         countries.push("USA \\ " + tabArr[i][6]);
          procArr.push(tabArr[i].slice(12));
          
          population.push(parseFloat(tabArr[i][11]));
@@ -143,7 +143,7 @@ function processDataECDC(tab){
       //replace underscores in country names with spaces
       //country = country.replace(/_/g," ");
       
-      if(!(countries.includes(country))){
+      if(!(countries.includes(country)) && (tabArr[i][9] != "")){
          countries.push(country);
          population.push(parseFloat(tabArr[i][9]));
       }
@@ -165,6 +165,7 @@ function processDataECDC(tab){
    console.log(tabArr.length);
    console.log(nCountries*nTimes);*/
    
+   
    let procArr = Array(nCountries);
    let procArrDeaths = Array(nCountries);
    
@@ -177,14 +178,20 @@ function processDataECDC(tab){
    let countryIdx;
    
    for(let i=0; i<nRows; i++){
-      date = (parseInt(tabArr[i][3])).pad(4) + "/" + (parseInt(tabArr[i][2])).pad(2) + "/" + (parseInt(tabArr[i][1])).pad(2);
+      
       country = tabArr[i][6];
       
-      timeIdx = times.indexOf(date);
-      countryIdx = countries.indexOf(country);
+      if(countries.includes(country)){
       
-      procArr[countryIdx][timeIdx] = parseFloat(tabArr[i][4]);//*1e5/population[countryIdx];
-      procArrDeaths[countryIdx][timeIdx] = parseFloat(tabArr[i][5]);//*1e5/population[countryIdx];
+         date = (parseInt(tabArr[i][3])).pad(4) + "/" + (parseInt(tabArr[i][2])).pad(2) + "/" + (parseInt(tabArr[i][1])).pad(2);
+         
+         
+         timeIdx = times.indexOf(date);
+         countryIdx = countries.indexOf(country);
+         
+         procArr[countryIdx][timeIdx] = parseFloat(tabArr[i][4]);//*1e5/population[countryIdx];
+         procArrDeaths[countryIdx][timeIdx] = parseFloat(tabArr[i][5]);//*1e5/population[countryIdx];
+      }
    }
    
    for(let i=0; i<nCountries;i++){

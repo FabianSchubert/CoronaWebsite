@@ -89,19 +89,23 @@ function setup() {
    
    //merge...
    for(let i=0;i<countries_ecdc.length;i++){
-      countries.push(countries_ecdc[i]);
-      times.push(times_ecdc);
-      tabArr.push(tabArr_ecdc[i]);
-      tabArrDeaths.push(tabArrDeaths_ecdc[i]);
-      population.push(population_ecdc[i]);
+      if((!isNaN(population_ecdc[i])) && (population_ecdc[i] != 0)){
+         countries.push(countries_ecdc[i]);
+         times.push(times_ecdc);
+         tabArr.push(tabArr_ecdc[i]);
+         tabArrDeaths.push(tabArrDeaths_ecdc[i]);
+         population.push(population_ecdc[i]);
+      }
    }
    
    for(let i=0;i<usstates_johns_hopkins.length;i++){
-      countries.push(usstates_johns_hopkins[i]);
-      times.push(times_usstates);
-      tabArr.push(tabArr_usstates_confirmed[i]);
-      tabArrDeaths.push(tabArr_usstates_deaths[i]);
-      population.push(population_usstates[i]);
+      if((!isNaN(population_usstates[i])) && (population_usstates[i] != 0)){
+         countries.push(usstates_johns_hopkins[i]);
+         times.push(times_usstates);
+         tabArr.push(tabArr_usstates_confirmed[i]);
+         tabArrDeaths.push(tabArr_usstates_deaths[i]);
+         population.push(population_usstates[i]);
+      }
    }
    
    // add a world aggregate
@@ -125,6 +129,25 @@ function setup() {
    tabArr.push(world_total_conf);
    tabArrDeaths.push(world_total_deaths);
    population.push(world_total_population);
+   
+   // Change United States of America to "USA \\ Aggregate"
+   us_idx = countries.indexOf("United States of America");
+   countries[us_idx] = "USA \\ Aggregate";
+   
+   let len = countries.length;
+   
+   var indices = new Array(len);
+   
+   for (var i = 0; i < len; ++i) indices[i] = i;
+   
+   indices.sort(function (a, b) { return countries[a] < countries[b] ? -1 : countries[a] > countries[b] ? 1 : 0; });
+   
+   countries = indices.map(i => countries[i]);
+   times = indices.map(i => times[i]);
+   tabArr = indices.map(i => tabArr[i]);
+   tabArrDeaths = indices.map(i => tabArrDeaths[i]);
+   population = indices.map(i => population[i]);
+   
    
    
    //[countries, times, tabArr] = processDataJohnsHopkins(tab);
@@ -226,7 +249,7 @@ function setup() {
    });
    
    
-   let start_idx = 75; //Data Row for Germany...
+   let start_idx = countries.indexOf("Germany"); //Data Row for Germany...
    addPlot(start_idx);
    
    /*let country = tableArray[test_idx][1];
