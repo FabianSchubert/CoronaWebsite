@@ -79,13 +79,14 @@
       </div>
       </div>
       
+      <!--
       <div class="dropdown" id="dataDropdown">
       <button onclick="showDataSets()" class="dropbtn">Choose Dataset</button>
       <div id="dataDropdownContent" class="dropdown-content">
-         <a>World Countries (ECDC)</a>
-         <a>US States (Johns Hopkins University)</a>
+         <a onclick = "setDataECDC();">World Countries (ECDC)</a>
+         <a onclick = "setDataUSStates();">US States (Johns Hopkins University)</a>
       </div>
-      </div>
+      </div>-->
       
       
       
