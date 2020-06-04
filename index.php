@@ -295,15 +295,15 @@
             
             <span class="averageWindowValue">7</span>
             
-            <div class="rangeContainer"
-            style="padding-top: 10px;
-            padding-bottom: 10px;">
+            <div class="rangeContainer">
+            <span>
                <input type="range"
                min="0"
                max="10"
                value="3"
                class="slider averageWindow"
                oninput="averageWindowSliderInput(this);">
+            </span>
             </div>
             
             <!-- switch between cases /deaths -->

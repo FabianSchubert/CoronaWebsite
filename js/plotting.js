@@ -154,7 +154,7 @@ function yScaleSliderInput(selfDOM){
 
 function averageWindowSliderInput(selfDOM){
    let self = $(selfDOM);
-   let selfCountryBox = self.parent().parent();
+   let selfCountryBox = self.parent().parent().parent();
    selfCountryBox.attr("n_avg",selfDOM.value);
    updateData(selfCountryBox);
    selfCountryBox.find(".averageWindowValue")[0].innerHTML = selfDOM.value*2+1;
