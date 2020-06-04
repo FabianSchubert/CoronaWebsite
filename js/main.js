@@ -67,7 +67,7 @@ function preload() {
    tab_us_states_deaths = loadTable(linkJohnsHopkinsDeathsUS,'csv','header');
    
    //https://www.census.gov/data/tables/time-series/demo/popest/2010s-state-total.html
-   tab_us_states_population = loadTable('./dat/us_states_population.csv','csv','header');
+   //tab_us_states_population = loadTable('./dat/us_states_population.csv','csv','header');
    
    /*
    // load table from European Centre for Disease Prevention and Control
