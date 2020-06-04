@@ -1,14 +1,26 @@
 let tab;
 
-const linkJohnsHopkins = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
+const linkJohnsHopkinsConfirmedUS = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv'
+const linkJohnsHopkinsDeathsUS = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_US.csv';
 
 const linkECDC = './dat/ecdc.csv';
 
-var countries;
-var times;
-var tabArr;
-var tabArrDeaths;
-var population;
+var countries = [];
+var times = [];
+var tabArr = [];
+var tabArrDeaths = [];
+var population = [];
+
+var countries_ecdc;
+var times_ecdc;
+var tabArr_ecdc;
+var tabArrDeaths_ecdc;
+var population_ecdc;
+
+var usstates;
+var times_usstates;
+var tabArr_usstates_confirmed;
+var tabArr_usstates_deaths;
 
 // mode is 'daily', 'total' or 'time'
 var xAxMode = "total";
@@ -51,10 +63,11 @@ function preload() {
    //tab = loadTable(linkJohnsHopkins,'csv','header');
    tab = loadTable(linkECDC,'csv','header');
    
-   tab_johns_hopkins = loadTable(linkJohnsHopkins,'csv','header');
+   tab_us_states_confirmed = loadTable(linkJohnsHopkinsConfirmedUS,'csv','header');
+   tab_us_states_deaths = loadTable(linkJohnsHopkinsDeathsUS,'csv','header');
    
    //https://www.census.gov/data/tables/time-series/demo/popest/2010s-state-total.html
-   tab_us_states = loadTable('./dat/us_states_population.csv','csv','header');
+   tab_us_states_population = loadTable('./dat/us_states_population.csv','csv','header');
    
    /*
    // load table from European Centre for Disease Prevention and Control
@@ -70,7 +83,48 @@ function preload() {
 function setup() {
    //console.log(table.columns);
    
-   [countries, times, tabArr, tabArrDeaths, population] = processDataECDC(tab);
+   [countries_ecdc, times_ecdc, tabArr_ecdc, tabArrDeaths_ecdc, population_ecdc] = processDataECDC(tab);
+   [usstates_johns_hopkins, times_usstates, tabArr_usstates_confirmed] = processDataJohnsHopkinsConfirmed(tab_us_states_confirmed);
+   [usstates_johns_hopkins, times_usstates, tabArr_usstates_deaths, population_usstates] = processDataJohnsHopkinsDeaths(tab_us_states_deaths);
+   
+   //merge...
+   for(let i=0;i<countries_ecdc.length;i++){
+      countries.push(countries_ecdc[i]);
+      times.push(times_ecdc);
+      tabArr.push(tabArr_ecdc[i]);
+      tabArrDeaths.push(tabArrDeaths_ecdc[i]);
+      population.push(population_ecdc[i]);
+   }
+   
+   for(let i=0;i<usstates_johns_hopkins.length;i++){
+      countries.push(usstates_johns_hopkins[i]);
+      times.push(times_usstates);
+      tabArr.push(tabArr_usstates_confirmed[i]);
+      tabArrDeaths.push(tabArr_usstates_deaths[i]);
+      population.push(population_usstates[i]);
+   }
+   
+   // add a world aggregate
+   let world_total_conf = Array(times_ecdc.length);
+   world_total_conf.fill(0);
+   let world_total_deaths = Array(times_ecdc.length);
+   world_total_deaths.fill(0)
+   let world_total_population = 0;
+   
+   countries.push("World");
+   times.push(times_ecdc);
+   
+   for(let i=0;i<countries_ecdc.length;i++){
+      for(let j=0;j<times_ecdc.length;j++){
+         world_total_conf[j] += tabArr_ecdc[i][j];
+         world_total_deaths[j] += tabArrDeaths_ecdc[i][j];
+      }
+      // "world population" as a sum over all countries in ecdc data, to be consistent.
+      world_total_population += (population_ecdc[i] || 0);
+   }
+   tabArr.push(world_total_conf);
+   tabArrDeaths.push(world_total_deaths);
+   population.push(world_total_population);
    
    
    //[countries, times, tabArr] = processDataJohnsHopkins(tab);

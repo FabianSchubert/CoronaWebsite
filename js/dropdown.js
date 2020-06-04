@@ -28,7 +28,7 @@ $(document).click(function(event) {
   $target = $(event.target);
   if(!$target.closest('.dropdown').length) {
     document.getElementById("countryDropdownContent").classList.remove("show");
-    document.getElementById("dataDropdownContent").classList.remove("show");
+    //document.getElementById("dataDropdownContent").classList.remove("show");
   }       
 });
 

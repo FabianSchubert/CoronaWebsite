@@ -8,35 +8,113 @@ Number.prototype.pad = function(size) {
 
 
 
-function processDataJohnsHopkins(tab){
+function processDataJohnsHopkinsConfirmed(tab){
       
    let tabArr = tab.getArray();
    
    let nRows = tabArr.length;
-   // we do not want the province, lon and lat columns:
-   let nCols = tabArr[0].length-3;
+   // data starts at column 11 (zero counting)
+   let nCols = tabArr[0].length-11;
    
-   // get the date headers starting at column 4:
-   let times = tab.columns.slice(4);
    
-   let countries = Array(nRows);
    
-   let procArr = Array(nRows);
+   // get the date headers starting at column 11:
+   let times = tab.columns.slice(11);   
+   
+   let countries = [];
+   
+   let procArr = [];
+   
+   let country_idx;
    
    for(let i=0;i<nRows;i++){
       
-      countries[i] = tabArr[i][1];
+      country_idx = countries.indexOf(tabArr[i][6]);
       
-      procArr[i] = Array(nCols);
-      for(let j=0;j<nCols;j++){
-         procArr[i][j] = parseFloat(tabArr[i][4+j]);
+      if(country_idx == -1){
+         countries.push(tabArr[i][6]);
+         procArr.push(tabArr[i].slice(11));
+         
+         for(let j=0;j<nCols;j++){
+            procArr[procArr.length - 1][j] = parseFloat(procArr[procArr.length - 1][j]);
+         }
+         
+      } else {
+         for(let j=0;j<nCols;j++){
+            procArr[country_idx][j] += parseFloat(tabArr[i][j+11]);
+         }
+         
       }
+   }
+   
+   //console.log(times[0]);
+   
+   for(let i=0;i<times.length;i++){
+      times[i] = Math.abs(new Date(times[i]));
    }
    
    //return a list with the countries, the times, and the table with the data
    return [countries, times, procArr];
    
 }
+
+function processDataJohnsHopkinsDeaths(tab){
+      
+   let tabArr = tab.getArray();
+   
+   let nRows = tabArr.length;
+   // data starts at column 11 (zero counting)
+   let nCols = tabArr[0].length-12;
+   
+   
+   
+   // get the date headers starting at column 11:
+   let times = tab.columns.slice(12);   
+   
+   let countries = [];
+   
+   let procArr = [];
+   
+   let population = [];
+   
+   let country_idx;
+   
+   for(let i=0;i<nRows;i++){
+      
+      country_idx = countries.indexOf(tabArr[i][6]);
+      
+      if(country_idx == -1){
+         countries.push(tabArr[i][6]);
+         procArr.push(tabArr[i].slice(12));
+         
+         population.push(parseFloat(tabArr[i][11]));
+         
+         for(let j=0;j<nCols;j++){
+            procArr[procArr.length - 1][j] = parseFloat(procArr[procArr.length - 1][j]);
+         }
+         
+      } else {
+         for(let j=0;j<nCols;j++){
+            procArr[country_idx][j] += parseFloat(tabArr[i][j+12]);
+         }
+         population[country_idx] += parseFloat(tabArr[i][11]);
+      }
+   }
+   
+   //console.log(times[0]);
+   
+   for(let i=0;i<times.length;i++){
+      times[i] = Math.abs(new Date(times[i]));
+   }
+   
+   //return a list with the countries, the times, and the table with the data
+   return [countries, times, procArr, population];
+   
+}
+
+
+
+
 
 function processDataECDC(tab){
    //console.log(tab);
@@ -70,7 +148,7 @@ function processDataECDC(tab){
          population.push(parseFloat(tabArr[i][9]));
       }
       
-      date = (parseInt(tabArr[i][3])).pad(4) + "-" + (parseInt(tabArr[i][2])).pad(2) + "-" + (parseInt(tabArr[i][1])).pad(2);
+      date = (parseInt(tabArr[i][3])).pad(4) + "/" + (parseInt(tabArr[i][2])).pad(2) + "/" + (parseInt(tabArr[i][1])).pad(2);
       
       if(!(times.includes(date))){
          times.push(date);
@@ -99,14 +177,14 @@ function processDataECDC(tab){
    let countryIdx;
    
    for(let i=0; i<nRows; i++){
-      date = (parseInt(tabArr[i][3])).pad(4) + "-" + (parseInt(tabArr[i][2])).pad(2) + "-" + (parseInt(tabArr[i][1])).pad(2);
+      date = (parseInt(tabArr[i][3])).pad(4) + "/" + (parseInt(tabArr[i][2])).pad(2) + "/" + (parseInt(tabArr[i][1])).pad(2);
       country = tabArr[i][6];
       
       timeIdx = times.indexOf(date);
       countryIdx = countries.indexOf(country);
       
-      procArr[countryIdx][timeIdx] = parseFloat(tabArr[i][4])*1e5/population[countryIdx];
-      procArrDeaths[countryIdx][timeIdx] = parseFloat(tabArr[i][5])*1e5/population[countryIdx];
+      procArr[countryIdx][timeIdx] = parseFloat(tabArr[i][4]);//*1e5/population[countryIdx];
+      procArrDeaths[countryIdx][timeIdx] = parseFloat(tabArr[i][5]);//*1e5/population[countryIdx];
    }
    
    for(let i=0; i<nCountries;i++){
@@ -218,11 +296,11 @@ function addArrScal(x,s){
    return res;
 }
 
-function processDataDailyVsTotal(idx,tabArr,times,smooth_n,xscale,yscale,timeShift,xMode,yMode){
+function processDataDailyVsTotal(idx,tabArr,times_list,population,smooth_n,xscale,yscale,timeShift,xMode,yMode){
    let total=tabArr[idx];
    let total_cut = total.slice(1,total.length);
    let daily_change = getDailyChange(total)
-   
+   let times = times_list[idx];
    
    // find negative daily changes and remove
    // running loop backwards to avoid having to change
@@ -240,9 +318,9 @@ function processDataDailyVsTotal(idx,tabArr,times,smooth_n,xscale,yscale,timeShi
    // 1 day = 86 400 000 ms
    
    if(xMode == "daily"){
-      xData = scaleArr(smooth_filter(daily_change,smooth_n),xscale);
+      xData = scaleArr(smooth_filter(daily_change,smooth_n),xscale*1e5/population[idx]);
    } else if(xMode == "total"){
-      xData = scaleArr(smooth_filter(total_cut,smooth_n),xscale);
+      xData = scaleArr(smooth_filter(total_cut,smooth_n),xscale*1e5/population[idx]);
    } else if(xMode == "time"){
       xData = addArrScal(scaleArr(smooth_filter(times.slice(1,times.length),
                      smooth_n),
@@ -262,9 +340,9 @@ function processDataDailyVsTotal(idx,tabArr,times,smooth_n,xscale,yscale,timeShi
    }
    
    if(yMode == "daily"){
-      yData = scaleArr(smooth_filter(daily_change,smooth_n),yscale);
+      yData = scaleArr(smooth_filter(daily_change,smooth_n),yscale*1e5/population[idx]);
    } else if(yMode == "total"){
-      yData = scaleArr(smooth_filter(total_cut,smooth_n),yscale);
+      yData = scaleArr(smooth_filter(total_cut,smooth_n),yscale*1e5/population[idx]);
    } else if(yMode == "time"){
       yData = addArrScal(scaleArr(smooth_filter(times.slice(1,times.length),
                      smooth_n),

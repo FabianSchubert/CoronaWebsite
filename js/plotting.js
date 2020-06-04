@@ -51,10 +51,10 @@ function updateData(countryBox){ //countryBox should be a jquery object
    
    let new_data
    if(countryBox.attr("displayData") == "cases"){
-      new_data = processDataDailyVsTotal(idx,tabArr,times,n_avg,xScale,yScale,
+      new_data = processDataDailyVsTotal(idx,tabArr,times,population,n_avg,xScale,yScale,
          timeShift,xAxMode,yAxMode);
    } else {
-      new_data = processDataDailyVsTotal(idx,tabArrDeaths,times,n_avg,xScale,yScale,
+      new_data = processDataDailyVsTotal(idx,tabArrDeaths,times,population,n_avg,xScale,yScale,
          timeShift,xAxMode,yAxMode);
    }
    
