@@ -325,9 +325,11 @@ function processDataDailyVsTotal(idx,tabArr,times_list,population,smooth_n,xscal
    // 1 day = 86 400 000 ms
    
    if(xMode == "daily"){
-      xData = scaleArr(smooth_filter(daily_change,smooth_n),xscale*1e5/population[idx]);
+      xData = showPopRel ? scaleArr(smooth_filter(daily_change,smooth_n),xscale*1e5/population[idx])
+      : scaleArr(smooth_filter(daily_change,smooth_n),xscale);
    } else if(xMode == "total"){
-      xData = scaleArr(smooth_filter(total_cut,smooth_n),xscale*1e5/population[idx]);
+      xData = showPopRel ? scaleArr(smooth_filter(total_cut,smooth_n),xscale*1e5/population[idx])
+      : scaleArr(smooth_filter(total_cut,smooth_n),xscale);
    } else if(xMode == "time"){
       xData = addArrScal(scaleArr(smooth_filter(times.slice(1,times.length),
                      smooth_n),
@@ -347,9 +349,11 @@ function processDataDailyVsTotal(idx,tabArr,times_list,population,smooth_n,xscal
    }
    
    if(yMode == "daily"){
-      yData = scaleArr(smooth_filter(daily_change,smooth_n),yscale*1e5/population[idx]);
+      yData = showPopRel ? scaleArr(smooth_filter(daily_change,smooth_n),yscale*1e5/population[idx])
+      : scaleArr(smooth_filter(daily_change,smooth_n),yscale);
    } else if(yMode == "total"){
-      yData = scaleArr(smooth_filter(total_cut,smooth_n),yscale*1e5/population[idx]);
+      yData = showPopRel ? scaleArr(smooth_filter(total_cut,smooth_n),yscale*1e5/population[idx])
+      : scaleArr(smooth_filter(total_cut,smooth_n),yscale);
    } else if(yMode == "time"){
       yData = addArrScal(scaleArr(smooth_filter(times.slice(1,times.length),
                      smooth_n),

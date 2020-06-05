@@ -37,6 +37,8 @@
    <div id="outerFrame">
    
    <div class="centerBox" style="background:#999999; color:#FFFFFF;">
+   <img src="./img/GU-Logo-weiss.png" align="right"
+        style="border: none; display: block; width: 15%;">
    <h1>Goethe Interactive COVID-19 Analyzer</h1>
    </div>
    <p>
@@ -82,6 +84,15 @@
       </div>
       </div>
       
+      <div id="totalPopSwitchContainer">
+      <span>Display: Per 100.000 Inh. </span>
+      <label class="switch" id="totalPopSwitch">
+         <input type="checkbox"
+         onclick="totalPopCheckBoxClick(this);">
+         <span class="switchSlider round"></span>
+      </label>
+      <span> Absolute</span>
+      </div>
       <!--
       <div class="dropdown" id="dataDropdown">
       <button onclick="showDataSets()" class="dropbtn">Choose Dataset</button>
@@ -310,7 +321,7 @@
             </span>
             </div>
             
-            <span>Crop Data</span>
+            <span>Select Start/End Date</span>
             
             <div class="rangeContainer">
                <span>

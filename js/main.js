@@ -22,6 +22,9 @@ var times_usstates;
 var tabArr_usstates_confirmed;
 var tabArr_usstates_deaths;
 
+var showPopRel = true; // if true, shows numbers relative to 100000 inhabitants.
+//else, absolute numbers
+
 // mode is 'daily', 'total' or 'time'
 var xAxMode = "total";
 var yAxMode = "daily";
@@ -171,7 +174,7 @@ function setup() {
    */
    
    
-   
+   $('#totalPopSwitch').children()[0].checked = false;
    
    
    let dropdown = document.getElementById("countryDropdownContent");
@@ -255,6 +258,7 @@ function setup() {
    let start_idx = countries.indexOf("Germany"); //Data Row for Germany...
    addPlot(start_idx);
    
+   //$.loadScript('./presets/preset.js', function(){});
    
    
    /*let country = tableArray[test_idx][1];
@@ -299,16 +303,11 @@ function setup() {
    });*/
 }
 
-/*
-$( function() {
- $( "#slider-range" ).slider({
-   range: true,
-   min: 0,
-   max: 500,
-   values: [ 75, 300 ]//,
-   slide: function( event, ui ) {
-     
-   }
- });
- 
-} );*/
+jQuery.loadScript = function (url, callback) {
+    jQuery.ajax({
+        url: url,
+        dataType: 'script',
+        success: callback,
+        async: true
+    });
+}

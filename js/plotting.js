@@ -255,6 +255,9 @@ function updateAxes(){
    $(".dataTypeButton.xAx").attr("style","background-color: #777777;");
    $(".dataTypeButton.yAx").attr("style","background-color: #777777;");
    
+   let perPopStrX = showPopRel ? " per 100.000 Inhabitants" : "";
+   let perPopStrY = showPopRel ? " per 100.000 Inh." : "";
+   
    // Update the x axis...
    if(xAxMode == "time"){
       
@@ -283,7 +286,7 @@ function updateAxes(){
                
                scaleLabel: {
                   display: true,
-                  labelString: "Total Confirmed Cases / Deaths per 100000 Inhabitants"
+                  labelString: "Total Confirmed Cases / Deaths" + perPopStrX
                }   
             }
    } else {
@@ -298,7 +301,7 @@ function updateAxes(){
                
                scaleLabel: {
                   display: true,
-                  labelString: "Daily Cases / Deaths per 100000 Inhabitants"
+                  labelString: "Daily Cases / Deaths" + perPopStrX
                }   
             }
    }
@@ -330,7 +333,7 @@ function updateAxes(){
                
                scaleLabel: {
                   display: true,
-                  labelString: "Total Confirmed Cases / Deaths per 100000 Inh."
+                  labelString: "Total Confirmed Cases / Deaths" + perPopStrY
                }   
             }
    } else {
@@ -345,7 +348,7 @@ function updateAxes(){
                
                scaleLabel: {
                   display: true,
-                  labelString: "Daily Cases / Deaths per 100000 Inh."
+                  labelString: "Daily Cases / Deaths" + perPopStrY
                }   
             }
    }
@@ -403,6 +406,16 @@ function openColorPicker(selfDOM){
    colorPicker.click();
 }
 
-function slideDateRange( selfDOM){
-   console.log(selfDOM);  
+function totalPopCheckBoxClick(selfDOM){
+   
+   showPopRel = !selfDOM.checked
+   
+   let countryBoxList = $('.countryBox')
+   
+   for(let i=0;i<countryBoxList.length;i++){
+      updateData($(countryBoxList[i]));
+   }
+   
+   updateAxes();
+      
 }
