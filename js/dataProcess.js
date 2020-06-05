@@ -303,11 +303,11 @@ function addArrScal(x,s){
    return res;
 }
 
-function processDataDailyVsTotal(idx,tabArr,times_list,population,smooth_n,xscale,yscale,timeShift,xMode,yMode){
-   let total=tabArr[idx];
+function processDataDailyVsTotal(idx,tabArr,times_list,population,smooth_n,xscale,yscale,xcut,ycut,timeShift,xMode,yMode){
+   let total=tabArr[idx].slice(xcut,tabArr[idx].length - ycut);
    let total_cut = total.slice(1,total.length);
    let daily_change = getDailyChange(total)
-   let times = times_list[idx];
+   let times = times_list[idx].slice(xcut,times_list[idx].length-ycut);
    
    // find negative daily changes and remove
    // running loop backwards to avoid having to change

@@ -171,6 +171,9 @@ function setup() {
    */
    
    
+   
+   
+   
    let dropdown = document.getElementById("countryDropdownContent");
    var newEntry;
    for(i=0;i<nRows;i++){
@@ -252,6 +255,8 @@ function setup() {
    let start_idx = countries.indexOf("Germany"); //Data Row for Germany...
    addPlot(start_idx);
    
+   
+   
    /*let country = tableArray[test_idx][1];
    
       
@@ -293,3 +298,17 @@ function setup() {
       }
    });*/
 }
+
+/*
+$( function() {
+ $( "#slider-range" ).slider({
+   range: true,
+   min: 0,
+   max: 500,
+   values: [ 75, 300 ]//,
+   slide: function( event, ui ) {
+     
+   }
+ });
+ 
+} );*/

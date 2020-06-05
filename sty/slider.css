@@ -33,3 +33,40 @@
   background: #b3b3b3;
   cursor: pointer;
 }
+
+/* jquery slider */
+.dateRange {
+  
+}
+
+.ui-slider {
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-left: 2px;
+    height: 6px;
+    position: relative;
+    border: none;
+    background: #b3b3b3;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    background: #b3b3b3;
+    border-radius: 25px;
+    outline: none;
+    border: none;
+    position: absolute;
+    top: -10px;
+}
+
+.ui-slider-horizontal .ui-slider-range {
+    background: #e9ecf1
+}
+
+.ui-slider-handle{
+  margin-top: 3px !important;
+  width: 20px !important;
+  height: 20px !important;
+  border-style: solid !important;
+  border-width: thin !important;
+  border-color: #999999 !important;
+}

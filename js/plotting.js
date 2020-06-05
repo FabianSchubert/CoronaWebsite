@@ -27,7 +27,24 @@ function addPlot(idx){
    newCountryBox.setAttribute("idx",String(idx));
    
    $(newCountryBox).children(".countryBoxHeader")[0].innerHTML = countries[idx];
-     
+   
+   $(newCountryBox).find(".dateRange").slider({
+      range: true,
+      min: 0,
+      max: Math.round((times[idx][times[idx].length-1] - times[idx][0])/864e5),
+      values: [0,Math.round((times[idx][times[idx].length-1] - times[idx][0])/864e5)],
+      slide: function( event, ui ) {
+         let countryBoxTemp = $(ui.handle).parent().parent().parent().parent();
+         let max = $(ui.handle).parent().slider("option","max")
+         countryBoxTemp.attr("xcut",Math.round(ui.values[0]));
+         countryBoxTemp.attr("ycut",Math.round(max - ui.values[1]));
+         //console.log(countryBoxTemp.attr("xcut"));
+         //console.log(countryBoxTemp.attr("ycut"));
+         
+         updateData(countryBoxTemp);
+      }
+   });
+   
    window.colCicleState++;
    window.colCicleState = colCicleState%nColors;
    
@@ -42,7 +59,8 @@ function updateData(countryBox){ //countryBox should be a jquery object
    let yScale = parseFloat(countryBox.attr("yScale"));      
    let n_avg = parseFloat(countryBox.attr("n_avg"));
    let timeShift = parseFloat(countryBox.attr("timeShift"));
-   
+   let xcut = parseInt(countryBox.attr("xcut"));
+   let ycut = parseInt(countryBox.attr("ycut"));
    
    
    let idx_node = countryBox.index();
@@ -52,10 +70,10 @@ function updateData(countryBox){ //countryBox should be a jquery object
    let new_data
    if(countryBox.attr("displayData") == "cases"){
       new_data = processDataDailyVsTotal(idx,tabArr,times,population,n_avg,xScale,yScale,
-         timeShift,xAxMode,yAxMode);
+         xcut,ycut,timeShift,xAxMode,yAxMode);
    } else {
       new_data = processDataDailyVsTotal(idx,tabArrDeaths,times,population,n_avg,xScale,yScale,
-         timeShift,xAxMode,yAxMode);
+         xcut,ycut,timeShift,xAxMode,yAxMode);
    }
    
    myLineChart.data.datasets[idx_node].data = new_data;
@@ -383,4 +401,8 @@ function openColorPicker(selfDOM){
    colorPicker.focus();
    colorPicker.value = selfCountryBox.css("backgroundColor");
    colorPicker.click();
+}
+
+function slideDateRange( selfDOM){
+   console.log(selfDOM);  
 }

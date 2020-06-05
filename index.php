@@ -14,13 +14,16 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
    
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
    <link rel="stylesheet" type="text/css" href="./sty/main.css">
    <link rel="stylesheet" type="text/css" href="./sty/dropdown.css">
    <link rel="stylesheet" type="text/css" href="./sty/countrybox.css">
    <link rel="stylesheet" type="text/css" href="./sty/slider.css">
    <link rel="stylesheet" type="text/css" href="./sty/switch.css">
+  
    
    
    
@@ -119,6 +122,8 @@
    
    <hr style = "height:2px;border-width:0;color:#AAAAAA;background-color:#AAAAAA">
    
+
+   
    
    <div id="countryBoxContainer">
        
@@ -163,9 +168,9 @@
    <ul>
    <li> <b>ECDC:</b> <a href="https://opendata.ecdc.europa.eu/covid19/casedistribution/" 
         target="_blank"
-        class="blackText"> European Center for Disease Control open Covid-19 data</a>
-   <!--<li> <b>JH-CSSE:</b> <a href="https://github.com/CSSEGISandData/COVID-19" target="_blank"
-        class="blackText">John Hopkins Center For Systems Science and Engineering Covid-19 Githup repository</a>-->
+        class="blackText"> European Center for Disease Control open Covid-19 data</a> (world wide countries)
+   <li> <b>JH-CSSE:</b> <a href="https://github.com/CSSEGISandData/COVID-19" target="_blank"
+        class="blackText">John Hopkins Center For Systems Science and Engineering Covid-19 Githup repository</a> (US states)
    </ul>
 
    <h2>Terms</h2>
@@ -189,10 +194,7 @@
    
    </div>
    
-   <script src="./js/dataProcess.js"></script>
-   <script src="./js/plotting.js"></script>
-   <script src="./js/dropdown.js"></script>
-   <script src="./js/main.js"></script>
+   
    
    <!--country box template-->
    <template id="countryBoxTmpl">
@@ -201,6 +203,8 @@
          xyScaleRatio="1"
          xScale="1.0"
          yScale="1.0"
+         xcut="0"
+         ycut="0"
          timeShift="0"
          n_avg="3"
          lockScales="true"
@@ -306,6 +310,14 @@
             </span>
             </div>
             
+            <span>Crop Data</span>
+            
+            <div class="rangeContainer">
+               <span>
+                  <div class="dateRange"></div>
+               </span>
+            </div>
+            
             <!-- switch between cases /deaths -->
             <span>Display: Cases </span>
             
@@ -317,7 +329,13 @@
             
             <span> Deaths</span>
          </div>
-      </template>  
+      </template>
+      
+      <script src="./js/dataProcess.js"></script>
+      <script src="./js/plotting.js"></script>
+      <script src="./js/dropdown.js"></script>
+      <script src="./js/main.js"></script>
    
 </body>
 </html>
+
