@@ -36,20 +36,25 @@
       
    <div id="outerFrame">
    
-   <div class="centerBox" style="background:#999999; color:#FFFFFF;">
+   <div class="centerBox" style="background:#999999; color:#FFFFFF;"
+     title = "Rescale, shift and compare Covid-19 data, create your own analysis">
    <img src="./img/GU-Logo-weiss.png" align="right"
         style="border: none; display: block; width: 15%;">
    <h1>Goethe Interactive COVID-19 Analyzer</h1>
    </div>
-   <p>
-   <div class="rightBox" style="">
-   Institut for Theoretical Physics &#8212;
-   Goethe University Frankfurt a.M. <br>
+   <div class="centerBox" style="background:#FFFFFF; text-align: left;">
+<div style="text-align:left;"><span style="color:#666666; font-weight:bold; 
+     font-size: larger;">Compare Covid-19 outbreaks,</span>
+    <span style="float:right;">Institut for Theoretical Physics &#8212; 
+                               Goethe University Frankfurt a.M.</span></div>
+<div style="text-align:left;"><span style="color:#666666; font-weight:bold; 
+     font-size: larger;">create your own plots!</span>
+    <span style="float:right;">
    <a href="https://itp.uni-frankfurt.de/~gros/" class="blackText">Claudius Gros</a> / 
-   Fabian Schubert
+   Fabian Schubert</span></div>
    </div>
    
-   <br><br><br><br><br>
+   <br><br>
    
    <div id="ChartDropdown">
       
@@ -76,16 +81,17 @@
       </div>
       </div>
       
-      <div class="dropdown" id="countryDropdown">
-      <button onclick="showCountries()" class="dropbtn">Add Country</button>
+      <div class="dropdown" id="countryDropdown"
+           title = "add country or US state of your choice">
+      <button onclick="showCountries()" class="dropbtn">Add&nbsp;Country</button>
       <div id="countryDropdownContent" class="dropdown-content">
          <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
          <!--list of countries goes here-->
       </div>
       </div>
       
-      <div id="totalPopSwitchContainer">
-      <span>Display: Per 100.000 Inh. </span>
+      <div id="totalPopSwitchContainer" title="how to display the data">
+      <span>Per 100.000 Inh.</span>
       <label class="switch" id="totalPopSwitch">
          <input type="checkbox"
          onclick="totalPopCheckBoxClick(this);">
@@ -103,7 +109,6 @@
       </div>-->
       
       
-      
       <div class="axDataTypeSwitch xAx">
          <button class="dataTypeButton xAx Left"
       onclick="xAxMode = 'total';
@@ -115,10 +120,10 @@
       onclick="xAxMode = 'daily';
             updateAxes();">Daily</button>
       
-      
       <input type="image"
             src="./img/download.svg"
       id = "downloadButton"
+      title = "export plot to png image"
       style="
       border-style: none;
       position: absolute;
@@ -133,8 +138,6 @@
    
    <hr style = "height:2px;border-width:0;color:#AAAAAA;background-color:#AAAAAA">
    
-
-   
    
    <div id="countryBoxContainer">
        
@@ -146,14 +149,20 @@
    <h2>Explanations / Support</h2>
    <ul> 
    <li> Select the same country multiple times to compare death/case counts
-   <li> Rescale the x/y axis to see if the XI representation (or the timeline) of 
-     countries are functionally similar; <br> 
-     same when comparing death and case counts
+   <li> Rescale the y axis to see if the case counts of two or more countries are
+        functionally similar,<br>
+        rescale both x and y axis to compare XI representations
+        (daily vs total case counts);<br>
+        can be done both for case and death counts
    <li> Shift the timeline of a country by a few days to match the onset of the outbreak.
    <li> n-day centered moving averages are provided; examples: <br>
      n=3: mean of previous-, current- and subsequent day<br>
      n=1: raw data
-   <li> Pick a custom color by clicking the color wheel.
+   <li> Examine total or per capita data
+   <li> Pick a custom color by clicking the color wheel  &nbsp;
+        <img src="./img/colorwheel.png" style="height: 15px; margin-bottom: 0;">
+   <li> Export your plot to an png-image, using &nbsp;
+        <img src="./img/download.svg" style="height: 15px; margin-bottom: 0;">
    <li> For support please contact Fabian Schubert:
    <font color="#990000">
    <span onclick="this.innerHTML='fschubert';
@@ -196,16 +205,12 @@
    <ul>
    <li> We notify that the used Covid-19 data may contain errors and
      inconsistencies.
-   <li> Bitte bachten Sie die 
+   <li> Bitte beachten Sie die 
    <a href="https://www.uni-frankfurt.de/72059554/Datenschutz">Datenschutzerklärung</a>
    </ul>
    </div>
    
-   
-   
    </div>
-   
-   
    
    <!--country box template-->
    <template id="countryBoxTmpl">
