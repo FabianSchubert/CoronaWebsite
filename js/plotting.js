@@ -45,8 +45,8 @@ function addPlot(idx){
       }
    });
    
-   window.colCicleState++;
-   window.colCicleState = colCicleState%nColors;
+   colCicleState++;
+   colCicleState = colCicleState%nColors;
    
    updateData($(newCountryBox));
    updateAxes();
