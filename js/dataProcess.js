@@ -29,10 +29,10 @@ function processDataJohnsHopkinsConfirmed(tab){
    
    for(let i=0;i<nRows;i++){
       
-      country_idx = countries.indexOf("USA \\ " + tabArr[i][6]);
+      country_idx = countries.indexOf("USA / " + tabArr[i][6]);
       
       if(country_idx == -1){
-         countries.push("USA \\ " + tabArr[i][6]);
+         countries.push("USA / " + tabArr[i][6]);
          procArr.push(tabArr[i].slice(11));
          
          for(let j=0;j<nCols;j++){
@@ -81,10 +81,10 @@ function processDataJohnsHopkinsDeaths(tab){
    
    for(let i=0;i<nRows;i++){
       
-      country_idx = countries.indexOf("USA \\ " + tabArr[i][6]);
+      country_idx = countries.indexOf("USA / " + tabArr[i][6]);
       
       if(country_idx == -1){
-         countries.push("USA \\ " + tabArr[i][6]);
+         countries.push("USA / " + tabArr[i][6]);
          procArr.push(tabArr[i].slice(12));
          
          population.push(parseFloat(tabArr[i][11]));

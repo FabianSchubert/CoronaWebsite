@@ -261,7 +261,7 @@ function updateAxes(){
    // Update the x axis...
    if(xAxMode == "time"){
       
-      $(".dataTypeButton.xAx.Right").attr("style","background-color: #333333;");
+      $(".dataTypeButton.xAx.Middle").attr("style","background-color: #333333;");
       
       myLineChart.options.scales.xAxes[0] = {
                type: 'time',
@@ -276,7 +276,7 @@ function updateAxes(){
             }
    } else if (xAxMode == "total"){
       
-      $(".dataTypeButton.xAx.Middle").attr("style","background-color: #333333;");
+      $(".dataTypeButton.xAx.Left").attr("style","background-color: #333333;");
       
       myLineChart.options.scales.xAxes[0] = {
                type: 'linear',
@@ -291,7 +291,7 @@ function updateAxes(){
             }
    } else {
       
-      $(".dataTypeButton.xAx.Left").attr("style","background-color: #333333;");
+      $(".dataTypeButton.xAx.Right").attr("style","background-color: #333333;");
       
       myLineChart.options.scales.xAxes[0] = {
                type: 'linear',

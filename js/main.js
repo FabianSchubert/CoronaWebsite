@@ -26,7 +26,7 @@ var showPopRel = true; // if true, shows numbers relative to 100000 inhabitants.
 //else, absolute numbers
 
 // mode is 'daily', 'total' or 'time'
-var xAxMode = "total";
+var xAxMode = "time";
 var yAxMode = "daily";
 
 var myLineChart;
@@ -135,7 +135,7 @@ function setup() {
    
    // Change United States of America to "USA \\ Aggregate"
    us_idx = countries.indexOf("United States of America");
-   countries[us_idx] = "USA \\ Aggregate";
+   countries[us_idx] = "USA / Aggregate";
    
    let len = countries.length;
    
@@ -217,7 +217,7 @@ function setup() {
                      label += Math.round(tooltipItem.xLabel * 100) / 100;
                   } else if (myLineChart.options.scales.xAxes[0].type == 'time'){
                      label += tooltipItem.xLabel.substring(0,
-                     tooltipItem.xLabel.length - 12);
+                     tooltipItem.xLabel.length - 13);
                   }
                   
                   label += ' | ';
@@ -255,8 +255,9 @@ function setup() {
    });
    
    
-   let start_idx = countries.indexOf("Germany"); //Data Row for Germany...
-   addPlot(start_idx);
+   updateAxes();
+   //let start_idx = countries.indexOf("Germany"); //Data Row for Germany...
+   //addPlot(start_idx);
    
    //$.loadScript('./presets/preset.js', function(){});
    

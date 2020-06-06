@@ -77,7 +77,7 @@
       </div>
       
       <div class="dropdown" id="countryDropdown">
-      <button onclick="showCountries()" class="dropbtn">Add Plot</button>
+      <button onclick="showCountries()" class="dropbtn">Add Country</button>
       <div id="countryDropdownContent" class="dropdown-content">
          <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
          <!--list of countries goes here-->
@@ -106,14 +106,14 @@
       
       <div class="axDataTypeSwitch xAx">
          <button class="dataTypeButton xAx Left"
-      onclick="xAxMode = 'daily';
-            updateAxes();">Daily</button><!--
-      --><button class="dataTypeButton xAx Middle"
       onclick="xAxMode = 'total';
             updateAxes();">Total</button><!--
-      --><button class="dataTypeButton xAx Right"
+      --><button class="dataTypeButton xAx Middle"
       onclick="xAxMode = 'time';
-            updateAxes();">Time</button>
+            updateAxes();">Time</button><!--
+      --><button class="dataTypeButton xAx Right"
+      onclick="xAxMode = 'daily';
+            updateAxes();">Daily</button>
       
       
       <input type="image"
