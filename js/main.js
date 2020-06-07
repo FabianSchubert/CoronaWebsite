@@ -41,6 +41,58 @@ var colCicleState = 0;
 
 var addPlotCounter = 0;
 
+var eu27 = [
+"Austria",
+"Belgium",
+"Bulgaria",
+"Croatia",
+"Cyprus",
+"Czechia",
+"Denmark",
+"Estonia",
+"Finland",
+"France",
+"Germany",
+"Greece",
+"Hungary",
+"Ireland",
+"Italy",
+"Latvia",
+"Lithuania",
+"Luxembourg",
+"Malta",
+"Netherlands",
+"Poland",
+"Portugal",
+"Romania", 
+"Slovakia",
+"Slovenia",
+"Spain",
+"Sweden"
+]
+
+var eu19 = [
+"Belgium",
+"Germany",
+"Estonia",
+"Finland",
+"France",
+"Greece",
+"Ireland",
+"Italy",
+"Latvia",
+"Lithuania",
+"Luxembourg",
+"Malta",
+"Netherlands",
+"Austria",
+"Portugal",
+"Slovakia",
+"Slovenia",
+"Spain",
+"Cyprus"
+]
+
 const colCicle = [
 'rgba(76, 114, 176,255)',
 'rgba(221, 132,  82,255)',
@@ -132,6 +184,61 @@ function setup() {
    tabArr.push(world_total_conf);
    tabArrDeaths.push(world_total_deaths);
    population.push(world_total_population);
+   
+   // add a eu_27 aggregate
+   
+   let eu27_total_conf = Array(times_ecdc.length);
+   eu27_total_conf.fill(0);
+   let eu27_total_deaths = Array(times_ecdc.length);
+   eu27_total_deaths.fill(0)
+   let eu27_total_population = 0;
+   
+   countries.push("EU 27");
+   times.push(times_ecdc);
+   
+   for(let i=0;i<countries_ecdc.length;i++){
+      if(eu27.includes(countries_ecdc[i])){
+         for(let j=0;j<times_ecdc.length;j++){
+            eu27_total_conf[j] += tabArr_ecdc[i][j];
+            eu27_total_deaths[j] += tabArrDeaths_ecdc[i][j];  
+         }
+         eu27_total_population += (population_ecdc[i] || 0);
+      }
+      
+   }
+   tabArr.push(eu27_total_conf);
+   tabArrDeaths.push(eu27_total_deaths);
+   population.push(eu27_total_population);
+   
+   
+   // add a eu_19 aggregate
+   
+   let eu19_total_conf = Array(times_ecdc.length);
+   eu19_total_conf.fill(0);
+   let eu19_total_deaths = Array(times_ecdc.length);
+   eu19_total_deaths.fill(0)
+   let eu19_total_population = 0;
+   
+   countries.push("EU 19");
+   times.push(times_ecdc);
+   
+   for(let i=0;i<countries_ecdc.length;i++){
+      if(eu19.includes(countries_ecdc[i])){
+         for(let j=0;j<times_ecdc.length;j++){
+            eu19_total_conf[j] += tabArr_ecdc[i][j];
+            eu19_total_deaths[j] += tabArrDeaths_ecdc[i][j];  
+         }
+         eu19_total_population += (population_ecdc[i] || 0);
+      }
+      
+   }
+   tabArr.push(eu19_total_conf);
+   tabArrDeaths.push(eu19_total_deaths);
+   population.push(eu19_total_population);
+   
+   
+   
+   
    
    // Change United States of America to "USA \\ Aggregate"
    us_idx = countries.indexOf("United States of America");
