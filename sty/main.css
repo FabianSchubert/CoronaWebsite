@@ -167,3 +167,21 @@ a.blackText:hover   {color: #FF3333; background: #FFFFFF; text-decoration: none;
   background-color: #444444;
 }
 
+#showExample {
+  display: inline-block;
+  background-color: #777777;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  
+  border-radius: 10px;
+}
+
+
+
+#showExample:hover{
+  background-color: #444444;
+}
+

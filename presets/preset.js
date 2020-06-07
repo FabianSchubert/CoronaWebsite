@@ -1,2 +1,2 @@
-addPlot(72);
-addPlot(73);
+addPlot(countries.indexOf("Germany"));
+addPlot(countries.indexOf("Spain"));

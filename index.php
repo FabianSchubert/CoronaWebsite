@@ -138,9 +138,13 @@
    
    <hr style = "height:2px;border-width:0;color:#AAAAAA;background-color:#AAAAAA">
    
+   <button id="showExample"
+   onclick="showExampleClick(this);">Show Example</button>
    
    <div id="countryBoxContainer">
-       
+   
+   
+    
    </div>
    
    <br><br><br>

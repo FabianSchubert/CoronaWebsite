@@ -3,6 +3,7 @@ function addPlot(idx){
    
    window.addPlotCounter++;
    
+   $('#showExample')[0].style.display = "none";
    
    let plotdata = {
          label: countries[idx],
@@ -63,7 +64,7 @@ function updateData(countryBox){ //countryBox should be a jquery object
    let ycut = parseInt(countryBox.attr("ycut"));
    
    
-   let idx_node = countryBox.index();
+   let idx_node = countryBox.index(); // The first element is the example button
    
    let idx = parseFloat(countryBox.attr("idx"))
    
@@ -84,12 +85,15 @@ function updateData(countryBox){ //countryBox should be a jquery object
 function closeButtonClick(self){
    let selfCountryBox = $(self).parent();
    
-   let idx_node = selfCountryBox.index();
+   let idx_node = selfCountryBox.index(); // The first element is the example button
    
    myLineChart.data.datasets.splice(idx_node,1);
    selfCountryBox.remove();
    myLineChart.update();
    nPlots--;
+   if(nPlots==0){
+      $('#showExample')[0].style.display = "inline-block";
+   }
 }
 
 function xScaleSliderInput(selfDOM){
@@ -418,4 +422,9 @@ function totalPopCheckBoxClick(selfDOM){
    
    updateAxes();
       
+}
+
+function showExampleClick(selfDOM){
+   selfDOM.style.display = "none";
+   $.loadScript('./presets/preset.js', function(){});
 }

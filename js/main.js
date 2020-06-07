@@ -193,7 +193,7 @@ function setup() {
    eu27_total_deaths.fill(0)
    let eu27_total_population = 0;
    
-   countries.push("EU 27");
+   countries.push("EU27");
    times.push(times_ecdc);
    
    for(let i=0;i<countries_ecdc.length;i++){
@@ -215,12 +215,10 @@ function setup() {
    let eu28_total_deaths = eu27_total_deaths.slice();
    let eu28_total_population = eu27_total_population*1.;
    
-   countries.push("EU 28");
+   countries.push("EU28");
    times.push(times_ecdc);
    
    let idx_UK = countries_ecdc.indexOf("United Kingdom");
-   
-   console.log(idx_UK);
    
    for(let j=0;j<times_ecdc.length;j++){
       eu28_total_conf[j] += tabArr_ecdc[idx_UK][j];
@@ -241,7 +239,7 @@ function setup() {
    eu19_total_deaths.fill(0)
    let eu19_total_population = 0;
    
-   countries.push("EU 19");
+   countries.push("Euro19");
    times.push(times_ecdc);
    
    for(let i=0;i<countries_ecdc.length;i++){
