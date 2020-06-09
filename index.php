@@ -192,7 +192,7 @@
        document.getElementById('add_2').innerHTML='@';
        document.getElementById('itp_2').innerHTML='itp.uni-frankfurt.de';"
        style="cursor: pointer;">click to show email</span><span id="add_2"></span><span id="itp_2"></span></font>
-   <li> Further developments are planned.
+   <li> Additional functionalities are planned.
    </ul>
 
    <h2>Representations of an Epidemic Outbreak</h2>
