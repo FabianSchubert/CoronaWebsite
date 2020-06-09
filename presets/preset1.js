@@ -22,6 +22,9 @@ GermanyBox.find('.dateRange').slider("option","values",[46,161]);
 SpainBox.find('.dateRange').slider("option","values",[46,161]);
 ItalyBox.find('.dateRange').slider("option","values",[46,161]);
 
+$(".dataTypeButton.xAx.Middle")[0].onclick();
+$(".dataTypeButton.yAx.Left")[0].onclick();
+
 updateData(GermanyBox);
 updateData(SpainBox);
 updateData(ItalyBox);
