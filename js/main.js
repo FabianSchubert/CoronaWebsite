@@ -317,6 +317,9 @@ function setup() {
       };
       dropdown.appendChild(newEntry);
    }
+   
+   
+   
       
    //updatePlot(test_idx);
    let ctx = document.getElementById('chart');
@@ -383,8 +386,8 @@ function setup() {
    
    
    updateAxes();
-   //let start_idx = countries.indexOf("Germany"); //Data Row for Germany...
-   //addPlot(start_idx);
+   let start_idx = countries.indexOf("World"); //Data Row for Germany...
+   addPlot(start_idx);
    
    //$.loadScript('./presets/preset.js', function(){});
    

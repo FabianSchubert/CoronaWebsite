@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Goethe Interactive COVID-19 Analyzer</title>
-	<meta charset="UTF-8">
+   
+   
+   
+   <title>Goethe Interactive COVID-19 Analyzer</title>
+   <meta charset="UTF-8">
    <meta name="description" content="Online interactive Covid-19 analyzer.
    Free tool to compare Corona data for counries, daily case counts, total 
    case counts and death count. Allows rescaling.">
@@ -10,12 +13,12 @@
    <meta name="keywords" content="Covid-19, Coronavirus, case-counts, death-counts,
    daily-counts, death-counts, analyzer, interactive, free, online"/>
    
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	
+   
    
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
    <link rel="stylesheet" type="text/css" href="./sty/main.css">
@@ -42,17 +45,18 @@
         style="border: none; display: block; width: 15%;">
    <h1>Goethe Interactive COVID-19 Analyzer</h1>
    </div>
+   
+   
+   
+   
    <div class="centerBox" style="background:#FFFFFF; text-align: left;">
-<div style="text-align:left;"><span style="color:#666666; font-weight:bold; 
-     font-size: larger;">Compare Covid-19 outbreaks,</span>
-    <span style="float:right;">Institut for Theoretical Physics &#8212; 
-                               Goethe University Frankfurt a.M.</span></div>
-<div style="text-align:left;"><span style="color:#666666; font-weight:bold; 
-     font-size: larger;">create your own plots!</span>
+    <span style="color:#666666; font-weight:bold; font-size: larger;">Compare 
+          Covid-19 outbreaks, create your own plots!</span>
     <span style="float:right;">
-   <a href="https://itp.uni-frankfurt.de/~gros/" class="blackText">Claudius Gros</a> / 
-   Fabian Schubert</span></div>
-   </div>
+       <a href="https://itp.uni-frankfurt.de/~gros/" class="blackText">Claudius Gros</a> /  
+   Fabian Schubert</span><br>
+    <span style="float:right;">Institute for Theoretical Physics &#8212; 
+                               Goethe University Frankfurt</span>
    
    <br><br>
    
@@ -138,8 +142,20 @@
    
    <hr style = "height:2px;border-width:0;color:#AAAAAA;background-color:#AAAAAA">
    
-   <button id="showExample"
-   onclick="showExampleClick(this);">Show Example</button>
+   <!--<button id="showExample"
+   onclick="showExampleClick(this);">Show Example</button>-->
+   
+   <div class="dropdown" id="exampleDropdown"
+        title = "show some examples to start exploring">
+   <button onclick="showExamples()" class="dropbtn">Show&nbsp;Examples</button>
+   <div id="exampleDropdownContent" class="dropdown-content">
+      <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+      <a id="exampleDropdownEntry1" onclick =
+         "$.loadScript('./presets/preset1.js', function(){});
+         document.getElementById('exampleDropdownContent').classList.toggle('show');">Compare Daily Cases of Germany, Spain and Italy</a>
+   </div>
+   </div>
+   
    
    <div id="countryBoxContainer">
    
@@ -150,7 +166,7 @@
    <br><br><br>
    
    <div class="explainBox" style="">
-   <h2>Explanations / Support</h2>
+   <h2>How to use / Support</h2>
    <ul> 
    <li> Select the same country multiple times to compare death/case counts
    <li> Rescale the y axis to see if the case counts of two or more countries are
@@ -165,7 +181,7 @@
    <li> Examine total or per capita data
    <li> Pick a custom color by clicking the color wheel  &nbsp;
         <img src="./img/colorwheel.png" style="height: 15px; margin-bottom: 0;">
-   <li> Export your plot to an png-image, using &nbsp;
+   <li> Export your plot to a png-image, using &nbsp;
         <img src="./img/download.svg" style="height: 15px; margin-bottom: 0;">
    <li> For support please contact Fabian Schubert:
    <font color="#990000">
@@ -173,6 +189,7 @@
        document.getElementById('add_2').innerHTML='@';
        document.getElementById('itp_2').innerHTML='itp.uni-frankfurt.de';"
        style="cursor: pointer;">click to show email</span><span id="add_2"></span><span id="itp_2"></span></font>
+   <li> Further developments are planned.
    </ul>
 
    <h2>Representations of an Epidemic Outbreak</h2>
@@ -194,13 +211,14 @@
         target="_blank"
         class="blackText"> European Center for Disease Control open Covid-19 data</a> (world wide countries)
    <li> <b>JH-CSSE:</b> <a href="https://github.com/CSSEGISandData/COVID-19" target="_blank"
-        class="blackText">John Hopkins Center For Systems Science and Engineering Covid-19 Githup repository</a> (US states)
+        class="blackText">John Hopkins Center For Systems Science and Engineering Covid-19 Github repository</a> (US states)
+   <li> World and EU aggregates: calculated from ECDC data.
    </ul>
 
    <h2>Terms</h2>
    <ul>
    <li> The Goethe Interactive COVID-19 Analyzer is free to use.
-   <li> Graphics produced can be used for both for private and commercial purposes,<br>
+   <li> Graphics produced can be used both for private and commercial purposes,<br>
      when including the disclaimer "Produced using the Goethe Interactive COVID-19 Analyzer".
    <li> Online publications need to include a link to this website.
    </ul>
@@ -209,8 +227,8 @@
    <ul>
    <li> We notify that the used Covid-19 data may contain errors and
      inconsistencies.
-   <li> Bitte beachten Sie die 
-   <a href="https://www.uni-frankfurt.de/72059554/Datenschutz">Datenschutzerklärung</a>
+   <li> Please take the note of the
+   <a href="https://www.uni-frankfurt.de/72059554/Datenschutz">data privacy statement</a>.
    </ul>
    </div>
    
@@ -227,7 +245,7 @@
          ycut="0"
          timeShift="0"
          n_avg="3"
-         lockScales="true"
+         lockScales="false"
          displayData="cases"
          idx="0"
          style="background-color: #ff0000;">
@@ -310,7 +328,7 @@
             
             <!-- lock scale button -->
             <input type="image"
-            src="./img/lock_closed.svg"
+            src="./img/lock_open.svg"
             class="scaleLock"
             onclick="scaleLockClick(this);">
                          
@@ -355,6 +373,8 @@
       <script src="./js/plotting.js"></script>
       <script src="./js/dropdown.js"></script>
       <script src="./js/main.js"></script>
+<?php include './php/visitCounter.php';?>
+
    
 </body>
 </html>

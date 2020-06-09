@@ -3,7 +3,7 @@ function addPlot(idx){
    
    window.addPlotCounter++;
    
-   $('#showExample')[0].style.display = "none";
+   $('#exampleDropdown')[0].style.display = "none";
    
    let plotdata = {
          label: countries[idx],
@@ -34,16 +34,8 @@ function addPlot(idx){
       min: 0,
       max: Math.round((times[idx][times[idx].length-1] - times[idx][0])/864e5),
       values: [0,Math.round((times[idx][times[idx].length-1] - times[idx][0])/864e5)],
-      slide: function( event, ui ) {
-         let countryBoxTemp = $(ui.handle).parent().parent().parent().parent();
-         let max = $(ui.handle).parent().slider("option","max")
-         countryBoxTemp.attr("xcut",Math.round(ui.values[0]));
-         countryBoxTemp.attr("ycut",Math.round(max - ui.values[1]));
-         //console.log(countryBoxTemp.attr("xcut"));
-         //console.log(countryBoxTemp.attr("ycut"));
-         
-         updateData(countryBoxTemp);
-      }
+      change: changeRangeSlider,
+      slide: changeRangeSlider      
    });
    
    colCicleState++;
@@ -52,6 +44,19 @@ function addPlot(idx){
    updateData($(newCountryBox));
    updateAxes();
    
+   return newCountryBox;
+   
+}
+
+function changeRangeSlider(event, ui){
+   let countryBoxTemp = $(ui.handle).parent().parent().parent().parent();
+   let max = $(ui.handle).parent().slider("option","max")
+   countryBoxTemp.attr("xcut",Math.round(ui.values[0]));
+   countryBoxTemp.attr("ycut",Math.round(max - ui.values[1]));
+   //console.log(countryBoxTemp.attr("xcut"));
+   //console.log(countryBoxTemp.attr("ycut"));
+   //console.log("triggered");
+   updateData(countryBoxTemp);
 }
 
 function updateData(countryBox){ //countryBox should be a jquery object
@@ -92,7 +97,7 @@ function closeButtonClick(self){
    myLineChart.update();
    nPlots--;
    if(nPlots==0){
-      $('#showExample')[0].style.display = "inline-block";
+      $('#exampleDropdown')[0].style.display = "inline-block";
    }
 }
 

@@ -4,6 +4,10 @@ function showCountries() {
   document.getElementById("countryDropdownContent").classList.toggle("show");
 }
 
+function showExamples() {
+  document.getElementById("exampleDropdownContent").classList.toggle("show");
+}
+
 function showDataSets() {
   document.getElementById("dataDropdownContent").classList.toggle("show");
 }
@@ -28,10 +32,11 @@ $(document).click(function(event) {
   $target = $(event.target);
   if(!$target.closest('.dropdown').length) {
     document.getElementById("countryDropdownContent").classList.remove("show");
-    //document.getElementById("dataDropdownContent").classList.remove("show");
+    document.getElementById("exampleDropdownContent").classList.remove("show");
   }       
 });
 
 function changeCountry(){
   
 }
+
