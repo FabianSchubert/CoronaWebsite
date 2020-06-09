@@ -9,6 +9,10 @@ let yScaleMax = ItalyBoxDeaths.find(".yScale").parent().parent().find('.sliderRa
 yScaleMax.value = "10";
 yScaleMax.oninput();
 
+let xScaleMax = ItalyBoxDeaths.find(".xScale").parent().parent().find('.sliderRangeField')[0];
+xScaleMax.value = "10";
+xScaleMax.oninput();
+
 ItalyBoxDeaths.find(".scaleLock")[0].onclick();
 
 ItalyBoxDeaths.find(".yScale")[0].value = 35;
