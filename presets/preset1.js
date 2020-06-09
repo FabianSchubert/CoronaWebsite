@@ -22,8 +22,6 @@ GermanyBox.find('.dateRange').slider("option","values",[46,161]);
 SpainBox.find('.dateRange').slider("option","values",[46,161]);
 ItalyBox.find('.dateRange').slider("option","values",[46,161]);
 
-console.log(SpainBox.find(".yScale")[0].value);
-
 updateData(GermanyBox);
 updateData(SpainBox);
 updateData(ItalyBox);

@@ -152,7 +152,10 @@
       <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
       <a id="exampleDropdownEntry1" onclick =
          "$.loadScript('./presets/preset1.js', function(){});
-         document.getElementById('exampleDropdownContent').classList.toggle('show');">Compare Daily Cases of Germany, Spain and Italy</a>
+         document.getElementById('exampleDropdownContent').classList.toggle('show');">Compare daily cases of Germany, Spain and Italy.</a>
+      <a id="exampleDropdownEntry2" onclick =
+         "$.loadScript('./presets/preset2.js', function(){});
+         document.getElementById('exampleDropdownContent').classList.toggle('show');">Compare confirmed cases and deaths in Italy.</a>
    </div>
    </div>
    
@@ -361,6 +364,7 @@
             
             <label class="switch">
                <input type="checkbox"
+               class="checkbox switchCasesDeaths"
                onclick="casesCheckBoxClick(this);">
                <span class="switchSlider round"></span>
             </label>
