@@ -203,6 +203,8 @@ function processDataECDC(tab){
    
    //console.log(times);
    
+   //console.log(countries)
+   
    for(let i=0;i<nCountries;i++){
       //replace underscores in country names with spaces
       countries[i] = countries[i].replace(/_/g," ");

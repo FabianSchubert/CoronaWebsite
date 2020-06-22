@@ -33,9 +33,7 @@
 </head>
 <body>
    
-   <?php
-   include('./php/downloadData.php');
-   ?>
+   
       
    <div id="outerFrame">
    

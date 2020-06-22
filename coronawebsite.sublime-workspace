@@ -484,19 +484,11 @@
 	"buffers":
 	[
 		{
-			"file": "index.php",
+			"file": "js/dataProcess.js",
 			"settings":
 			{
-				"buffer_size": 13913,
+				"buffer_size": 10443,
 				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/fabian/itp_mount/public_html/php/index.php",
-			"settings":
-			{
-				"buffer_size": 66,
 				"line_ending": "Unix"
 			}
 		},
@@ -509,13 +501,19 @@
 			}
 		},
 		{
-			"contents": "<!DOCTYPE html>\n<html>\n<head>\n   \n   \n   \n   <title>Goethe Interactive COVID-19 Analyzer</title>\n   <meta charset=\"UTF-8\">\n   <meta name=\"description\" content=\"Online interactive Covid-19 analyzer.\n   Free tool to compare Corona data for counries, daily case counts, total \n   case counts and death count. Allows rescaling.\">\n\n   <meta name=\"keywords\" content=\"Covid-19, Coronavirus, case-counts, death-counts,\n   daily-counts, death-counts, analyzer, interactive, free, online\"/>\n   \n   <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js\"></script>\n   <script src=\"https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js\"></script>\n   <script src=\"https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js\"></script>\n   <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js\"></script>\n   <script src=\"https://code.jquery.com/ui/1.12.1/jquery-ui.js\"></script>\n   \n   \n    <link rel=\"stylesheet\" href=\"//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css\">\n   <link rel=\"stylesheet\" type=\"text/css\" href=\"./sty/main.css\">\n   <link rel=\"stylesheet\" type=\"text/css\" href=\"./sty/dropdown.css\">\n   <link rel=\"stylesheet\" type=\"text/css\" href=\"./sty/countrybox.css\">\n   <link rel=\"stylesheet\" type=\"text/css\" href=\"./sty/slider.css\">\n   <link rel=\"stylesheet\" type=\"text/css\" href=\"./sty/switch.css\">\n  \n   \n   \n   \n</head>\n<body>\n   \n   <?php\n   include('./php/downloadData.php');\n   ?>\n      \n   <div id=\"outerFrame\">\n   \n   <div class=\"centerBox\" style=\"background:#999999; color:#FFFFFF;\"\n     title = \"Rescale, shift and compare Covid-19 data, create your own analysis\">\n   <img src=\"./img/GU-Logo-weiss.png\" align=\"right\"\n        style=\"border: none; display: block; width: 15%;\">\n   <h1>Goethe Interactive COVID-19 Analyzer</h1>\n   </div>\n   \n   \n   \n   \n   <div class=\"centerBox\" style=\"background:#FFFFFF; text-align: left;\">\n    <span style=\"color:#666666; font-weight:bold; font-size: larger;\">Compare \n          Covid-19 outbreaks, create your own plots!</span>\n    <span style=\"float:right;\">\n       <a href=\"https://itp.uni-frankfurt.de/~gros/\" class=\"blackText\">Claudius Gros</a> /  \n   Fabian Schubert</span><br>\n    <span style=\"float:right;\">Institute for Theoretical Physics &#8212; \n                               Goethe University Frankfurt</span>\n   \n   <br><br>\n   \n   <div id=\"ChartDropdown\">\n      \n      \n      <div id = \"chartcontainer\">\n      <div class=\"axDataTypeSwitch yAx\"><!--\n      --><button class=\"dataTypeButton yAx Left\"\n      onclick=\"yAxMode = 'daily';\n            updateAxes();\"><span\n      style=\"margin: 20px 5px 17px 0px;\">Daily</span></button><!--\n      --><button class=\"dataTypeButton yAx Middle\"\n      onclick=\"yAxMode = 'total';\n            updateAxes();\"><span\n      style=\"margin: 17px 3.65px 17px 1px;\">Total</span></button><!--\n      <button class=\"dataTypeButton yAx Right\"\n      onclick=\"yAxMode = 'time';\n            updateAxes();\"><span\n      style=\"margin: 17px 5px 20px 0px;\">Time</span></button>-->\n      </div>\n      \n      \n      <div style=\"width:calc(100% - 70px); float: right;\">\n         <canvas id=\"chart\" width=\"1280\" height=\"720\"></canvas>\n      </div>\n      </div>\n      \n      <div class=\"dropdown\" id=\"countryDropdown\"\n           title = \"add country or US state of your choice\">\n      <button onclick=\"showCountries()\" class=\"dropbtn\">Add&nbsp;Country</button>\n      <div id=\"countryDropdownContent\" class=\"dropdown-content\">\n         <input type=\"text\" placeholder=\"Search..\" id=\"myInput\" onkeyup=\"filterFunction()\">\n         <!--list of countries goes here-->\n      </div>\n      </div>\n      \n      <div id=\"totalPopSwitchContainer\" title=\"how to display the data\">\n      <span>Per 100.000 Inh.</span>\n      <label class=\"switch\" id=\"totalPopSwitch\">\n         <input type=\"checkbox\"\n         onclick=\"totalPopCheckBoxClick(this);\">\n         <span class=\"switchSlider round\"></span>\n      </label>\n      <span> Absolute</span>\n      </div>\n      <!--\n      <div class=\"dropdown\" id=\"dataDropdown\">\n      <button onclick=\"showDataSets()\" class=\"dropbtn\">Choose Dataset</button>\n      <div id=\"dataDropdownContent\" class=\"dropdown-content\">\n         <a onclick = \"setDataECDC();\">World Countries (ECDC)</a>\n         <a onclick = \"setDataUSStates();\">US States (Johns Hopkins University)</a>\n      </div>\n      </div>-->\n      \n      \n      <div class=\"axDataTypeSwitch xAx\">\n         <button class=\"dataTypeButton xAx Left\"\n      onclick=\"xAxMode = 'total';\n            updateAxes();\">Total</button><!--\n      --><button class=\"dataTypeButton xAx Middle\"\n      onclick=\"xAxMode = 'time';\n            updateAxes();\">Time</button><!--\n      --><button class=\"dataTypeButton xAx Right\"\n      onclick=\"xAxMode = 'daily';\n            updateAxes();\">Daily</button>\n      \n      <input type=\"image\"\n            src=\"./img/download.svg\"\n      id = \"downloadButton\"\n      title = \"export plot to png image\"\n      style=\"\n      border-style: none;\n      position: absolute;\n      right: 5px;\"\n      onclick=\"var url = myLineChart.toBase64Image();\n      window.open(url);\">\n      \n      </div>\n      \n   </div>\n   \n   \n   <hr style = \"height:2px;border-width:0;color:#AAAAAA;background-color:#AAAAAA\">\n   \n   <!--<button id=\"showExample\"\n   onclick=\"showExampleClick(this);\">Show Example</button>-->\n   \n   <div class=\"dropdown\" id=\"exampleDropdown\"\n        title = \"show some examples to start exploring\">\n   <button onclick=\"showExamples()\" class=\"dropbtn\">Show&nbsp;Examples</button>\n   <div id=\"exampleDropdownContent\" class=\"dropdown-content\">\n      <input type=\"text\" placeholder=\"Search..\" id=\"myInput\" onkeyup=\"filterFunction()\">\n      <a id=\"exampleDropdownEntry1\" onclick =\n         \"$.loadScript('./presets/preset1.js', function(){});\n         document.getElementById('exampleDropdownContent').classList.toggle('show');\">Compare daily cases of Germany, Spain and Italy.</a>\n      <a id=\"exampleDropdownEntry2\" onclick =\n         \"$.loadScript('./presets/preset2.js', function(){});\n         document.getElementById('exampleDropdownContent').classList.toggle('show');\">Compare confirmed cases and deaths in Italy.</a>\n   </div>\n   </div>\n   \n   \n   <div id=\"countryBoxContainer\">\n   \n   \n    \n   </div>\n   \n   <br><br><br>\n   \n   <div class=\"explainBox\" style=\"\">\n   <h2>How to use / Support</h2>\n   <ul> \n   <li> Select the same country multiple times to compare death/case counts\n   <li> Rescale the y axis to see if the case counts of two or more countries are\n        functionally similar,<br>\n        rescale both x and y axis to compare XI representations\n        (daily vs total case counts);<br>\n        can be done both for case and death counts\n   <li> Shift the timeline of a country by a few days to match the onset of the outbreak.\n   <li> n-day centered moving averages are provided; examples: <br>\n     n=3: mean of previous-, current- and subsequent day<br>\n     n=1: raw data\n   <li> Examine total or per capita data\n   <li> Pick a custom color by clicking the color wheel  &nbsp;\n        <img src=\"./img/colorwheel.png\" style=\"height: 15px; margin-bottom: 0;\">\n   <li> Export your plot to a png-image, using &nbsp;\n        <img src=\"./img/download.svg\" style=\"height: 15px; margin-bottom: 0;\">\n   <li> For support please contact Fabian Schubert:\n   <font color=\"#990000\">\n   <span onclick=\"this.innerHTML='fschubert';\n       document.getElementById('add_2').innerHTML='@';\n       document.getElementById('itp_2').innerHTML='itp.uni-frankfurt.de';\"\n       style=\"cursor: pointer;\">click to show email</span><span id=\"add_2\"></span><span id=\"itp_2\"></span></font>\n   <li> Additional functionalities are planned.\n   </ul>\n\n   <h2>Representations of an Epidemic Outbreak</h2>\n   <ul>\n   <li> <b>Timeline:</b> Data (case/total counts) as a function of time (date)\n   <li> <b>XI representation:</b> I: daily counts (cases/deaths) as a function of \n                              X: total counts (cases/deaths) <br>\n     Time is implicit; allows to compare/extract parameters\n   <li> <b>Publication:</b>\n   <em><a href=\"http://arxiv.org/abs/2004.00493\" class=\"blackText\" target=\"_blank\" >\n   \"Containment efficiency and control strategies for the Corona pandemic costs\"</a></em>, \n   <br>\n   C. Gros, R. Valenti, L. Schneider, K. Valenti, D. Gros (2020)\n   </ul>\n\n   <h2>Covid-19 Data Sources</h2>\n   <ul>\n   <li> <b>ECDC:</b> <a href=\"https://opendata.ecdc.europa.eu/covid19/casedistribution/\" \n        target=\"_blank\"\n        class=\"blackText\"> European Center for Disease Control open Covid-19 data</a> (world wide countries)\n   <li> <b>JH-CSSE:</b> <a href=\"https://github.com/CSSEGISandData/COVID-19\" target=\"_blank\"\n        class=\"blackText\">John Hopkins Center For Systems Science and Engineering Covid-19 Github repository</a> (US states)\n   <li> World and EU aggregates: calculated from ECDC data.\n   </ul>\n\n   <h2>Terms</h2>\n   <ul>\n   <li> The Goethe Interactive COVID-19 Analyzer is free to use.\n   <li> Graphics produced can be used both for private and commercial purposes,<br>\n     when including the disclaimer \"Produced using the Goethe Interactive COVID-19 Analyzer\".\n   <li> Online publications need to include a link to this website.\n   </ul>\n\n   <h2>Data Protection</h2>\n   <ul>\n   <li> We notify that the used Covid-19 data may contain errors and\n     inconsistencies.\n   <li> Please take the note of the\n   <a href=\"https://www.uni-frankfurt.de/72059554/Datenschutz\">data privacy statement</a>.\n   </ul>\n   </div>\n   \n   </div>\n   \n   <!--country box template-->\n   <template id=\"countryBoxTmpl\">\n         <div class=\"countryBox\"\n         id=\"countryBox_Init\"\n         xyScaleRatio=\"1\"\n         xScale=\"1.0\"\n         yScale=\"1.0\"\n         xcut=\"0\"\n         ycut=\"0\"\n         timeShift=\"0\"\n         n_avg=\"3\"\n         lockScales=\"false\"\n         displayData=\"cases\"\n         idx=\"0\"\n         style=\"background-color: #ff0000;\">\n            <p class=\"countryBoxHeader\">\n            TemplateCountry\n            </p>\n            \n            <!-- close button -->\n            <input type=\"image\"\n            src=\"./img/closeicon.svg\"\n            class=\"closeCountryBox\"\n            onclick=\"closeButtonClick(this);\">\n            \n            <input type=\"color\" style='opacity:0;width:100px;position:absolute;'\n            class=\"colorPicker\"\n            onchange=\"setColor(this);\" />            \n            <input type=\"image\"\n            src=\"./img/colorwheel.png\"\n            class=\"colorWheel\"\n            onclick=\"openColorPicker(this);\">\n            \n            <!-- x-scale -->\n            <span>x-Scale: </span>\n            \n            <span class=\"xScaleValue\">1</span>\n            <div class=\"rangeContainer\">\n               <span>\n                  <input type=\"range\"\n                  min=\"1\"\n                  max=\"50\"\n                  value=\"10\"\n                  class=\"slider xScale\"\n                  oninput=\"xScaleSliderInput(this);\">\n                  </span>\n               <input type=\"text\"\n               class=\"sliderRangeField max\"\n               value=\"5\"\n               oninput=\"scaleMaxInput(this);\">\n            </div>\n            \n            \n            <!-- y-scale -->\n            <span>y-Scale: </span>\n            \n            <span class=\"yScaleValue\">1</span>\n            \n            <br>\n            <div class=\"rangeContainer\">\n               <span>\n                  <input type=\"range\"\n                  min=\"1\"\n                  max=\"50\"\n                  value=\"10\"\n                  class=\"slider yScale\"\n                  oninput=\"yScaleSliderInput(this);\">\n               </span>\n               <input type=\"text\"\n               class=\"sliderRangeField max\"\n               value=\"5\"\n               oninput=\"scaleMaxInput(this);\">\n            </div>\n            \n            <!-- time shift -->\n            <span>Time Shift (Days): </span>\n            \n            <span class=\"timeShiftValue\">0</span>\n            \n            <br>\n            <div class=\"rangeContainer\">\n               <span>\n                  <input type=\"range\"\n                  min=\"-60\"\n                  max=\"60\"\n                  value=\"0\"\n                  class=\"slider timeShift\"\n                  oninput=\"timeShiftSliderInput(this);\">\n               </span>\n            </div>\n            \n            \n            <!-- lock scale button -->\n            <input type=\"image\"\n            src=\"./img/lock_open.svg\"\n            class=\"scaleLock\"\n            onclick=\"scaleLockClick(this);\">\n                         \n            <!-- averaging window-->\n            <span>Averaging Window (Days): </span>\n            \n            <span class=\"averageWindowValue\">7</span>\n            \n            <div class=\"rangeContainer\">\n            <span>\n               <input type=\"range\"\n               min=\"0\"\n               max=\"10\"\n               value=\"3\"\n               class=\"slider averageWindow\"\n               oninput=\"averageWindowSliderInput(this);\">\n            </span>\n            </div>\n            \n            <span>Select Start/End Date</span>\n            \n            <div class=\"rangeContainer\">\n               <span>\n                  <div class=\"dateRange\"></div>\n               </span>\n            </div>\n            \n            <!-- switch between cases /deaths -->\n            <span>Display: Cases </span>\n            \n            <label class=\"switch\">\n               <input type=\"checkbox\"\n               class=\"checkbox switchCasesDeaths\"\n               onclick=\"casesCheckBoxClick(this);\">\n               <span class=\"switchSlider round\"></span>\n            </label>\n            \n            <span> Deaths</span>\n         </div>\n      </template>\n      \n      <script src=\"./js/dataProcess.js\"></script>\n      <script src=\"./js/plotting.js\"></script>\n      <script src=\"./js/dropdown.js\"></script>\n      <script src=\"./js/main.js\"></script>\n      \n<?php include './php/visitCounter.php';?>\n\n   \n</body>\n</html>\n\n",
-			"file": "/home/fabian/itp_mount/public_html/CoronaWebsite/index.php",
-			"file_size": 13913,
-			"file_write_time": 132361910690000000,
+			"file": "index.php",
 			"settings":
 			{
-				"buffer_size": 13920,
+				"buffer_size": 13915,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "php/downloadData_new.php",
+			"settings":
+			{
+				"buffer_size": 991,
 				"line_ending": "Unix"
 			}
 		}
@@ -598,8 +596,11 @@
 	],
 	"file_history":
 	[
-		"/home/fabian/work/repos/CoronaWebsite/php/visit_counter.php",
 		"/home/fabian/itp_mount/public_html/index.php",
+		"/home/fabian/itp_mount/public_html/CoronaWebsite/index.php",
+		"/home/fabian/work/repos/CoronaWebsite/index.php",
+		"/home/fabian/itp_mount/public_html/php/index.php",
+		"/home/fabian/work/repos/CoronaWebsite/php/visit_counter.php",
 		"/home/fabian/student_project/sketch.js",
 		"/home/fabian/work/repos/CoronaWebsite/sty/countrybox.css",
 		"/home/fabian/work/repos/CoronaWebsite/sty/slider.css",
@@ -613,7 +614,6 @@
 		"/home/fabian/work/repos/CoronaWebsite/presets/preset.js",
 		"/home/fabian/work/repos/CoronaWebsite/js/main.js",
 		"/home/fabian/work/repos/CoronaWebsite/js/plotting.js",
-		"/home/fabian/work/repos/CoronaWebsite/index.php",
 		"/home/fabian/itp_mount/home/www-covid-19/public_html/index.php",
 		"/home/fabian/work/repos/CoronaWebsite/dat/us_states_population.csv",
 		"/home/fabian/work/repos/CoronaWebsite/example.html",
@@ -678,7 +678,7 @@
 	],
 	"find":
 	{
-		"height": 35.0
+		"height": 31.0
 	},
 	"find_in_files":
 	{
@@ -733,24 +733,54 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "index.php",
+					"file": "js/dataProcess.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 13913,
+						"buffer_size": 10443,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								13913,
-								13913
+								5105,
+								5105
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 4108.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "php/downloadData.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1063,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								221,
+								221
 							]
 						],
 						"settings":
@@ -760,27 +790,57 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 10644.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "/home/fabian/itp_mount/public_html/php/index.php",
+					"buffer": 2,
+					"file": "index.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 66,
+						"buffer_size": 13915,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								64,
-								0
+								1442,
+								1442
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 660.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "php/downloadData_new.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 991,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								929,
+								929
 							]
 						],
 						"settings":
@@ -793,73 +853,13 @@
 					},
 					"stack_index": 0,
 					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "php/downloadData.php",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 1063,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 3,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "/home/fabian/itp_mount/public_html/CoronaWebsite/index.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 13920,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								13855,
-								13855
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 3,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 10947.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
 				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 35.0
+		"height": 31.0
 	},
 	"input":
 	{
@@ -896,7 +896,7 @@
 	"project": "coronawebsite.sublime-project",
 	"replace":
 	{
-		"height": 66.0
+		"height": 58.0
 	},
 	"save_all_on_build": true,
 	"select_file":
