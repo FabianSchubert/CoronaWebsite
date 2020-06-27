@@ -8,10 +8,10 @@
    <meta charset="UTF-8">
    <meta name="description" content="Online interactive Covid-19 analyzer.
    Free tool to compare Corona data for counries, daily case counts, total 
-   case counts and death count. Allows rescaling.">
+   case counts and fatalities. Allows rescaling.">
 
    <meta name="keywords" content="Covid-19, Coronavirus, case-counts, death-counts,
-   daily-counts, death-counts, analyzer, interactive, free, online"/>
+   daily-counts, death-counts, analyzer, interactive, free, online, fatalities"/>
    
    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
@@ -169,12 +169,12 @@
    <div class="explainBox" style="">
    <h2>How to use / Support</h2>
    <ul> 
-   <li> Select the same country multiple times to compare death/case counts
+   <li> Select the same country multiple times to compare fatalities/case counts
    <li> Rescale the y axis to see if the case counts of two or more countries are
         functionally similar,<br>
         rescale both x and y axis to compare XI representations
         (daily vs total case counts);<br>
-        can be done both for case and death counts
+        can be done both for case counts and fatalities.
    <li> Shift the timeline of a country by a few days to match the onset of the outbreak.
    <li> n-day centered moving averages are provided; examples: <br>
      n=3: mean of previous-, current- and subsequent day<br>
@@ -196,8 +196,8 @@
    <h2>Representations of an Epidemic Outbreak</h2>
    <ul>
    <li> <b>Timeline:</b> Data (case/total counts) as a function of time (date)
-   <li> <b>XI representation:</b> I: daily counts (cases/deaths) as a function of 
-                              X: total counts (cases/deaths) <br>
+   <li> <b>XI representation:</b> I: daily counts (cases/fatalities) as a function of 
+                              X: total counts (cases/fatalities) <br>
      Time is implicit; allows to compare/extract parameters
    <li> <b>Publication:</b>
    <em><a href="http://arxiv.org/abs/2004.00493" class="blackText" target="_blank" >
