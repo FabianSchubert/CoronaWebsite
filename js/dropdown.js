@@ -12,21 +12,27 @@ function showDataSets() {
   document.getElementById("dataDropdownContent").classList.toggle("show");
 }
 
-function filterFunction() {
-  var input, filter, ul, li, a, i;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  div = document.getElementById("countryDropdownContent");
-  a = div.getElementsByTagName("a");
-  for (i = 0; i < a.length; i++) {
-    txtValue = a[i].textContent || a[i].innerText;
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      a[i].style.display = "";
-    } else {
-      a[i].style.display = "none";
-    }
-  }
-}
+	function filterFunction() {
+	  var input, filter, ul, li, a, i;
+	  input = document.getElementById("myInput");
+	  filter = input.value.toUpperCase();
+	  div = document.getElementById("countryDropdownContent");
+	  a = div.getElementsByTagName("a");
+	  a.href = "#"
+	  for (i = 0; i < a.length; i++) {
+		txtValue = a[i].textContent || a[i].innerText;
+		if (txtValue.toUpperCase().indexOf(filter) > -1) {
+		  a[i].style.display = "" ;
+		} else {
+		  a[i].style.display = "none";
+		}
+	  }
+	}
+
+
+
+
+
 
 $(document).click(function(event) { 
   $target = $(event.target);
@@ -39,4 +45,9 @@ $(document).click(function(event) {
 function changeCountry(){
   
 }
+
+
+$(document).ready(function(){
+  $(".dropdown-toggle").dropdown();
+});
 
