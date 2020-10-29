@@ -303,21 +303,28 @@ function setup() {
    
    $('#totalPopSwitch').children()[0].checked = false;
    
+  
    
    let dropdown = document.getElementById("countryDropdownContent");
+	 
    var newEntry;
    for(i=0;i<nRows;i++){
       newEntry = document.createElement('a');
+	  newEn = document.createElement('li');
       newEntry.innerHTML = countries[i];
+	  newEntry.href = "javascript:void(0)"
       newEntry.id = countries[i] + "DropdownEntry";
+	  newEn = document.createElement('li');
+	  newEn.appendChild(newEntry)
       newEntry.onclick = function(){
          let findidx = countries.indexOf(this.innerHTML);
          addPlot(findidx);
-         document.getElementById("countryDropdownContent").classList.toggle("show");
-      };
-      dropdown.appendChild(newEntry);
+         document.getElementById("countryDropdownContent").classList.remove("show");
+		
+	  };
+	  
+	  dropdown.appendChild(newEn);
    }
-   
    
    
       
