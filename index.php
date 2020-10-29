@@ -369,7 +369,7 @@
             
             <div class="rangeContainer">
                <span>
-                  <div id="daterange" class="dateRange" style ="height: 6.5px;" ></div>
+                  <div id="daterange" class="dateRange" style="height: 6.5px;" ></div>
                </span>
             </div>
             
