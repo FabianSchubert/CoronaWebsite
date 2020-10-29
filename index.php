@@ -23,12 +23,15 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
    <link rel="stylesheet" type="text/css" href="./sty/main.css">
    <link rel="stylesheet" type="text/css" href="./sty/dropdown.css">
-   <link rel="stylesheet" type="text/css" href="./sty/countrybox.css">
+   <link rel="stylesheet" type="text/css" href="./sty/countryb.css">
    <link rel="stylesheet" type="text/css" href="./sty/slider.css">
    <link rel="stylesheet" type="text/css" href="./sty/switch.css">
+
   
-   
-   
+	 <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
    
 </head>
 <body>
@@ -37,19 +40,19 @@
       include('./php/downloadData.php')
    ?>   
       
-   <div id="outerFrame">
+   <div id="outerFrame" style= "max-width: 1100px;">
    
    <div class="centerBox" style="background:#999999; color:#FFFFFF;"
      title = "Rescale, shift and compare Covid-19 data, create your own analysis">
    <img src="./img/GU-Logo-weiss.png" align="right"
         style="border: none; display: block; width: 15%;">
-   <h1>Goethe Interactive COVID-19 Analyzer</h1>
+   <h1 style="font-weight: 600;">Goethe Interactive COVID-19 Analyzer</h1>
    </div>
    
    
    
    
-   <div class="centerBox" style="background:#FFFFFF; text-align: left;">
+   <div class="centerBox" style="background:#FFFFFF; font-size: 16px; text-align: left;">
     <span style="color:#666666; font-weight:bold; font-size: larger;">Compare 
           Covid-19 outbreaks, create your own plots!</span>
     <span style="float:right;">
@@ -68,7 +71,7 @@
       --><button class="dataTypeButton yAx Left"
       onclick="yAxMode = 'daily';
             updateAxes();"><span
-      style="margin: 20px 5px 17px 0px;">Daily</span></button><!--
+      style="margin: 20px 5px 17px 0px; font-size: 15px;">Daily</span></button><!--
       --><button class="dataTypeButton yAx Middle"
       onclick="yAxMode = 'total';
             updateAxes();"><span
@@ -87,12 +90,12 @@
       
       <div class="dropdown" id="countryDropdown"
            title = "add country or US state of your choice">
-      <button onclick="showCountries()" class="dropbtn">Add&nbsp;Country</button>
-      <div id="countryDropdownContent" class="dropdown-content">
-         <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-         <!--list of countries goes here-->
-      </div>
-      </div>
+      <button  class="dropbtn"  type="button" data-toggle="dropdown" >Add&nbsp;Country </button> 
+        <div id = "countryDropdownContent" style = "padding-top: 0px;" class="dropdown-menu dropdown-content ">
+		
+		<input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+	  </div>
+	  </div>
       
       <div id="totalPopSwitchContainer" title="how to display the data">
       <span>Per 100.000 Inh.</span>
@@ -147,28 +150,29 @@
    
    <div class="dropdown" id="exampleDropdown"
         title = "show some examples to start exploring">
-   <button onclick="showExamples()" class="dropbtn">Show&nbsp;Examples</button>
-   <div id="exampleDropdownContent" class="dropdown-content">
+    <button  class="dropbtn"  type="button" data-toggle="dropdown" >Show&nbsp;Examples</button>
+   <div id="exampleDropdownContent" style = "padding-top: 0px;" class="dropdown-menu dropdown-content ">
       <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-      <a id="exampleDropdownEntry1" onclick =
+      <li><a href="#" id="exampleDropdownEntry1" onclick =
          "$.loadScript('./presets/preset1.js', function(){});
-         document.getElementById('exampleDropdownContent').classList.toggle('show');">Compare daily cases of Germany, Spain and Italy.</a>
-      <a id="exampleDropdownEntry2" onclick =
+         document.getElementById('exampleDropdownContent').classList.toggle('show');">Compare daily cases of Germany, Spain and Italy.</a></li>
+     <li><a href= "#" id="exampleDropdownEntry2" onclick =
          "$.loadScript('./presets/preset2.js', function(){});
-         document.getElementById('exampleDropdownContent').classList.toggle('show');">Compare confirmed cases and deaths in Italy.</a>
+         document.getElementById('exampleDropdownContent').classList.toggle('show');">Compare confirmed cases and deaths in Italy.</a></li>
    </div>
    </div>
    
    
-   <div id="countryBoxContainer">
+   <div id="countryBoxContainer" >
    
-   
+  
     
    </div>
    
    <br><br><br>
    
-   <div class="explainBox" style="">
+   <div class="explainBox" style="margin-left: auto; margin-right: auto; border-radius: 30px;
+		border: 5px solid #666666; background: #FFFFFF; padding: 20px;text-align: left; width: 100%;">
    <h2>How to use / Support</h2>
    <ul> 
    <li> Select the same country multiple times to compare fatalities/case counts
@@ -239,6 +243,7 @@
    
    <!--country box template-->
    <template id="countryBoxTmpl">
+    
          <div class="countryBox"
          id="countryBox_Init"
          xyScaleRatio="1"
@@ -249,10 +254,12 @@
          timeShift="0"
          n_avg="3"
          lockScales="false"
+		 lockDates="false"
          displayData="cases"
          idx="0"
-         style="background-color: #ff0000;">
+         style="padding-right: 17px; background-color: #ff0000;">
             <p class="countryBoxHeader">
+			
             TemplateCountry
             </p>
             
@@ -275,18 +282,19 @@
             
             <span class="xScaleValue">1</span>
             <div class="rangeContainer">
-               <span>
+               <span >
                   <input type="range"
                   min="1"
                   max="50"
-                  value="10"
+                  value="2"
                   class="slider xScale"
                   oninput="xScaleSliderInput(this);">
                   </span>
                <input type="text"
                class="sliderRangeField max"
-               value="5"
-               oninput="scaleMaxInput(this);">
+               value="25"
+			   style=" position: absolute; top: 67px; right: 40px; color:black"
+               oninput="scaleMaxInput(this)" style ="color: black;">
             </div>
             
             
@@ -301,14 +309,15 @@
                   <input type="range"
                   min="1"
                   max="50"
-                  value="10"
+                  value="2"
                   class="slider yScale"
                   oninput="yScaleSliderInput(this);">
                </span>
                <input type="text"
                class="sliderRangeField max"
-               value="5"
-               oninput="scaleMaxInput(this);">
+               value="25"
+			   style=" position: absolute; top: 122px; right: 40px; color:black"
+               oninput="scaleMaxInput(this)" style ="color: black ;">
             </div>
             
             <!-- time shift -->
@@ -326,6 +335,11 @@
                   class="slider timeShift"
                   oninput="timeShiftSliderInput(this);">
                </span>
+			   <input type="text"
+               class="sliderRangeField max"
+               value="30"
+			   style=" position: absolute; top: 172px; right: 40px; width: 11%; color:black"
+               oninput="timeMaxInput(this)" style ="color: black ;">
             </div>
             
             
@@ -333,7 +347,7 @@
             <input type="image"
             src="./img/lock_open.svg"
             class="scaleLock"
-            onclick="scaleLockClick(this);">
+            onclick="scaleLockClick(this);" style="width: 11%;">
                          
             <!-- averaging window-->
             <span>Averaging Window (Days): </span>
@@ -355,10 +369,11 @@
             
             <div class="rangeContainer">
                <span>
-                  <div class="dateRange"></div>
+                  <div id="daterange" class="dateRange" ></div>
                </span>
             </div>
             
+			
             <!-- switch between cases /deaths -->
             <span>Display: Cases </span>
             
