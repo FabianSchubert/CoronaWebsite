@@ -8,7 +8,7 @@
 
 .countryBox {
   position: relative;
-  width: 290px;
+  width: 312px;
   min-height: 100px;
   padding: 10px;
   border-radius: 10px;
@@ -54,12 +54,12 @@
   cursor: pointer;
 }
 
-
 .scaleLock {
   position: absolute;
-  top: 73px;
-  right: 10px;
+  top: 69px;
+  right: 2px;
 }
+
 
 .rangeContainer {
   width: 90%;
@@ -71,7 +71,7 @@
 }
 
 .sliderRangeField {
-  width: 9.5%;
+  width: 11%;
   height: 21px;
   box-sizing: border-box;
   border-radius: 8px;
