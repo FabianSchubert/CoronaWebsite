@@ -337,7 +337,7 @@
                </span>
 			   <input type="text"
                class="sliderRangeField max"
-               value="30"
+               value="365"
 			   style=" position: absolute; top: 172px; right: 40px; width: 11%; color:black"
                oninput="timeMaxInput(this)" style ="color: black ;">
             </div>
