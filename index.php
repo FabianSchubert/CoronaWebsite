@@ -153,10 +153,10 @@
     <button  class="dropbtn"  type="button" data-toggle="dropdown" >Show&nbsp;Examples</button>
    <div id="exampleDropdownContent" style = "padding-top: 0px;" class="dropdown-menu dropdown-content ">
       <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-      <li><a href="javascript:void(0)" id="exampleDropdownEntry1" onclick =
+      <li><a href="#" id="exampleDropdownEntry1" onclick =
          "$.loadScript('./presets/preset1.js', function(){});
          document.getElementById('exampleDropdownContent').classList.toggle('show');">Compare daily cases of Germany, Spain and Italy.</a></li>
-     <li><a href= "javascript:void(0)" id="exampleDropdownEntry2" onclick =
+     <li><a href= "#" id="exampleDropdownEntry2" onclick =
          "$.loadScript('./presets/preset2.js', function(){});
          document.getElementById('exampleDropdownContent').classList.toggle('show');">Compare confirmed cases and deaths in Italy.</a></li>
    </div>
