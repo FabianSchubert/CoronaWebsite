@@ -25,7 +25,7 @@
    $fileName_ECDC = "./dat/ecdc.csv";
    //$url_ECDC   = "https://opendata.ecdc.europa.eu/covid19/casedistribution/csv";
    $url_ECDC = "https://opendata.ecdc.europa.eu/covid19/casedistribution/csv/data.csv";
-   $seconds_download_interval = 0;
+   $seconds_download_interval = 3600;
    // --- ------------------------ ---
    // --- time since last modified ---
    // --- ------------------------ ---
