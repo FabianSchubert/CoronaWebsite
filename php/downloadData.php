@@ -9,6 +9,16 @@
        echo $js_code;
    }
 
+   function convert_date_timestamp($date){
+      $d = DateTime::createFromFormat('d-m-Y H:i:s', $date." 00:00:00");
+      if ($d === false) {
+          die("Incorrect date string");
+      } else {
+          return $d->getTimestamp();
+      }
+
+   }
+
    // --- -------------- ---
    // --- variable names ---
    // --- -------------- ---
@@ -34,15 +44,39 @@
    // --- -------------------------- ---
 
    if ( ($time_now-$time_ECDC_lastUpdated) > $seconds_download_interval ){
+      
+
       $file_contents = file_get_contents($url_ECDC);
-      //console_log($file_contents);
+
       if($file_contents != false) { 
             file_put_contents($fileName_ECDC, $file_contents);
+
+            copy($fileName_ECDC, "./dat/backup/ecdc_backup_".date('d-m-Y', $time_now).".csv");            
+
             console_log("File downloaded successfully"); 
       } 
       else { 
-          console_log("File downloading failed."); 
-      } 
+          console_log("File downloading failed. Replacing ecdc.csv with most recent_backup...");
+
+          $backup_files = array_slice(scandir("./dat/backup/"),2);
+   
+         $max_timestamp = 0;
+         for ($i = 0; $i <= count($backup_files)-1; $i++) {
+              $timestamp_temp = convert_date_timestamp(substr($backup_files[$i],12,10));
+              if($timestamp_temp > $max_timestamp){
+                $max_timestamp = $timestamp_temp;
+              }
+          }
+
+          $fileName_max_timestamp = "ecdc_backup_".date("d-m-Y", $max_timestamp).".csv";
+
+          copy("./dat/backup/".$fileName_max_timestamp, $fileName_ECDC);
+
+
+      }
+
+
+
    }
      
    ?>
