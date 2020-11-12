@@ -2,7 +2,7 @@
   position: relative;
   display: inline-block;
   width: 52px;
-  height: 24px;
+    height: 24px;
 }
 
 .switch input { 
@@ -10,6 +10,7 @@
   width: 0;
   height: 0;
 }
+
 
 .switchSlider {
   position: absolute;
@@ -34,6 +35,7 @@
   -webkit-transition: .4s;
   transition: .4s;
 }
+
 
 input:checked + .switchSlider {
   background-color: #b3b3b3;/*rgb(38, 57, 88);*/
