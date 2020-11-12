@@ -61,6 +61,13 @@
 }
 
 
+.dateLock {
+  position: absolute !important;
+  top: 271px !important;
+  right: 27px !important;
+}
+
+
 .rangeContainer {
   width: 90%;
 }
