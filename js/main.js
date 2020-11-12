@@ -306,24 +306,25 @@ function setup() {
   
    
    let dropdown = document.getElementById("countryDropdownContent");
-	 
    var newEntry;
    for(i=0;i<nRows;i++){
       newEntry = document.createElement('a');
-	  newEn = document.createElement('li');
       newEntry.innerHTML = countries[i];
-	  newEntry.href = "javascript:void(0)"
+	  newEntry.href = "#undefined1"
       newEntry.id = countries[i] + "DropdownEntry";
-	  newEn = document.createElement('li');
-	  newEn.appendChild(newEntry)
+	  newEntryListe = document.createElement('li');
+	  newEntryListe.appendChild(newEntry)
       newEntry.onclick = function(){
          let findidx = countries.indexOf(this.innerHTML);
          addPlot(findidx);
          document.getElementById("countryDropdownContent").classList.remove("show");
-		
-	  };
-	  
-	  dropdown.appendChild(newEn);
+	 var box = document.getElementById("countryBoxContainer")
+	if(box.getAttribute("lockDatesAll") == "false"){
+		box.setAttribute("lockDatesAll","true");
+		/*box.setAttribute("lockDatesAll","true");*/
+	} 
+	 };
+	  dropdown.appendChild(newEntryListe);
    }
    
    
