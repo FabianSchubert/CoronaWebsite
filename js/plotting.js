@@ -15,31 +15,35 @@ function addPlot(idx){
       };
    
    myLineChart.data.datasets.push(plotdata);
-      
    let countryBoxTmpl = $("#countryBoxTmpl")[0];
    
    let newCountryBoxCont = countryBoxTmpl.content.cloneNode(true);
    $("#countryBoxContainer").append(newCountryBoxCont);
    
+   let datelocks = $("#datelocks")[0];
    let newCountryBox = $("#countryBox_Init")[0];
-   
+   let daterange = $("#daterange")[0];
       
    newCountryBox.style.backgroundColor = colCicle[colCicleState];
    newCountryBox.setAttribute("id","countryBox" + addPlotCounter);
    newCountryBox.setAttribute("idx",String(idx));
-
+   datelocks.setAttribute("id","datelocks" + addPlotCounter);
+   newCountryBox.setAttribute("o", addPlotCounter);
    
+   
+   daterange.setAttribute("id","daterange" + addPlotCounter);
    
    $(newCountryBox).children(".countryBoxHeader")[0].innerHTML = countries[idx];
    
-   $(newCountryBox).find(".dateRange").slider({
+   $(countryBoxContainer).find(".dateRange").slider({
       range: true,
       min: 0,
       max: Math.round((times[idx][times[idx].length-1] - times[idx][0])/864e5),
       values: [0,Math.round((times[idx][times[idx].length-1] - times[idx][0])/864e5)],
       change: changeRangeSlider,
-      slide: changeRangeSlider     
+      slide: changeRangeSlider  
    });
+   
    
    colCicleState++;
    colCicleState = colCicleState%nColors;
@@ -52,17 +56,56 @@ function addPlot(idx){
 }
 
 function changeRangeSlider(event, ui){
+   let countryBoxT = $(ui.handle).parent().parent().parent().parent().parent();
    let countryBoxTemp = $(ui.handle).parent().parent().parent().parent();
-   let max = $(ui.handle).parent().slider("option","max")
-   countryBoxTemp.attr("xcut",Math.round(ui.values[0]));
-   countryBoxTemp.attr("ycut",Math.round(max - ui.values[1]));
-   //console.log(countryBoxTemp.attr("xcut"));
-   //console.log(countryBoxTemp.attr("ycut"));
-   //console.log("triggered");
-	   
-   updateData(countryBoxTemp);
+   let max = $(ui.handle).parent().slider("option","max");
+   
+    
+	//function range(start, end) {
+	/* generate a range : [start, start+1, ..., end-1, end] */
+	var len = addPlotCounter;
+	var a = new Array(len);
+	for (let i = 0; i < len; i++) {a[i] = 1 + i;
 }
 
+  if (countryBoxTemp.attr("lockDatesAll")=="true"){
+	   countryBoxT.attr("xcut",Math.round(ui.values[0]));
+       countryBoxT.attr("ycut",Math.round(max - ui.values[1]));
+	  let countryBox1 =$(ui.handle).parent()
+   
+	var x = countryBox1.children()[0].getAttribute("style")
+	var y = countryBox1.children()[1].getAttribute("style")
+	var z = countryBox1.children()[2].getAttribute("style")
+  }
+	for (i in a) {
+		 
+	  let allCountryBox = $(countryBoxT).children("#countryBox"+a[i]);
+	  var dateSlider = allCountryBox.children().children().children("#daterange"+a[i])
+		
+  if(countryBoxT.attr("lockDatesAll")=="true"){
+   if(countryBoxTemp.attr("lockDatesAll")=="true"){
+	if(allCountryBox.attr("lockDatesAll")=="true"){
+		
+		 allCountryBox.attr("xcut",countryBoxT.attr("xcut"));
+		 allCountryBox.attr("ycut",countryBoxT.attr("ycut"));
+		 
+  		  dateSlider.children()[0].style = x
+		  dateSlider.children()[1].style = y
+		  dateSlider.children()[2].style = z 
+		  
+		  updateData(allCountryBox);
+		  
+	   } 
+   }
+ }
+	}
+	countryBoxTemp.attr("xcut",Math.round(ui.values[0]));
+   countryBoxTemp.attr("ycut",Math.round(max - ui.values[1]));
+
+	
+   updateData(countryBoxTemp);
+   
+}
 function updateData(countryBox){ //countryBox should be a jquery object
       
    let xScale = parseFloat(countryBox.attr("xScale"));
@@ -94,13 +137,31 @@ function updateData(countryBox){ //countryBox should be a jquery object
 
 function closeButtonClick(self){
    let selfCountryBox = $(self).parent();
-   
+   let y = selfCountryBox.attr("o");
+   var z = Number(y);
    let idx_node = selfCountryBox.index(); // The first element is the example button
+    myLineChart.data.datasets.splice(idx_node,1);
+
+	 if (addPlotCounter>z){
+	  for (i=0; i<(addPlotCounter-z); i++){
+		  var h = i+z+1
+		  let x = selfCountryBox.parent().children("#countryBox"+h)
+		  let date = selfCountryBox.parent().children("#countryBox"+h).children().children().children("#daterange"+h)
+		  let datelock = selfCountryBox.parent().children("#countryBox"+h).children("#datelocks"+h)
+		  
+		  
+		  x.attr("id","countryBox"+(h-1))
+		  x.attr("o",(h-1))
+		  date.attr("id","daterange"+(h-1))
+		  datelock.attr("id","datelocks"+(h-1))
+	}
+	}
+ 
+	selfCountryBox.remove();
+
+    addPlotCounter -=1
+    myLineChart.update();
    
-   myLineChart.data.datasets.splice(idx_node,1);
-   selfCountryBox.remove();
-   myLineChart.update();
-   addPlotCounter -=1
    nPlots--;
    if(nPlots==0){
       $('#exampleDropdown')[0].style.display = "inline-block";
@@ -199,7 +260,7 @@ function averageWindowSliderInput(selfDOM){
 function timeShiftSliderInput(selfDOM){
    let self = $(selfDOM);
    let selfCountryBox = self.parent().parent().parent();
-   
+   console.log(selfDOM)
    let timeShiftSlider = selfCountryBox.find(".slider.timeShift")[0];
    let timeShiftMax = parseFloat(selfCountryBox.find(".sliderRangeField.max")[2].value);
    let timeShift = selfDOM.value*timeShiftMax/selfDOM.max;
@@ -229,6 +290,34 @@ function scaleLockClick(selfDOM){
       selfCountryBox.attr("lockScales","false");
    }
 }
+
+function dateLockClick(selfDOM){
+   
+   let self = $(selfDOM);
+   let selfCountryBox = self.parent();
+   
+	
+	if(selfCountryBox.attr("lockDatesAll") == "true"){
+	  selfCountryBox.attr("lockDatesAll","false") ;
+	  self.attr("src","./img/lock_opendate.svg");
+	}  else {
+      self.attr("src","./img/lock_closeddate.svg");
+      selfCountryBox.attr("lockDatesAll","true");
+	  
+	  
+   }
+}
+ 
+document.getElementById("buttonDropdown").addEventListener("click", function() {
+	var box = document.getElementById("countryBoxContainer")
+	if(box.getAttribute("lockDatesAll") == "true"){
+		box.setAttribute("lockDatesAll","false");
+		document.getElementById("datelock").addEventListener("mouseover", function() {
+	if(box.getAttribute("lockDatesAll") == "false"){
+	box.setAttribute("lockDatesAll","true"); }});
+	
+	}});
+
 
 
 function casesCheckBoxClick(selfDOM){
@@ -268,7 +357,7 @@ function scaleMaxInput(selfDOM){
    yScaleSlider.value = (yScale / yScaleMax) * yScaleSlider.max;   
 }
 
-function timeMaxInput(selfDOM){
+/*function timeMaxInput(selfDOM){
      
    let self = $(selfDOM);
    let selfCountryBox = self.parent().parent();
@@ -281,10 +370,11 @@ function timeMaxInput(selfDOM){
    let timeShiftSlider = selfCountryBox.find(".slider.timeShift")[0]
    
    timeShiftSlider.value = (timeShift / timeShiftMax) * timeShiftSlider.max;  
-}
+}*/
 
 function updateAxes(){
-   
+   selfCountryBox = document.getElementById("countryBoxContainer")
+	
    countryBoxList = $('.countryBox');
    
    for(let k=0;k<countryBoxList.length;k++){
@@ -300,7 +390,7 @@ function updateAxes(){
    // Update the x axis...
    if(xAxMode == "time"){
       
-      $(".dataTypeButton.xAx.Middle").attr("style","background-color: #333333;");
+      $(".dataTypeButton.xAx.Right").attr("style","background-color: #333333;");
       
       myLineChart.options.scales.xAxes[0] = {
                type: 'time',
@@ -328,22 +418,7 @@ function updateAxes(){
                   labelString: "Total Confirmed Cases / Deaths" + perPopStrX
                }   
             }
-   } else {
-      
-      $(".dataTypeButton.xAx.Right").attr("style","background-color: #333333;");
-      
-      myLineChart.options.scales.xAxes[0] = {
-               type: 'linear',
-               time: {
-                  unit: 'day'
-               },
-               
-               scaleLabel: {
-                  display: true,
-                  labelString: "Daily Cases / Deaths" + perPopStrX
-               }   
-            }
-   }
+   } 
    // The whole thing for the y axis...
    if(yAxMode == "time"){
       
@@ -360,7 +435,7 @@ function updateAxes(){
                   labelString: "Time"
                }   
             }
-   } else if (yAxMode == "total"){
+   } else if (yAxMode == "total" && selfCountryBox.getAttribute("logscale") == "false"){
       
       $(".dataTypeButton.yAx.Middle").attr("style","background-color: #333333;");
       
@@ -375,7 +450,35 @@ function updateAxes(){
                   labelString: "Total Confirmed Cases / Deaths" + perPopStrY
                }   
             }
-   } else {
+   }   else if (yAxMode == "total" && selfCountryBox.getAttribute("logscale") == "true" ){
+      
+      $(".dataTypeButton.yAx.Middle").attr("style","background-color: #333333;");
+      
+      myLineChart.options.scales.yAxes[0] = {
+               type: 'logarithmic',
+               time: {
+                  unit: 'day'
+               },
+			      ticks: { 
+          maxTicksLimit: 8 ,
+          callback: function (value, index, values) { 
+           var remain = Math.floor(Math.log(value)); 
+            if (value === 0) { 
+             return '0'; 
+           } else if (remain === -4 || remain === -3 || remain === -2 || remain === -1 || remain === 0 ||remain === 1 || remain === 2 || remain === 3 || remain === 4 || remain === 5 || remain === 6 || remain === 7 
+		   || remain === 8 || remain === 9 || remain === 10 || remain === 11 || remain === 12 || remain === 13 || remain === 14 || remain === 15 || remain === 16 ||index === 0 ) { 
+            return value; 
+           }
+           return ''; 
+				},
+          min: 0  },
+               scaleLabel: {
+                  display: true,
+                  labelString: "Total Confirmed Cases / Deaths" + perPopStrY
+               }   
+            }
+   
+   }else if (yAxMode == "daily" && selfCountryBox.getAttribute("logscale") == "false"){
       
       $(".dataTypeButton.yAx.Left").attr("style","background-color: #333333;");
       
@@ -384,17 +487,41 @@ function updateAxes(){
                time: {
                   unit: 'day'
                },
-               
                scaleLabel: {
                   display: true,
                   labelString: "Daily Cases / Deaths" + perPopStrY
                }   
             }
    }
-   
-   myLineChart.update();
+   else if (yAxMode == "daily" && selfCountryBox.getAttribute("logscale") == "true"){
       
-   
+      $(".dataTypeButton.yAx.Left").attr("style","background-color: #333333;");
+      myLineChart.options.scales.yAxes[0] = {
+               type: 'logarithmic',
+               time: {
+                  unit: 'day'
+               },
+			    ticks: { 
+				 maxTicksLimit: 8 ,
+          callback: function (value, index, values) { 
+           var remain = Math.floor(Math.log(value)); 
+            if (value === 0) { 
+             return '0'; 
+           } else if (remain === -4 || remain === -3 || remain === -2 || remain === -1 || remain === 0 ||remain === 0 || remain === 1 || remain === 2 || remain === 3 || remain === 4 || remain === 5 || remain === 6 || remain === 7 
+		   || remain === 8 || remain === 9 || remain === 10 || remain === 11 || remain === 12 || remain === 13 || remain === 14 || remain === 15 || remain === 16 ||index === 0 ) { 
+            return value; 
+           }
+           return ''; 
+				},
+          min: 0  },
+               scaleLabel: {
+                  display: true,
+                  labelString: "Daily Cases / Deaths" + perPopStrY
+               }   
+            }
+    
+   }
+   myLineChart.update(); 
 }
 
 $.cssHooks.backgroundColor = {
@@ -415,6 +542,7 @@ $.cssHooks.backgroundColor = {
         }
     }
 }
+
 
 function setColor(selfDOM){
    let self = $(selfDOM);
@@ -445,16 +573,30 @@ function openColorPicker(selfDOM){
    colorPicker.click();
 }
 
+function totalPopCheckBoxClicklog(selfDOM){
+   
+   let self = $(selfDOM);
+   selfCountryBox = document.getElementById("countryBoxContainer");
+
+   if(selfCountryBox.getAttribute("logscale") == "false"){
+      selfCountryBox.setAttribute("logscale","true");
+	 updateAxes();
+   } else {
+      selfCountryBox.setAttribute("logscale","false");
+	  
+	  updateAxes();
+   }
+    
+}
+
 function totalPopCheckBoxClick(selfDOM){
    
    showPopRel = !selfDOM.checked
-   
    let countryBoxList = $('.countryBox')
    
    for(let i=0;i<countryBoxList.length;i++){
       updateData($(countryBoxList[i]));
    }
-   
    updateAxes();
       
 }

@@ -40,24 +40,25 @@
       include('./php/downloadData.php')
    ?>   
       
-   <div id="outerFrame" style= "max-width: 1100px;">
+   <div id="outerFrame" style= "max-width: 1125px;">
    
    <div class="centerBox" style="background:#999999; color:#FFFFFF;"
      title = "Rescale, shift and compare Covid-19 data, create your own analysis">
    <img src="./img/GU-Logo-weiss.png" align="right"
         style="border: none; display: block; width: 15%;">
-   <h1 style="font-weight: 600;">Goethe Interactive COVID-19 Analyzer</h1>
+   <h1 style="margin-top: 20px;
+margin-bottom: 20px; font-weight: 600;">Goethe Interactive COVID-19 Analyzer</h1>
    </div>
    
    
    
    
-   <div class="centerBox" style="background:#FFFFFF; font-size: 16px; text-align: left;">
+   <div id ="centerBox" class="centerBox" style="background:#FFFFFF; font-size: 16px; text-align: left;">
     <span style="color:#666666; font-weight:bold; font-size: larger;">Compare 
           Covid-19 outbreaks, create your own plots!</span>
     <span style="float:right;">
        <a href="https://itp.uni-frankfurt.de/~gros/" class="blackText">Claudius Gros</a> /  
-   Fabian Schubert</span><br>
+   Fabian Schubert / Carolin Roskothen</span><br>
     <span style="float:right;">Institute for Theoretical Physics &#8212; 
                                Goethe University Frankfurt</span>
    
@@ -71,17 +72,19 @@
       --><button class="dataTypeButton yAx Left"
       onclick="yAxMode = 'daily';
             updateAxes();"><span
-      style="margin: 20px 5px 17px 0px; font-size: 15px;">Daily</span></button><!--
+      style="font-size: 15px; margin: 20px 5px 17px 0px;">Daily</span></button><!--
       --><button class="dataTypeButton yAx Middle"
       onclick="yAxMode = 'total';
             updateAxes();"><span
       style="margin: 17px 3.65px 17px 1px;">Total</span></button><!--
-      <button class="dataTypeButton yAx Right"
+	  <button class="dataTypeButton yAx Right"
       onclick="yAxMode = 'time';
             updateAxes();"><span
       style="margin: 17px 5px 20px 0px;">Time</span></button>-->
+	  <!--
+      -->
+	    
       </div>
-      
       
       <div style="width:calc(100% - 70px); float: right;">
          <canvas id="chart" width="1280" height="720"></canvas>
@@ -90,22 +93,34 @@
       
       <div class="dropdown" id="countryDropdown"
            title = "add country or US state of your choice">
-      <button  class="dropbtn"  type="button" data-toggle="dropdown" >Add&nbsp;Country </button> 
-        <div id = "countryDropdownContent" style = "padding-top: 0px;" class="dropdown-menu dropdown-content ">
+      <button   id ="buttonDropdown" class="dropbtn"  type="button" data-toggle="dropdown" >Add&nbsp;Country </button> 
+        <div  id = "countryDropdownContent" style = "padding-top: 0px;" class="dropdown-menu dropdown-content ">
 		
 		<input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
 	  </div>
 	  </div>
-      
-      <div id="totalPopSwitchContainer" title="how to display the data">
+       <div id="totalPopSwitchContainer" title="how to display the data" style="right: 65%;
+	top: 10%;">
+      <span>normal</span>
+      <label class="switch" id="totalPopSwitch">
+         <input type="checkbox"
+         onclick="totalPopCheckBoxClicklog(this);"  >
+         <span class="switchSlider round" id ="switchSlider"  ></span>
+      </label>
+      <span> log</span>
+      </div>
+	  
+	       <div id="totalPopSwitchContainer" title="how to display the data" style="right: 4%;
+top: 10%;" >
       <span>Per 100.000 Inh.</span>
       <label class="switch" id="totalPopSwitch">
          <input type="checkbox"
-         onclick="totalPopCheckBoxClick(this);">
-         <span class="switchSlider round"></span>
+         onclick="totalPopCheckBoxClick(this);"  >
+         <span class="switchSlider round" id ="switchSlider"  ></span>
       </label>
       <span> Absolute</span>
       </div>
+     
       <!--
       <div class="dropdown" id="dataDropdown">
       <button onclick="showDataSets()" class="dropbtn">Choose Dataset</button>
@@ -120,12 +135,12 @@
          <button class="dataTypeButton xAx Left"
       onclick="xAxMode = 'total';
             updateAxes();">Total</button><!--
-      --><button class="dataTypeButton xAx Middle"
+      --><button class="dataTypeButton xAx Right"
       onclick="xAxMode = 'time';
             updateAxes();">Time</button><!--
-      --><button class="dataTypeButton xAx Right"
+      <button class="dataTypeButton xAx Right"
       onclick="xAxMode = 'daily';
-            updateAxes();">Daily</button>
+            updateAxes();">Daily</button>-->
       
       <input type="image"
             src="./img/download.svg"
@@ -150,29 +165,31 @@
    
    <div class="dropdown" id="exampleDropdown"
         title = "show some examples to start exploring">
+		
     <button  class="dropbtn"  type="button" data-toggle="dropdown" >Show&nbsp;Examples</button>
    <div id="exampleDropdownContent" style = "padding-top: 0px;" class="dropdown-menu dropdown-content ">
       <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
       <li><a href="javascript:void(0)" id="exampleDropdownEntry1" onclick =
          "$.loadScript('./presets/preset1.js', function(){});
-         document.getElementById('exampleDropdownContent').classList.toggle('show');">Compare daily cases of Germany, Spain and Italy.</a></li>
-     <li><a href= "javascript:void(0)" id="exampleDropdownEntry2" onclick =
+         document.getElementById('exampleDropdownContent').classList.remove('show');">Compare daily cases of Germany, Spain and Italy.</a></li>
+     <li><a href= "javascript:void.(0)" id="exampleDropdownEntry2" onclick =
          "$.loadScript('./presets/preset2.js', function(){});
-         document.getElementById('exampleDropdownContent').classList.toggle('show');">Compare confirmed cases and deaths in Italy.</a></li>
+         document.getElementById('exampleDropdownContent').classList.remove('show');">Compare confirmed cases and deaths in Italy.</a></li>
    </div>
    </div>
    
    
-   <div id="countryBoxContainer" >
-   
+   <div id="countryBoxContainer" xcut="0"
+         ycut="0" lockDatesAll="true"  lockDatesAlle="true" logscale="false" >
+	
   
     
    </div>
    
    <br><br><br>
    
-   <div class="explainBox" style="margin-left: auto; margin-right: auto; border-radius: 30px;
-		border: 5px solid #666666; background: #FFFFFF; padding: 20px;text-align: left; width: 100%;">
+   <div class="explainBox" style=" margin-left: auto; margin-right: auto; border-radius: 25px; border: 5px solid #666666;
+	background: #FFFFFF; padding: 20px;	text-align: left; width: 100%;">
    <h2>How to use / Support</h2>
    <ul> 
    <li> Select the same country multiple times to compare fatalities/case counts
@@ -254,10 +271,15 @@
          timeShift="0"
          n_avg="3"
          lockScales="false"
-		 lockDates="false"
+		 lockDatesall="true"
          displayData="cases"
          idx="0"
+		 o="0"
          style="padding-right: 17px; background-color: #ff0000;">
+		 <input id="datelocks" type="image" src="./img/lock_closeddate.svg"
+            class="dateLock"
+            onclick="dateLockClick(this);" 
+			style = "display: inline-Block ; position: absolute; top: 271px; right: 7px;">
             <p class="countryBoxHeader">
 			
             TemplateCountry
@@ -340,6 +362,7 @@
                value="365"
 			   style=" position: absolute; top: 172px; right: 40px; width: 11%; color:black"
                oninput="timeMaxInput(this)" style ="color: black ;">
+
             </div>
             
             
@@ -367,9 +390,9 @@
             
             <span>Select Start/End Date</span>
             
-            <div class="rangeContainer">
-               <span>
-                  <div id="daterange" class="dateRange" style="height: 6.5px;" ></div>
+            <div id="datelock" class="rangeContainer">
+               <span >
+                  <div id="daterange" class="dateRange" style ="height: 6.5px;" ></div>
                </span>
             </div>
             
@@ -397,4 +420,3 @@
    
 </body>
 </html>
-

@@ -93,11 +93,12 @@ a.blackText:hover   {color: #FF3333; background: #FFFFFF; text-decoration: none;
 
 .axDataTypeSwitch.xAx{
   display: flex;
-  justify-content: center;
+  justify-content: end;
   border-style: none;
   
   margin-top: 15px;
   margin-bottom: 5px;
+  width: 64%
 }
 
 .dataTypeButton{
@@ -159,7 +160,6 @@ a.blackText:hover   {color: #FF3333; background: #FFFFFF; text-decoration: none;
   right: 4%;
   top: 10%;
 }
-  
 
 
 
@@ -184,4 +184,3 @@ a.blackText:hover   {color: #FF3333; background: #FFFFFF; text-decoration: none;
 #showExample:hover{
   background-color: #444444;
 }
-
