@@ -166,7 +166,7 @@ top: 10%;" >
    <div class="dropdown" id="exampleDropdown"
         title = "show some examples to start exploring">
 		
-    <button  class="dropbtn"  type="button" data-toggle="dropdown" >Show&nbsp;Examples</button>
+    <button id="buttonExampleDropdown" class="dropbtn"  type="button" data-toggle="dropdown" >Show&nbsp;Examples</button>
    <div id="exampleDropdownContent" style = "padding-top: 0px;" class="dropdown-menu dropdown-content ">
       <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
       <li><a href="javascript:void(0)" id="exampleDropdownEntry1" onclick =
