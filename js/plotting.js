@@ -3,7 +3,7 @@ function addPlot(idx){
    
    window.addPlotCounter++;
    
-   $('#exampleDropdown')[0].style.display = "inline-block";
+   $('#exampleDropdown')[0].style.display = "none";
    
    let plotdata = {
          label: countries[idx],
