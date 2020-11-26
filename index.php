@@ -21,14 +21,14 @@
    
    
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-   <link rel="stylesheet" type="text/css" href="./sty/main.css">
+   <link rel="stylesheet" type="text/css" href="./sty/mai.css">
    <link rel="stylesheet" type="text/css" href="./sty/dropdown.css">
    <link rel="stylesheet" type="text/css" href="./sty/countryb.css">
    <link rel="stylesheet" type="text/css" href="./sty/slider.css">
-   <link rel="stylesheet" type="text/css" href="./sty/switch.css">
+   <link rel="stylesheet" type="text/css" href="./sty/switc.css">
 
   
-	 <meta name="viewport" content="width=device-width, initial-scale=1">
+	 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
@@ -65,41 +65,11 @@ margin-bottom: 20px; font-weight: 600;">Goethe Interactive COVID-19 Analyzer</h1
    <br><br>
    
    <div id="ChartDropdown">
-      
+		
       
       <div id = "chartcontainer">
-      <div class="axDataTypeSwitch yAx"><!--
-      --><button class="dataTypeButton yAx Left"
-      onclick="yAxMode = 'daily';
-            updateAxes();"><span
-      style="font-size: 15px; margin: 20px 5px 17px 0px;">Daily</span></button><!--
-      --><button class="dataTypeButton yAx Middle"
-      onclick="yAxMode = 'total';
-            updateAxes();"><span
-      style="margin: 17px 3.65px 17px 1px;">Total</span></button><!--
-	  <button class="dataTypeButton yAx Right"
-      onclick="yAxMode = 'time';
-            updateAxes();"><span
-      style="margin: 17px 5px 20px 0px;">Time</span></button>-->
-	  <!--
-      -->
-	    
-      </div>
-      
-      <div style="width:calc(100% - 70px); float: right;">
-         <canvas id="chart" width="1280" height="720"></canvas>
-      </div>
-      </div>
-      
-      <div class="dropdown" id="countryDropdown"
-           title = "add country or US state of your choice">
-      <button   id ="buttonDropdown" class="dropbtn"  type="button" data-toggle="dropdown" >Add&nbsp;Country </button> 
-        <div  id = "countryDropdownContent" style = "padding-top: 0px;" class="dropdown-menu dropdown-content ">
-		
-		<input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-	  </div>
-	  </div>
-       <div id="totalPopSwitchContainer" title="how to display the data" style="right: 65%;
+	  
+		       <div id="totalPopSwitchContainer" title="how to display the data" style="right: 65%;
 	top: 10%;">
       <span>normal</span>
       <label class="switch" id="totalPopSwitch">
@@ -120,6 +90,39 @@ top: 10%;" >
       </label>
       <span> Absolute</span>
       </div>
+	  
+      <div class="axDataTypeSwitch yAx"><!--
+      --><button class="dataTypeButton yAx Left"
+      onclick="yAxMode = 'daily';
+            updateAxes();"><span
+      style="font-size: 15px; margin: 20px 5px 17px 0px;">Daily</span></button><!--
+      --><button class="dataTypeButton yAx Middle"
+      onclick="yAxMode = 'total';
+            updateAxes();"><span
+      style="margin: 17px 3.65px 17px 1px;">Total</span></button><!--
+	  <button class="dataTypeButton yAx Right"
+      onclick="yAxMode = 'time';
+            updateAxes();"><span
+      style="margin: 17px 5px 20px 0px;">Time</span></button>-->
+	  <!--
+      -->
+	    
+      </div>
+      
+      <div  style="width:calc(100% - 70px); float: right;">
+         <canvas id="chart" width="1280" height="720" ></canvas>
+      </div>
+      </div>
+      
+      <div class="dropdown" id="countryDropdown"
+           title = "add country or US state of your choice">
+      <button   id ="buttonDropdown" class="dropbtn"  type="button" data-toggle="dropdown" >Add&nbsp;Country </button> 
+        <div  id = "countryDropdownContent" style = "padding-top: 0px;" class="dropdown-menu dropdown-content ">
+		
+		<input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+	  </div>
+	  </div>
+
      
       <!--
       <div class="dropdown" id="dataDropdown">
@@ -152,7 +155,14 @@ top: 10%;" >
       right: 5px;"
       onclick="var url = myLineChart.toBase64Image();
       window.open(url);">
-      
+	  <input type="image"
+            src="./img/download_data.svg"
+      id = "downloadCSV"
+      title = "export files as csv "
+      style="
+      border-style: none;
+      position: absolute;
+      right: 50px; height: 45px">
       </div>
       
    </div>
@@ -171,7 +181,7 @@ top: 10%;" >
       <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
       <li><a href="javascript:void(0)" id="exampleDropdownEntry1" onclick =
          "$.loadScript('./presets/preset1.js', function(){});
-         document.getElementById('exampleDropdownContent').classList.remove('show');">Compare daily cases of Germany, Spain and Italy.</a></li>
+         document.getElementById('exampleDropdownContent').classList.remove('show');v">Compare daily cases of Germany, Spain and Italy.</a></li>
      <li><a href= "javascript:void.(0)" id="exampleDropdownEntry2" onclick =
          "$.loadScript('./presets/preset2.js', function(){});
          document.getElementById('exampleDropdownContent').classList.remove('show');">Compare confirmed cases and deaths in Italy.</a></li>
@@ -280,10 +290,18 @@ top: 10%;" >
             class="dateLock"
             onclick="dateLockClick(this);" 
 			style = "display: inline-Block ; position: absolute; top: 271px; right: 7px;">
-            <p class="countryBoxHeader">
+            <p class="countryBoxHeader">TemplateCountry</p>
 			
-            TemplateCountry
-            </p>
+            
+            <input type="image"
+            src="./img/download_data_white.svg"
+      id = "DownloadCSV"
+      title = "export files as csv "
+      style="
+      border-style: none;
+      position: absolute;
+      right: 30px; top: 10px; height: 40px;"
+	  onclick="downloadCSV1(this)">
             
             <!-- close button -->
             <input type="image"
