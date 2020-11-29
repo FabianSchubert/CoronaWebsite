@@ -409,63 +409,28 @@ document.getElementById("downloadCSV").addEventListener("click", function(){
 	
 
 function convertChartDataToCSV(args) {  
-  var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+  var result, columnDelimiter, lineDelimiter, data;
   
   data = args.data[0]
   if (data == null ) {
-    return 2;
+    return null;
   }
   var d = []
   var xDatum = []
-  var yNachkomma = []
-  var maximal = []
-  var arrayLängen = []
-  var arrays = []
-  var Tagesanfang = []
-  var minimumTage =[]
-  var maximumTage =[]
-  var TagesEnde=[]
-  var probe =[]
-  var probe2=[]
-  var neuAnfang = []
   var xDatenTotalalle = []
   var neueAufzählung = []
   var xDatenTimealle = []
   
-  for (let i=0; i< args.data.length; i++){
-	  Tagesanfang[i]= args.data[i].data[0].x
-  }
-  minimumTage = Math.min(...Tagesanfang)
   
-  
-  for (let i=0; i< args.data.length; i++){
-	  arrayLängen[i]= args.data[i].data.length 
-  }
- 
-  maximal = Math.max(...arrayLängen)
-  
- for (let i=0; i< args.data.length; i++){
-	 
-	 a =arrayLängen[i]-1
-	 
-	  TagesEnde[i]= (args.data[i].data[a].x)
-  }
-  maximumTage = Math.max(...TagesEnde)
- 
-	for (var n =0; n<args.data.length; n++){
-	neuAnfang[n] = 0
-	 probe[n] = TagesEnde[n]
-		 probe2[n]= Math.round(Tagesanfang[n]/86400000)*86400000+86400000}
 	
   columnDelimiter = args.columnDelimiter || ',';
   lineDelimiter = args.lineDelimiter || '\n';
   result = '';
-  result += lineDelimiter;
   result += columnDelimiter;
   for (var n =0; n<args.data.length; n++){
   result += document.getElementsByClassName("countryBoxHeader")[n].innerHTML
   result += columnDelimiter;}
-  result += lineDelimiter;
+  result += lineDelimiter; 
   result += lineDelimiter;
   result += 'x'
   result += columnDelimiter
@@ -491,13 +456,6 @@ function convertChartDataToCSV(args) {
 	 } 
  }result += columnDelimiter
  result += lineDelimiter;}
-
- 
- 
- Reihen = Math.round((maximumTage-minimumTage)/86400000)-1
-  xSelfDaten = Math.round(minimumTage/86400000)*86400000
-  
- //ok  
  
 	for (var n =0; n<args.data.length; n++){
 	 neueAufzählung[n] = 0
@@ -543,6 +501,11 @@ function convertChartDataToCSV(args) {
 		 xDatenTimealle[i] = Math.round(xDatenTotalalle[i]/86400000)*86400000
 	        d[i] = new Date(xDatenTimealle[i])
 		    xDatum[i] = d[i].toDateString().slice(3, 10)
+			h=i-1
+			if (h==-1){h=4}
+			if (xDatum[i]!== xDatum[h]){
+				console.log(xDatum[i])
+				console.log(h)
 		 	result += xDatum[i]
 			result += columnDelimiter;
 
@@ -559,43 +522,9 @@ function convertChartDataToCSV(args) {
 				}					
 			}else{
 				result += columnDelimiter; 
-		 }}
-		result += lineDelimiter;}
-	
-	
-	
-	
-	
-	
-	
-	
-	//stop
-	
-	
- /* }else if (myLineChart.options.scales.xAxes[0].type == 'time'){
-	for (var i =0; i<Reihen ; i++){
-	d[i] = new Date(xSelfDaten)
-		xDatum[i] = d[i].toDateString().slice(3, 10)
-	result += xDatum[i]
-	result += columnDelimiter;
-	console.log(xSelfDaten)
-	
-	 for (var n =0; n<args.data.length; n++){
-		 if (xSelfDaten==probe2[n] && xSelfDaten<=probe[n]){
-			 abc = neuAnfang[n]
-			 console.log(args.data[n].data[i].x)
-			 console.log(abc)
-	yDaten = (args.data[n].data[abc].y)
-	yNachkomma[i] = yDaten
-	result += Math.round(yDaten*100)/100
-	result += columnDelimiter; 
-	neuAnfang[n] +=1
-	probe2[n] += 86400000
-	
-	}else{
-		result += columnDelimiter;  
-	 }}
-  result += lineDelimiter;}*/}
+			}}result += lineDelimiter;}
+		}	
+}
   return result;
 }
 
