@@ -23,6 +23,7 @@ function addPlot(idx){
    let datelocks = $("#datelocks")[0];
    let newCountryBox = $("#countryBox_Init")[0];
    let daterange = $("#daterange")[0];
+   let DownloadCSV = $("#DownloadCSV")[0]
       
    newCountryBox.style.backgroundColor = colCicle[colCicleState];
    newCountryBox.setAttribute("id","countryBox" + addPlotCounter);
@@ -30,21 +31,26 @@ function addPlot(idx){
    datelocks.setAttribute("id","datelocks" + addPlotCounter);
    newCountryBox.setAttribute("o", addPlotCounter);
    
-   
+   DownloadCSV.setAttribute("id","DownloadCSV" + addPlotCounter);
    daterange.setAttribute("id","daterange" + addPlotCounter);
    
    $(newCountryBox).children(".countryBoxHeader")[0].innerHTML = countries[idx];
-   
-   $(countryBoxContainer).find(".dateRange").slider({
+   var box = document.getElementById("countryBoxContainer")
+	  xcut =box.getAttribute("xcut")
+	  ycut =  Math.round((times[idx][times[idx].length-1] - times[idx][0])/864e5)-box.getAttribute("ycut")
+  
+   $(countryBoxContainer).find("#daterange"+addPlotCounter).slider({
       range: true,
       min: 0,
       max: Math.round((times[idx][times[idx].length-1] - times[idx][0])/864e5),
-      values: [0,Math.round((times[idx][times[idx].length-1] - times[idx][0])/864e5)],
+      values: [xcut,ycut],
       change: changeRangeSlider,
       slide: changeRangeSlider  
    });
-   
-   
+  
+  newCountryBox.setAttribute("xcut",box.getAttribute("xcut"));
+   newCountryBox.setAttribute("ycut",box.getAttribute("ycut"));
+	
    colCicleState++;
    colCicleState = colCicleState%nColors;
    
@@ -56,18 +62,23 @@ function addPlot(idx){
 }
 
 function changeRangeSlider(event, ui){
-   let countryBoxT = $(ui.handle).parent().parent().parent().parent().parent();
+  
+
+  let countryBoxT = $(ui.handle).parent().parent().parent().parent().parent();
    let countryBoxTemp = $(ui.handle).parent().parent().parent().parent();
    let max = $(ui.handle).parent().slider("option","max");
    
-    
+	
 	//function range(start, end) {
 	/* generate a range : [start, start+1, ..., end-1, end] */
 	var len = addPlotCounter;
 	var a = new Array(len);
 	for (let i = 0; i < len; i++) {a[i] = 1 + i;
 }
-
+   
+   countryBoxTemp.attr("xcut",Math.round(ui.values[0]));
+       countryBoxTemp.attr("ycut",Math.round(max - ui.values[1]));
+   
   if (countryBoxTemp.attr("lockDatesAll")=="true"){
 	   countryBoxT.attr("xcut",Math.round(ui.values[0]));
        countryBoxT.attr("ycut",Math.round(max - ui.values[1]));
@@ -76,7 +87,7 @@ function changeRangeSlider(event, ui){
 	var x = countryBox1.children()[0].getAttribute("style")
 	var y = countryBox1.children()[1].getAttribute("style")
 	var z = countryBox1.children()[2].getAttribute("style")
-  }
+  
 	for (i in a) {
 		 
 	  let allCountryBox = $(countryBoxT).children("#countryBox"+a[i]);
@@ -86,24 +97,25 @@ function changeRangeSlider(event, ui){
    if(countryBoxTemp.attr("lockDatesAll")=="true"){
 	if(allCountryBox.attr("lockDatesAll")=="true"){
 		
+		
 		 allCountryBox.attr("xcut",countryBoxT.attr("xcut"));
 		 allCountryBox.attr("ycut",countryBoxT.attr("ycut"));
-		 
+	
   		  dateSlider.children()[0].style = x
 		  dateSlider.children()[1].style = y
 		  dateSlider.children()[2].style = z 
-		  
+	 
+	
 		  updateData(allCountryBox);
 		  
 	   } 
    }
- }
+ }}
 	}
-	countryBoxTemp.attr("xcut",Math.round(ui.values[0]));
-   countryBoxTemp.attr("ycut",Math.round(max - ui.values[1]));
-
 	
-   updateData(countryBoxTemp);
+	
+	
+  updateData(countryBoxTemp);
    
 }
 function updateData(countryBox){ //countryBox should be a jquery object
@@ -131,8 +143,13 @@ function updateData(countryBox){ //countryBox should be a jquery object
    }
    
    myLineChart.data.datasets[idx_node].data = new_data;
-   
+ 
    myLineChart.update();
+}
+
+var options = { 
+    responsive: true,
+    maintainAspectRatio: false
 }
 
 function closeButtonClick(self){
@@ -260,7 +277,7 @@ function averageWindowSliderInput(selfDOM){
 function timeShiftSliderInput(selfDOM){
    let self = $(selfDOM);
    let selfCountryBox = self.parent().parent().parent();
-   console.log(selfDOM)
+   
    let timeShiftSlider = selfCountryBox.find(".slider.timeShift")[0];
    let timeShiftMax = parseFloat(selfCountryBox.find(".sliderRangeField.max")[2].value);
    let timeShift = selfDOM.value*timeShiftMax/selfDOM.max;
@@ -291,6 +308,24 @@ function scaleLockClick(selfDOM){
    }
 }
 
+
+function dateRangeclick(selfDOM){
+   
+   let self = $(selfDOM);
+   let selfCountryBox = self.parent().parent().parent();
+   let CountryBoxContainer = selfCountryBox.parent();
+   idx= selfCountryBox.attr("idx")
+	xcut = CountryBoxContainer.attr("xcut")
+	
+	ycut = Math.round((times[idx][times[idx].length-1] - times[idx][0])/864e5)-CountryBoxContainer.attr("ycut")
+	if(selfCountryBox.attr("lockDatesAll") == "true"){
+	    $(selfCountryBox).find(".dateRange").slider({  
+      values: [xcut,ycut],
+   });
+	 	  
+   }
+}
+
 function dateLockClick(selfDOM){
    
    let self = $(selfDOM);
@@ -318,6 +353,7 @@ document.getElementById("buttonDropdown").addEventListener("click", function() {
 	
 	}});
 
+
 document.getElementById("buttonExampleDropdown").addEventListener("click", function() {
 	var box = document.getElementById("countryBoxContainer")
 	if(box.getAttribute("lockDatesAll") == "true"){
@@ -327,6 +363,7 @@ document.getElementById("buttonExampleDropdown").addEventListener("click", funct
 	box.setAttribute("lockDatesAll","true"); }});
 	
 	}});
+
 
 function casesCheckBoxClick(selfDOM){
    
@@ -437,7 +474,6 @@ function updateAxes(){
                time: {
                   unit: 'day'
                },
-               
                scaleLabel: {
                   display: true,
                   labelString: "Time"
@@ -585,8 +621,8 @@ function totalPopCheckBoxClicklog(selfDOM){
    
    let self = $(selfDOM);
    selfCountryBox = document.getElementById("countryBoxContainer");
-
-   if(selfCountryBox.getAttribute("logscale") == "false"){
+   showPop = !selfDOM.checked
+   if(showPop == false){
       selfCountryBox.setAttribute("logscale","true");
 	 updateAxes();
    } else {
@@ -594,18 +630,26 @@ function totalPopCheckBoxClicklog(selfDOM){
 	  
 	  updateAxes();
    }
-    
+   updateAxes();
 }
 
 function totalPopCheckBoxClick(selfDOM){
    
    showPopRel = !selfDOM.checked
    let countryBoxList = $('.countryBox')
-   
+	
    for(let i=0;i<countryBoxList.length;i++){
       updateData($(countryBoxList[i]));
    }
    updateAxes();
+   
+   selfCountryBox = document.getElementById("countryBoxContainer");
+
+   /*if(selfCountryBox.getAttribute("absolut") == "false"){
+      selfCountryBox.setAttribute("absolut","true");
+   } else {
+      selfCountryBox.setAttribute("absolut","false");
+   }*/
       
 }
 
