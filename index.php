@@ -21,16 +21,17 @@
    
    
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-   <link rel="stylesheet" type="text/css" href="./sty/main.css">
+   <link rel="stylesheet" type="text/css" href="./sty/mai.css">
    <link rel="stylesheet" type="text/css" href="./sty/dropdown.css">
    <link rel="stylesheet" type="text/css" href="./sty/countryb.css">
    <link rel="stylesheet" type="text/css" href="./sty/slider.css">
-   <link rel="stylesheet" type="text/css" href="./sty/switch.css">
+   <link rel="stylesheet" type="text/css" href="./sty/switc.css">
 
   
+	 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+   
    
 </head>
 <body>
@@ -189,7 +190,7 @@ top: 10%;" >
    
    
    <div id="countryBoxContainer" xcut="0"
-         ycut="0" lockDatesAll="true"  lockDatesAlle="true" logscale="false" >
+         ycut="0" lockDatesAll="true"  lockDatesAlle="true" logscale="false"  >
 	
   
     
@@ -407,7 +408,7 @@ top: 10%;" >
             
             <div id="datelock" class="rangeContainer">
                <span >
-                  <div id="daterange" class="dateRange" style ="height: 6.5px;" ></div>
+                  <div id="daterange" class="dateRange" style ="height: 6.5px;" onmouseover="dateRangeclick(this);" ></div>
                </span>
             </div>
             
@@ -430,8 +431,11 @@ top: 10%;" >
       <script src="./js/plotting.js"></script>
       <script src="./js/dropdown.js"></script>
       <script src="./js/main.js"></script>
+	  
+	  
 <?php include './php/visitCounter.php';?>
 
    
 </body>
 </html>
+
