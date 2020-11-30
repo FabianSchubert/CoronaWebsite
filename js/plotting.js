@@ -318,7 +318,15 @@ document.getElementById("buttonDropdown").addEventListener("click", function() {
 	
 	}});
 
-
+document.getElementById("buttonExampleDropdown").addEventListener("click", function() {
+	var box = document.getElementById("countryBoxContainer")
+	if(box.getAttribute("lockDatesAll") == "true"){
+		box.setAttribute("lockDatesAll","false");
+		document.getElementById("countryBoxContainer").addEventListener("mouseover", function() {
+	if(box.getAttribute("lockDatesAll") == "false"){
+	box.setAttribute("lockDatesAll","true"); }});
+	
+	}});
 
 function casesCheckBoxClick(selfDOM){
    
