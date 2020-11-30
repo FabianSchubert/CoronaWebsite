@@ -21,11 +21,11 @@
    
    
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-   <link rel="stylesheet" type="text/css" href="./sty/mai.css">
+   <link rel="stylesheet" type="text/css" href="./sty/main.css">
    <link rel="stylesheet" type="text/css" href="./sty/dropdown.css">
    <link rel="stylesheet" type="text/css" href="./sty/countryb.css">
    <link rel="stylesheet" type="text/css" href="./sty/slider.css">
-   <link rel="stylesheet" type="text/css" href="./sty/switc.css">
+   <link rel="stylesheet" type="text/css" href="./sty/switch.css">
 
   
 	 
