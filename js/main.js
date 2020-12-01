@@ -504,8 +504,6 @@ function convertChartDataToCSV(args) {
 			h=i-1
 			if (h==-1){h=4}
 			if (xDatum[i]!== xDatum[h]){
-				console.log(xDatum[i])
-				console.log(h)
 		 	result += xDatum[i]
 			result += columnDelimiter;
 
