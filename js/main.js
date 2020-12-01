@@ -487,7 +487,7 @@ function convertChartDataToCSV(args) {
 			result += Math.round(yDaten*100)/100
 			result += columnDelimiter; 	
 			neueAufzählung[n] +=1	;
-				if (neueAufzählung[n] == args.data[0].data.length){
+				if (neueAufzählung[n] == args.data[n].data.length){
 					neueAufzählung[n]=0
 				}					
 			}else{
@@ -515,7 +515,7 @@ function convertChartDataToCSV(args) {
 			result += Math.round(yDaten*100)/100
 			result += columnDelimiter; 	
 			neueAufzählung[n] +=1	;
-				if (neueAufzählung[n] == args.data[0].data.length){
+				if (neueAufzählung[n] == args.data[n].data.length){
 					neueAufzählung[n]=0
 				}					
 			}else{
