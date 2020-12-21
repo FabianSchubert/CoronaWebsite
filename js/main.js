@@ -154,7 +154,7 @@ function setup() {
          tabArrDeaths.push(tabArrDeaths_ecdc[i]);
          population.push(population_ecdc[i]);
       }
-   }
+   } 
   
    for(let i=0;i<usstates_johns_hopkins.length;i++){
       if((!isNaN(population_usstates[i])) && (population_usstates[i] != 0)){
@@ -400,7 +400,7 @@ function setup() {
       }
     
 	});
-    console.log(myLineChart);
+    
    updateAxes();
    let start_idx = countries.indexOf("World"); //Data Row for Germany...
    addPlot(start_idx);
