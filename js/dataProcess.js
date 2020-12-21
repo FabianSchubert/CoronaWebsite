@@ -116,18 +116,24 @@ function processDataJohnsHopkinsDeaths(tab){
 
 
 
-function processDataECDC(tab){
+function processDataECDC(tab,tab2){
    //console.log(tab);
    
-   
-   
    let tabArr = tab.getArray();
+   let tabArr2 = tab2.getArray()
    
    let nRows = tabArr.length;
+   
+   let nRows2 = tabArr2.length;
+   
    let nCols = tabArr[0].length;
    
    let countries = [];
+   let countriesList = [];
+   let countriesList2 = [];
    let population = [];
+   let population2 = [];
+   let popul2 = [];
    let times = [];
    
    // Rows are clustered by country and sorted by days, starting with the most recent day.
@@ -136,27 +142,58 @@ function processDataECDC(tab){
    
    let date;
    let country;
+   
+   //neu
+   
+   c=0
+   
+   d=0
+   for(let i=0;i<nRows;i++){if (i ==0){c=1000}else{c=i}
+   if (tabArr[i][2] !== tabArr[c-1][2] ){countriesList[d] = tabArr[i][2] 
+   d +=1}}
       
+   d=0
+   for(let i=0;i<nRows2;i++){if (i ==0){c=1000}else{c=i}
+   if (tabArr2[i][4] !== tabArr2[c-1][4] ){countriesList2[d] = tabArr2[i][4] 
+   popul2[d]=tabArr2[i][7]
+   d +=1}}
+   
+   let nRowsCountrie = countriesList.length;
+   let nRowsCountrie2 = countriesList2.length;
+   
+   b=0
+   
+   d=0
+    for(let i=0;i<nRowsCountrie;i++){
+   for(let a=0;a<nRowsCountrie2;a++){
+   if (countriesList[i] == countriesList2[a] ){population2[i] = popul2[a]
+	}}if (population2[i] ==0){population2[i]=1}}
+   
+   
    for(let i=0;i<nRows;i++){
       //Country Name is in row 6 (starting zero)
-      country = tabArr[i][6];
+      country = tabArr[i][2];
       //replace underscores in country names with spaces
       //country = country.replace(/_/g," ");
-      
-      if(!(countries.includes(country)) && (tabArr[i][9] != "")){
+	 
+    
+      if(!(countries.includes(country))){
          countries.push(country);
-         population.push(parseFloat(tabArr[i][9]));
-      }
+		 if (i ==0){a=1}else{a=i}
+		 if (tabArr[i][2]=== tabArr[a-1][2]){
+		 population.push(parseFloat(population2[b]));}else{ b += 1
+			 population.push(parseFloat(population2[b]));
+        
+      } }
       
-      date = (parseInt(tabArr[i][3])).pad(4) + "/" + (parseInt(tabArr[i][2])).pad(2) + "/" + (parseInt(tabArr[i][1])).pad(2);
-      
+      date = (parseInt(tabArr[i][0].slice(0,4))).pad(4) + "/" + (parseInt(tabArr[i][0].slice(5,7))).pad(2) + "/" + (parseInt(tabArr[i][0].slice(8,10))).pad(2);
+ 
       if(!(times.includes(date))){
          times.push(date);
-      }
+      } 
    }
-   
+  
    times.sort();
-   
    let nCountries = countries.length;
    let nTimes = times.length;
    
@@ -179,21 +216,24 @@ function processDataECDC(tab){
    
    for(let i=0; i<nRows; i++){
       
-      country = tabArr[i][6];
+      country = tabArr[i][2];
       
       if(countries.includes(country)){
       
-         date = (parseInt(tabArr[i][3])).pad(4) + "/" + (parseInt(tabArr[i][2])).pad(2) + "/" + (parseInt(tabArr[i][1])).pad(2);
+         date = (parseInt(tabArr[i][0].slice(0,4))).pad(4) + "/" + (parseInt(tabArr[i][0].slice(5,7))).pad(2) + "/" + (parseInt(tabArr[i][0].slice(8,10))).pad(2); //.pad(4) + "/" + (parseInt(tabArr[i][2])).pad(2) + "/" + (parseInt(tabArr[i][1])).pad(2);
          
          
          timeIdx = times.indexOf(date);
          countryIdx = countries.indexOf(country);
          
          procArr[countryIdx][timeIdx] = parseFloat(tabArr[i][4]);//*1e5/population[countryIdx];
-         procArrDeaths[countryIdx][timeIdx] = parseFloat(tabArr[i][5]);//*1e5/population[countryIdx];
+		 if (tabArr[i][4]<0){
+			 procArr[countryIdx][timeIdx] = 0
+		 }
+         procArrDeaths[countryIdx][timeIdx] = parseFloat(tabArr[i][6]);//*1e5/population[countryIdx];
       }
    }
-   
+  
    for(let i=0; i<nCountries;i++){
       for(let j=1; j<nTimes;j++){
          procArr[i][j] = procArr[i][j-1] + procArr[i][j];
@@ -203,7 +243,7 @@ function processDataECDC(tab){
    
    //console.log(times);
    
-   //console.log(countries)
+   
    
    for(let i=0;i<nCountries;i++){
       //replace underscores in country names with spaces
@@ -213,8 +253,7 @@ function processDataECDC(tab){
    // convert times to list of integers denoting absolute time
    for(let i=0;i<times.length;i++){
       times[i] = Math.abs(new Date(times[i]));
-   }
-   
+   } 
    return [countries, times, procArr, procArrDeaths, population];
    
    
@@ -320,7 +359,6 @@ function processDataDailyVsTotal(idx,tabArr,times_list,population,smooth_n,xscal
          daily_change.splice(i,1);
       }
    }
-   
    let xData;
    let yData;
    
@@ -349,7 +387,6 @@ function processDataDailyVsTotal(idx,tabArr,times_list,population,smooth_n,xscal
    } else{
       console.log("Error: Wrong x-axis mode specified");
    }
-   
    if(yMode == "daily"){
       yData = showPopRel ? scaleArr(smooth_filter(daily_change,smooth_n),yscale*1e5/population[idx])
       : scaleArr(smooth_filter(daily_change,smooth_n),yscale);
@@ -364,10 +401,12 @@ function processDataDailyVsTotal(idx,tabArr,times_list,population,smooth_n,xscal
       console.log("Error: Wrong y-axis mode specified");
    }
    
+   
    let datapoints = convert2dData(
       transpose([xData,yData]));
-   
+	
    return datapoints;
+   
 }
 
 function I(x,g0,a){
