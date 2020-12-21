@@ -657,7 +657,7 @@ function convertChartDataToCSV1(args) {
 		result += lineDelimiter;
 	    result +=  attrs[anzahlAttribute[i]].name + " : " + attrs[anzahlAttribute[i]].value
 	  
- }}
+ }} result += lineDelimiter;
 	for (var i =0; i<args.data.data.length; i++){
 	xDaten = (args.data.data[i].x)
 	yDaten = (args.data.data[i].y)
