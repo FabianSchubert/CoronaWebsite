@@ -167,8 +167,11 @@ function processDataECDC(tab,tab2){
     for(let i=0;i<nRowsCountrie;i++){
    for(let a=0;a<nRowsCountrie2;a++){
    if (countriesList[i] == countriesList2[a] ){population2[i] = popul2[a]
-	}}if (population2[i] ==0){population2[i]=1}}
-   
+	}}if (population2[i] ==0 || isNaN(population2[i]) ){population2[i]=1}}
+	
+   let idx_UK = countriesList.indexOf("The United Kingdom");
+   let idx_UK2 = countriesList2.indexOf("United_Kingdom");
+   population2[idx_UK] = popul2[idx_UK2]
    
    for(let i=0;i<nRows;i++){
       //Country Name is in row 6 (starting zero)
