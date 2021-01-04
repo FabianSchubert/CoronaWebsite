@@ -1,9 +1,11 @@
 let tab;
+let tab2;
 
 const linkJohnsHopkinsConfirmedUS = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv'
 const linkJohnsHopkinsDeathsUS = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_US.csv';
 
 const linkECDC = './dat/ecdc.csv';
+const linkWHO = './dat/who.csv';
 
 var countries = [];
 var times = [];
@@ -116,7 +118,8 @@ function preload() {
    
    // load table from Johns Hopkins University
    //tab = loadTable(linkJohnsHopkins,'csv','header');
-   tab = loadTable(linkECDC,'csv','header');
+   tab = loadTable(linkWHO,'csv','header');
+   tab2 = loadTable(linkECDC,'csv','header');
    
    tab_us_states_confirmed = loadTable(linkJohnsHopkinsConfirmedUS,'csv','header');
    tab_us_states_deaths = loadTable(linkJohnsHopkinsDeathsUS,'csv','header');
@@ -138,7 +141,7 @@ function preload() {
 function setup() {
    //console.log(table.columns);
    
-   [countries_ecdc, times_ecdc, tabArr_ecdc, tabArrDeaths_ecdc, population_ecdc] = processDataECDC(tab);
+   [countries_ecdc, times_ecdc, tabArr_ecdc, tabArrDeaths_ecdc, population_ecdc] = processDataECDC(tab,tab2);
    [usstates_johns_hopkins, times_usstates, tabArr_usstates_confirmed] = processDataJohnsHopkinsConfirmed(tab_us_states_confirmed);
    [usstates_johns_hopkins, times_usstates, tabArr_usstates_deaths, population_usstates] = processDataJohnsHopkinsDeaths(tab_us_states_deaths);
    
@@ -151,8 +154,8 @@ function setup() {
          tabArrDeaths.push(tabArrDeaths_ecdc[i]);
          population.push(population_ecdc[i]);
       }
-   }
-   
+   } 
+  
    for(let i=0;i<usstates_johns_hopkins.length;i++){
       if((!isNaN(population_usstates[i])) && (population_usstates[i] != 0)){
          countries.push(usstates_johns_hopkins[i]);
@@ -218,7 +221,7 @@ function setup() {
    countries.push("EU28");
    times.push(times_ecdc);
    
-   let idx_UK = countries_ecdc.indexOf("United Kingdom");
+   let idx_UK = countries_ecdc.indexOf("The United Kingdom");
    
    for(let j=0;j<times_ecdc.length;j++){
       eu28_total_conf[j] += tabArr_ecdc[idx_UK][j];
@@ -277,7 +280,7 @@ function setup() {
    tabArr = indices.map(i => tabArr[i]);
    tabArrDeaths = indices.map(i => tabArrDeaths[i]);
    population = indices.map(i => population[i]);
-   
+  
    
    //[countries, times, tabArr] = processDataJohnsHopkins(tab);
    
@@ -320,8 +323,10 @@ function setup() {
 	 var box = document.getElementById("countryBoxContainer")
 	if(box.getAttribute("lockDatesAll") == "false"){
 		box.setAttribute("lockDatesAll","true");
+		
 		/*box.setAttribute("lockDatesAll","true");*/
-	} 
+		
+	  } 
 	 };
 	  dropdown.appendChild(newEntryListe);
    }
@@ -393,7 +398,8 @@ function setup() {
             }]
          }
       }
-   });
+    
+	});
     
    updateAxes();
    let start_idx = countries.indexOf("World"); //Data Row for Germany...
@@ -504,6 +510,7 @@ function convertChartDataToCSV(args) {
 			h=i-1
 			if (h==-1){h=4}
 			if (xDatum[i]!== xDatum[h]){
+				
 		 	result += xDatum[i]
 			result += columnDelimiter;
 
@@ -522,7 +529,7 @@ function convertChartDataToCSV(args) {
 				result += columnDelimiter; 
 			}}result += lineDelimiter;}
 		}	
-}
+} console.log(Date(xDatenTimealle[0]))
   return result;
 }
 
@@ -538,11 +545,11 @@ function downloadCSV(args) {
   if (csv == null) return;
 
   filename = args.filename || 'chart-data.csv';
-
+  
   if (!csv.match(/^data:text\/csv/i)) {
     csv = 'data:text/csv;charset=utf-8,' + csv;
   }
-  
+   
   data = encodeURI(csv);
   link = document.createElement('a');
   link.setAttribute('href', data);
@@ -595,6 +602,7 @@ function downloadCSV(args) {
          }
       }
    });*/
+  
 }
 
 
@@ -649,7 +657,7 @@ function convertChartDataToCSV1(args) {
 		result += lineDelimiter;
 	    result +=  attrs[anzahlAttribute[i]].name + " : " + attrs[anzahlAttribute[i]].value
 	  
- }}
+ }} result += lineDelimiter;
 	for (var i =0; i<args.data.data.length; i++){
 	xDaten = (args.data.data[i].x)
 	yDaten = (args.data.data[i].y)

@@ -22,61 +22,82 @@
    // --- -------------- ---
    // --- variable names ---
    // --- -------------- ---
-   $fileName_ECDC = "./dat/ecdc.csv";
-   //$url_ECDC   = "https://opendata.ecdc.europa.eu/covid19/casedistribution/csv";
-   $url_ECDC = "https://opendata.ecdc.europa.eu/covid19/casedistribution/csv/data.csv";
-   $seconds_download_interval = 3600;
+   $fileName_ECDC             = "./dat/ecdc.csv";
+   $fileName_WHO             = "./dat/who.csv";
+   $url_WHO   = "https://covid19.who.int/WHO-COVID-19-global-data.csv";
+   $url_ECDC   = "https://opendata.ecdc.europa.eu/covid19/casedistribution/csv";
+   $seconds_download_interval = 0;
    // --- ------------------------ ---
    // --- time since last modified ---
    // --- ------------------------ ---
    $time_ECDC_lastUpdated = filemtime($fileName_ECDC);
+   $time_WHO_lastUpdated = filemtime($fileName_WHO);
+
    $time_now = time();
    // --- ------------------------- ---
    // --- test output (comment out) ---
    // --- ------------------------- ---
    $logfile = fopen("./dat/ecdc_download.log","w");
+   
    fwrite($logfile,"time since last modified: ");
    fwrite($logfile,$time_now - $time_ECDC_lastUpdated);
    fwrite($logfile," seconds\n");
    fclose($logfile);
+   $logfile2 = fopen("./dat/who_download.log","w");
+   fwrite($logfile2,"time since last modified: ");
+   fwrite($logfile2,$time_now - $time_WHO_lastUpdated);
+   fwrite($logfile2," seconds\n");
+   fclose($logfile2);
    // --- -------------------------- ---
    // --- download new Covid-19 data ---
    // --- -------------------------- ---
+    
+   $fileName_list = array($fileName_ECDC,$fileName_WHO);
+   $url_list = array($url_ECDC,$url_WHO);
+   $time_lastUpdated_list = array($time_ECDC_lastUpdated,$time_WHO_lastUpdated);
+   $dirBackup_list = array("./dat/backup/ecdc/","./dat/backup/who/");
+   $fileNameBackup_list = array("ecdc_backup_","who_backup_");
 
-   if ( ($time_now-$time_ECDC_lastUpdated) > $seconds_download_interval ){
-      
+   for ($i = 0; $i < 2; $i++) {
+     if ( ($time_now-$time_lastUpdated_list[$i]) > $seconds_download_interval ){
+        
 
-      $file_contents = file_get_contents($url_ECDC);
+        $file_contents = file_get_contents($url_list[$i]);
 
-      if($file_contents != false) { 
-            file_put_contents($fileName_ECDC, $file_contents);
+        if($file_contents != false) { 
+              file_put_contents($fileName_list[$i], $file_contents);
 
-            copy($fileName_ECDC, "./dat/backup/ecdc_backup_".date('d-m-Y', $time_now).".csv");            
+              copy($fileName_list[$i], $dirBackup_list[$i].$fileNameBackup_list[$i].date('d-m-Y', $time_now).".csv");            
 
-            console_log("File downloaded successfully"); 
-      } 
-      else { 
-          console_log("File downloading failed. Replacing ecdc.csv with most recent_backup...");
+              console_log("File downloaded successfully"); 
+        } 
+        else { 
+            if($i == 0){
+              console_log("File downloading failed. Replacing ecdc.csv with most recent backup...");
+            } else {
+              console_log("File dwonloading failed. Replacing who.csv with most recent backup...");
+            }
+            $backup_files = array_slice(scandir($dirBackup_list[$i]),2);
+     
+           $max_timestamp = 0;
+           for ($j = 0; $j <= count($backup_files)-1; $j++) {
+                $timestamp_temp = convert_date_timestamp(substr($backup_files[$j],12,10));
+                if($timestamp_temp > $max_timestamp){
+                  $max_timestamp = $timestamp_temp;
+                }
+            }
 
-          $backup_files = array_slice(scandir("./dat/backup/"),2);
-   
-         $max_timestamp = 0;
-         for ($i = 0; $i <= count($backup_files)-1; $i++) {
-              $timestamp_temp = convert_date_timestamp(substr($backup_files[$i],12,10));
-              if($timestamp_temp > $max_timestamp){
-                $max_timestamp = $timestamp_temp;
-              }
-          }
+            $fileName_max_timestamp = $fileNameBackup_list[$i].date("d-m-Y", $max_timestamp).".csv";
 
-          $fileName_max_timestamp = "ecdc_backup_".date("d-m-Y", $max_timestamp).".csv";
-
-          copy("./dat/backup/".$fileName_max_timestamp, $fileName_ECDC);
+            copy($dirBackup_list[$i].$fileName_max_timestamp, $fileName_ECDC);
 
 
-      }
+        }
 
 
+
+     }
 
    }
      
-   ?>
+  ?>
