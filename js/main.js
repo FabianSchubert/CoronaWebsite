@@ -6,6 +6,7 @@ const linkJohnsHopkinsDeathsUS = 'https://raw.githubusercontent.com/CSSEGISandDa
 
 const linkECDC = './dat/ecdc.csv';
 const linkWHO = './dat/who.csv';
+const linkPop = './dat/population_who.csv'
 
 var countries = [];
 var times = [];
@@ -120,6 +121,7 @@ function preload() {
    //tab = loadTable(linkJohnsHopkins,'csv','header');
    tab = loadTable(linkWHO,'csv','header');
    tab2 = loadTable(linkECDC,'csv','header');
+   tabPop = loadTable(linkPop,'csv','header');
    
    tab_us_states_confirmed = loadTable(linkJohnsHopkinsConfirmedUS,'csv','header');
    tab_us_states_deaths = loadTable(linkJohnsHopkinsDeathsUS,'csv','header');
@@ -141,7 +143,7 @@ function preload() {
 function setup() {
    //console.log(table.columns);
    
-   [countries_ecdc, times_ecdc, tabArr_ecdc, tabArrDeaths_ecdc, population_ecdc] = processDataECDC(tab,tab2);
+   [countries_ecdc, times_ecdc, tabArr_ecdc, tabArrDeaths_ecdc, population_ecdc] = processDataECDC(tab,tabPop);
    [usstates_johns_hopkins, times_usstates, tabArr_usstates_confirmed] = processDataJohnsHopkinsConfirmed(tab_us_states_confirmed);
    [usstates_johns_hopkins, times_usstates, tabArr_usstates_deaths, population_usstates] = processDataJohnsHopkinsDeaths(tab_us_states_deaths);
    
