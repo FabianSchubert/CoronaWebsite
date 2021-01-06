@@ -188,9 +188,12 @@ function processDataECDC(tab,tab2){
       } 
    }
   
-   times.sort();
-   let nCountries = countries.length;
+   times.sort();   
    let nTimes = times.length;
+   let nCountries = countries.length;
+   
+   
+
    
    /*console.log(nCountries);
    console.log(nTimes);
@@ -217,15 +220,62 @@ function processDataECDC(tab,tab2){
       
          date = (parseInt(tabArr[i][0].slice(0,4))).pad(4) + "/" + (parseInt(tabArr[i][0].slice(5,7))).pad(2) + "/" + (parseInt(tabArr[i][0].slice(8,10))).pad(2); //.pad(4) + "/" + (parseInt(tabArr[i][2])).pad(2) + "/" + (parseInt(tabArr[i][1])).pad(2);
          
-         
+         y=parseFloat(tabArr[i][4])
+		 x=1
+		 z=1
+		 
          timeIdx = times.indexOf(date);
          countryIdx = countries.indexOf(country);
          
-         procArr[countryIdx][timeIdx] = parseFloat(tabArr[i][4]);//*1e5/population[countryIdx];
-		 if (tabArr[i][4]<0){
-			 procArr[countryIdx][timeIdx] = 0
-		 }
-         procArrDeaths[countryIdx][timeIdx] = parseFloat(tabArr[i][6]);//*1e5/population[countryIdx];
+       
+		 if (tabArr[i][4]<0){	 
+		 
+			 for(let a=0; a<1000 ;a++){
+				
+				y+= parseFloat(tabArr[i-1-a][4])
+				
+			     x+=1 			
+				z+=x
+				if (y>0){a=999}
+				
+			 }differenz=y
+			 b= (y)+(-y)*0.8
+			 c= b/x
+			d= (y)*0.8/z	 
+			for (let timesIdx1=0; timesIdx1<1000; timesIdx1++){
+				neu =timeIdx-timesIdx1
+			 procArr[countryIdx][neu] = Math.round(c+d*x);
+			 
+			 differenz-=Math.round(c+d*x)
+			 x-=1
+			 if (x==0){timesIdx1=999}
+			}procArr[countryIdx][timeIdx]+=differenz }else{ procArr[countryIdx][timeIdx] = parseFloat(tabArr[i][4]);}//*1e5/population[countryIdx];
+          y=parseFloat(tabArr[i][6])
+		 x=1
+		 z=1
+		 if (tabArr[i][6]<0){	 
+		 
+			 for(let a=0; a<1000 ;a++){
+				
+				y+= parseFloat(tabArr[i-1-a][6])
+				
+			     x+=1 			
+				z+=x
+				if (y>0){a=999}
+				
+			 }differenz=y
+			 b= (y)+(-y)*0.8
+			 c= b/x
+			d= (y)*0.8/z	 
+			for (let timesIdx1=0; timesIdx1<1000; timesIdx1++){
+				neu =timeIdx-timesIdx1
+			 procArrDeaths[countryIdx][neu] = Math.round(c+d*x);
+			 
+			 differenz-=Math.round(c+d*x)
+			 x-=1
+			 if (x==0){timesIdx1=999}
+			}procArrDeaths[countryIdx][timeIdx]+=differenz }else{ procArrDeaths[countryIdx][timeIdx] = parseFloat(tabArr[i][6]);}
+		 //*1e5/population[countryIdx];
       }
    }
   
@@ -248,6 +298,7 @@ function processDataECDC(tab,tab2){
    // convert times to list of integers denoting absolute time
    for(let i=0;i<times.length;i++){
       times[i] = Math.abs(new Date(times[i]));
+	  
    } 
    return [countries, times, procArr, procArrDeaths, population];
    
