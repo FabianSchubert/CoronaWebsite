@@ -215,6 +215,13 @@ top: 10%;" >
    <li> Examine total or per capita data
    <li> Pick a custom color by clicking the color wheel  &nbsp;
         <img src="./img/colorwheel.png" style="height: 15px; margin-bottom: 0;">
+   <li> Download the data currently displayed as a csv file using &nbsp;
+        <img src="./img/download_data.svg" style="height: 20px; margin-bottom: 0;">. 
+        The downloaded data includes all manual data modifications, as well as whether "Per 100.000 Inh."
+        or "Absolute" is selected in the plot. Note that you can either choose to download the 
+        data of all graphs/countries currently shown using the download button at the bottom
+        right of the graph, as well as data for a single graph by clicking the download button
+        in the respective adjustment panel.
    <li> Export your plot to a png-image, using &nbsp;
         <img src="./img/download.svg" style="height: 15px; margin-bottom: 0;">
    <li> For support please contact Fabian Schubert:
@@ -241,12 +248,12 @@ top: 10%;" >
 
    <h2>Covid-19 Data Sources</h2>
    <ul>
-   <li> <b>ECDC:</b> <a href="https://opendata.ecdc.europa.eu/covid19/casedistribution/" 
+   <li> <b>WHO:<a href="https://covid19.who.int/WHO-COVID-19-global-data.csv"
         target="_blank"
-        class="blackText"> European Center for Disease Control open Covid-19 data</a> (world wide countries)
+        class="blackText"> World Health Organization Covid-19 Data Table</a> (world wide countries)
    <li> <b>JH-CSSE:</b> <a href="https://github.com/CSSEGISandData/COVID-19" target="_blank"
         class="blackText">John Hopkins Center For Systems Science and Engineering Covid-19 Github repository</a> (US states)
-   <li> World and EU aggregates: calculated from ECDC data.
+   <li> World and EU aggregates: calculated from WHO data.
    </ul>
 
    <h2>Terms</h2>
