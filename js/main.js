@@ -67,7 +67,7 @@ var eu27 = [
 "Netherlands",
 "Poland",
 "Portugal",
-"Romania", 
+"Romania",
 "Slovakia",
 "Slovenia",
 "Spain",
@@ -156,7 +156,7 @@ function setup() {
          tabArrDeaths.push(tabArrDeaths_ecdc[i]);
          population.push(population_ecdc[i]);
       }
-   } 
+   }
   
    for(let i=0;i<usstates_johns_hopkins.length;i++){
       if((!isNaN(population_usstates[i])) && (population_usstates[i] != 0)){
@@ -205,7 +205,7 @@ function setup() {
       if(eu27.includes(countries_ecdc[i])){
          for(let j=0;j<times_ecdc.length;j++){
             eu27_total_conf[j] += tabArr_ecdc[i][j];
-            eu27_total_deaths[j] += tabArrDeaths_ecdc[i][j];  
+            eu27_total_deaths[j] += tabArrDeaths_ecdc[i][j];
          }
          eu27_total_population += (population_ecdc[i] || 0);
       }
@@ -227,7 +227,7 @@ function setup() {
    
    for(let j=0;j<times_ecdc.length;j++){
       eu28_total_conf[j] += tabArr_ecdc[idx_UK][j];
-      eu28_total_deaths[j] += tabArrDeaths_ecdc[idx_UK][j];  
+      eu28_total_deaths[j] += tabArrDeaths_ecdc[idx_UK][j];
    }
    eu28_total_population += (population_ecdc[idx_UK] || 0);
    
@@ -251,7 +251,7 @@ function setup() {
       if(eu19.includes(countries_ecdc[i])){
          for(let j=0;j<times_ecdc.length;j++){
             eu19_total_conf[j] += tabArr_ecdc[i][j];
-            eu19_total_deaths[j] += tabArrDeaths_ecdc[i][j];  
+            eu19_total_deaths[j] += tabArrDeaths_ecdc[i][j];
          }
          eu19_total_population += (population_ecdc[i] || 0);
       }
@@ -328,7 +328,7 @@ function setup() {
 		
 		/*box.setAttribute("lockDatesAll","true");*/
 		
-	  } 
+	  }
 	 };
 	  dropdown.appendChild(newEntryListe);
    }
@@ -350,14 +350,14 @@ function setup() {
          tooltips: {
 	
             callbacks: {
-               label: 
+               label:
 			   function(tooltipItem, data) {
                   var label = data.datasets[tooltipItem.datasetIndex].label || '';
                   
 				  
                   if (label) {
                      label += ' ( ';
-                  }                  
+                  }
                   
                   if (myLineChart.options.scales.xAxes[0].type == 'linear'){
                      label += Math.round(tooltipItem.xLabel * 100) / 100;
@@ -373,7 +373,7 @@ function setup() {
                   label += ' )'
 				  
                   return label;
-               } 
+               }
             }
          },
          
@@ -395,8 +395,8 @@ function setup() {
                
                scaleLabel: {
                   display: true,
-                  labelString: "Total Confirmed Cases / Deaths per 100000 Inhabitants"
-               }   
+                  labelString: "Total Cases / Deaths per 100000 Inhabitants"
+               }
             }]
          }
       }
@@ -416,7 +416,7 @@ document.getElementById("downloadCSV").addEventListener("click", function(){
 });
 	
 
-function convertChartDataToCSV(args) {  
+function convertChartDataToCSV(args) {
   var result, columnDelimiter, lineDelimiter, data;
   
   data = args.data[0]
@@ -438,7 +438,7 @@ function convertChartDataToCSV(args) {
   for (var n =0; n<args.data.length; n++){
   result += document.getElementsByClassName("countryBoxHeader")[n].innerHTML
   result += columnDelimiter;}
-  result += lineDelimiter; 
+  result += lineDelimiter;
   result += lineDelimiter;
   result += 'x'
   result += columnDelimiter
@@ -461,16 +461,16 @@ function convertChartDataToCSV(args) {
 		 
 	  result +=  attrs[anzahlAttribute[i]].name + " : " + attrs[anzahlAttribute[i]].value
 	 
-	 } 
+	 }
  }result += columnDelimiter
  result += lineDelimiter;}
  
 	for (var n =0; n<args.data.length; n++){
 	 neueAufzählung[n] = 0
 	}
-	function Sortierung(a, b) { 
+	function Sortierung(a, b) {
 		return (a - b);
-		} 
+		}
 	 Aufzählung = 0
 	 for (var n =0; n<args.data.length; n++){
 		  for (var i =0; i<args.data[n].data.length; i++){
@@ -493,13 +493,13 @@ function convertChartDataToCSV(args) {
 		 if (xDatenTotalalle[i] == args.data[n].data[Zahl].x){
 			yDaten = (args.data[n].data[Zahl].y)
 			result += Math.round(yDaten*100)/100
-			result += columnDelimiter; 	
+			result += columnDelimiter;
 			neueAufzählung[n] +=1	;
 				if (neueAufzählung[n] == args.data[n].data.length){
 					neueAufzählung[n]=0
-				}					
+				}
 			}else{
-				result += columnDelimiter; 
+				result += columnDelimiter;
 		 }}
 		result += lineDelimiter;}
 	
@@ -522,15 +522,15 @@ function convertChartDataToCSV(args) {
 		 if (xDatenTimealle[i] == abgerundet){
 			yDaten = (args.data[n].data[Zahl].y)
 			result += Math.round(yDaten*100)/100
-			result += columnDelimiter; 	
+			result += columnDelimiter;
 			neueAufzählung[n] +=1	;
 				if (neueAufzählung[n] == args.data[n].data.length){
 					neueAufzählung[n]=0
-				}					
+				}
 			}else{
-				result += columnDelimiter; 
+				result += columnDelimiter;
 			}}result += lineDelimiter;}
-		}	
+		}
 } console.log(Date(xDatenTimealle[0]))
   return result;
 }
@@ -540,7 +540,7 @@ function downloadCSV(args) {
   var csv = "";
    
  
-    csv += convertChartDataToCSV({ 
+    csv += convertChartDataToCSV({
       data: args.chart.data.datasets
     });
   
@@ -557,8 +557,8 @@ function downloadCSV(args) {
   link.setAttribute('href', data);
   link.setAttribute('download', filename);
   document.body.appendChild(link); // Required for FF
-	link.click(); 
-	document.body.removeChild(link);   
+	link.click();
+	document.body.removeChild(link);
 }
    
    //$.loadScript('./presets/preset.js', function(){});
@@ -599,7 +599,7 @@ function downloadCSV(args) {
                scaleLabel: {
                   display: true,
                   labelString: "Total Cases"
-               }   
+               }
             }]
          }
       }
@@ -620,7 +620,7 @@ jQuery.loadScript = function (url, callback) {
 }
 
 
-function convertChartDataToCSV1(args) {  
+function convertChartDataToCSV1(args) {
   var result, ctr, keys, columnDelimiter, lineDelimiter, data;
   
   data = args.data.data;
@@ -700,6 +700,6 @@ function downloadCSV1(args) {
   link.setAttribute('href', data);
   link.setAttribute('download', filename);
   document.body.appendChild(link); // Required for FF
-	link.click(); 
-	document.body.removeChild(link);   
+	link.click();
+	document.body.removeChild(link);
 }

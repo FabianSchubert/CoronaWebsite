@@ -2,12 +2,12 @@
 <html>
 <head>
    
-   
+   <link rel="icon" href="./img/favicon.png" type="image/png">
    
    <title>Goethe Interactive COVID-19 Analyzer</title>
    <meta charset="UTF-8">
    <meta name="description" content="Online interactive Covid-19 analyzer.
-   Free tool to compare Corona data for counries, daily case counts, total 
+   Free tool to compare Corona data for counries, daily case counts, total
    case counts and fatalities. Allows rescaling.">
 
    <meta name="keywords" content="Covid-19, Coronavirus, case-counts, death-counts,
@@ -36,9 +36,9 @@
 </head>
 <body>
    
-   <?php 
+   <?php
       include('./php/downloadData.php')
-   ?>   
+   ?>
       
    <div id="outerFrame" style= "max-width: 1125px;">
    
@@ -54,12 +54,12 @@ margin-bottom: 20px; font-weight: 600;">Goethe Interactive COVID-19 Analyzer</h1
    
    
    <div id ="centerBox" class="centerBox" style="background:#FFFFFF; font-size: 16px; text-align: left;">
-    <span style="color:#666666; font-weight:bold; font-size: larger;">Compare 
+    <span style="color:#666666; font-weight:bold; font-size: larger;">Compare
           Covid-19 outbreaks, create your own plots!</span>
     <span style="float:right;">
-       <a href="https://itp.uni-frankfurt.de/~gros/" class="blackText">Claudius Gros</a> /  
+       <a href="https://itp.uni-frankfurt.de/~gros/" class="blackText">Claudius Gros</a> /
    Fabian Schubert / Carolin Roskothen</span><br>
-    <span style="float:right;">Institute for Theoretical Physics &#8212; 
+    <span style="float:right;">Institute for Theoretical Physics &#8212;
                                Goethe University Frankfurt</span>
    
    <br><br>
@@ -116,7 +116,7 @@ top: 10%;" >
       
       <div class="dropdown" id="countryDropdown"
            title = "add country or US state of your choice">
-      <button   id ="buttonDropdown" class="dropbtn"  type="button" data-toggle="dropdown" >Add&nbsp;Country </button> 
+      <button   id ="buttonDropdown" class="dropbtn"  type="button" data-toggle="dropdown" >Add&nbsp;Country </button>
         <div  id = "countryDropdownContent" style = "padding-top: 0px;" class="dropdown-menu dropdown-content ">
 		
 		<input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
@@ -154,7 +154,8 @@ top: 10%;" >
       position: absolute;
       right: 5px;"
       onclick="var url = myLineChart.toBase64Image();
-      window.open(url);">
+      downloadFileTempLink(url, 'covid_plot.png');
+      //window.open(url);">
 	  <input type="image"
             src="./img/download_data.svg"
       id = "downloadCSV"
@@ -201,8 +202,10 @@ top: 10%;" >
    <div class="explainBox" style=" margin-left: auto; margin-right: auto; border-radius: 25px; border: 5px solid #666666;
 	background: #FFFFFF; padding: 20px;	text-align: left; width: 100%;">
    <h2>How to use / Support</h2>
-   <ul> 
-   <li> Select the same country multiple times to compare fatalities/case counts
+   <ul>
+   <li> Select the same country multiple times to compare fatalities/case counts.
+        You can simultaneously show both cases/deaths as indicated by the
+        y-axis labeling (cases/deaths).
    <li> Rescale the y axis to see if the case counts of two or more countries are
         functionally similar,<br>
         rescale both x and y axis to compare XI representations
@@ -212,18 +215,19 @@ top: 10%;" >
    <li> n-day centered moving averages are provided; examples: <br>
      n=3: mean of previous-, current- and subsequent day<br>
      n=1: raw data
-   <li> Examine total or per capita data
+   <li> Examine total or per capita data. Per 100,000 Inh. (inhabitants) means
+        (per capita) x 10⁵.
    <li> Pick a custom color by clicking the color wheel  &nbsp;
-        <img src="./img/colorwheel.png" style="height: 15px; margin-bottom: 0;">
+        <img src="./img/colorwheel.png" style="height: 15px; margin-bottom: 0;">.
    <li> Download the data currently displayed as a csv file using &nbsp;
-        <img src="./img/download_data.svg" style="height: 20px; margin-bottom: 0;">. 
+        <img src="./img/download_data.svg" style="height: 20px; margin-bottom: 0;">.
         The downloaded data includes all manual data modifications, as well as whether "Per 100.000 Inh."
-        or "Absolute" is selected in the plot. Note that you can either choose to download the 
+        or "Absolute" is selected in the plot. Note that you can either choose to download the
         data of all graphs/countries currently shown using the download button at the bottom
         right of the graph, as well as data for a single graph by clicking the download button
         in the respective adjustment panel.
    <li> Export your plot to a png-image, using &nbsp;
-        <img src="./img/download.svg" style="height: 15px; margin-bottom: 0;">
+        <img src="./img/download.svg" style="height: 15px; margin-bottom: 0;">.
    <li> For support please contact Fabian Schubert:
    <font color="#990000">
    <span onclick="this.innerHTML='fschubert';
@@ -235,13 +239,13 @@ top: 10%;" >
 
    <h2>Representations of an Epidemic Outbreak</h2>
    <ul>
-   <li> <b>Timeline:</b> Data (case/total counts) as a function of time (date)
-   <li> <b>XI representation:</b> I: daily counts (cases/fatalities) as a function of 
+   <li> <b>Timeline:</b> Data (case/total counts) as a function of time (date).
+   <li> <b>XI representation:</b> I: daily counts (cases/fatalities) as a function of
                               X: total counts (cases/fatalities) <br>
-     Time is implicit; allows to compare/extract parameters
+     Time is implicit; allows to compare/extract parameters.
    <li> <b>Publication:</b>
    <em><a href="http://arxiv.org/abs/2004.00493" class="blackText" target="_blank" >
-   "Containment efficiency and control strategies for the Corona pandemic costs"</a></em>, 
+   "Containment efficiency and control strategies for the Corona pandemic costs"</a></em>,
    <br>
    C. Gros, R. Valenti, L. Schneider, K. Valenti, D. Gros (2020)
    </ul>
@@ -250,9 +254,10 @@ top: 10%;" >
    <ul>
    <li> <b>WHO:<a href="https://covid19.who.int/WHO-COVID-19-global-data.csv"
         target="_blank"
-        class="blackText"> World Health Organization Covid-19 Data Table</a> (world wide countries)
+        class="blackText"> World Health Organization Covid-19 Data Table</a> (world wide countries).<br>
+        WHO data used on this website was last updated on <?php include './php/whoDataSourcesLastDownload.php';?>.
    <li> <b>JH-CSSE:</b> <a href="https://github.com/CSSEGISandData/COVID-19" target="_blank"
-        class="blackText">John Hopkins Center For Systems Science and Engineering Covid-19 Github repository</a> (US states)
+        class="blackText">John Hopkins Center For Systems Science and Engineering Covid-19 Github repository</a> (US states).
    <li> World and EU aggregates: calculated from WHO data.
    </ul>
 
@@ -295,7 +300,7 @@ top: 10%;" >
          style="padding-right: 17px; background-color: #ff0000;">
 		 <input id="datelocks" type="image" src="./img/lock_closeddate.svg"
             class="dateLock"
-            onclick="dateLockClick(this);" 
+            onclick="dateLockClick(this);"
 			style = "display: inline-Block ; position: absolute; top: 271px; right: 7px;">
             <p class="countryBoxHeader">TemplateCountry</p>
 			
@@ -318,7 +323,7 @@ top: 10%;" >
             
             <input type="color" style='opacity:0;width:100px;position:absolute;'
             class="colorPicker"
-            onchange="setColor(this);" />            
+            onchange="setColor(this);" />
             <input type="image"
             src="./img/colorwheel.png"
             class="colorWheel"
@@ -440,6 +445,7 @@ top: 10%;" >
       <script src="./js/plotting.js"></script>
       <script src="./js/dropdown.js"></script>
       <script src="./js/main.js"></script>
+      <script src="./js/misc.js"></script>
 	  
 	  
 <?php include './php/visitCounter.php';?>
@@ -447,4 +453,3 @@ top: 10%;" >
    
 </body>
 </html>
-

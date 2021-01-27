@@ -1,7 +1,7 @@
 <?php
    
    function console_log($output, $with_script_tags = true) {
-       $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) . 
+       $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) .
    ');';
        if ($with_script_tags) {
            $js_code = '<script>' . $js_code . '</script>';
@@ -26,7 +26,7 @@
    $fileName_WHO             = "./dat/who.csv";
    $url_WHO   = "https://covid19.who.int/WHO-COVID-19-global-data.csv";
    $url_ECDC   = "https://opendata.ecdc.europa.eu/covid19/casedistribution/csv";
-   $seconds_download_interval = 0;
+   $seconds_download_interval = 3600;
    // --- ------------------------ ---
    // --- time since last modified ---
    // --- ------------------------ ---
@@ -64,14 +64,14 @@
 
         $file_contents = file_get_contents($url_list[$i]);
 
-        if($file_contents != false) { 
+        if($file_contents != false) {
               file_put_contents($fileName_list[$i], $file_contents);
 
-              copy($fileName_list[$i], $dirBackup_list[$i].$fileNameBackup_list[$i].date('d-m-Y', $time_now).".csv");            
+              copy($fileName_list[$i], $dirBackup_list[$i].$fileNameBackup_list[$i].date('d-m-Y', $time_now).".csv");
 
-              console_log("File downloaded successfully"); 
-        } 
-        else { 
+              console_log("File downloaded successfully");
+        }
+        else {
             if($i == 0){
               console_log("File downloading failed. Replacing ecdc.csv with most recent backup...");
             } else {

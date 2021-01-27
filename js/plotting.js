@@ -45,7 +45,7 @@ function addPlot(idx){
       max: Math.round((times[idx][times[idx].length-1] - times[idx][0])/864e5),
       values: [xcut,ycut],
       change: changeRangeSlider,
-      slide: changeRangeSlider  
+      slide: changeRangeSlider
    });
   
   newCountryBox.setAttribute("xcut",box.getAttribute("xcut"));
@@ -103,12 +103,12 @@ function changeRangeSlider(event, ui){
 	
   		  dateSlider.children()[0].style = x
 		  dateSlider.children()[1].style = y
-		  dateSlider.children()[2].style = z 
+		  dateSlider.children()[2].style = z
 	 
 	
 		  updateData(allCountryBox);
 		  
-	   } 
+	   }
    }
  }}
 	}
@@ -121,7 +121,7 @@ function changeRangeSlider(event, ui){
 function updateData(countryBox){ //countryBox should be a jquery object
       
    let xScale = parseFloat(countryBox.attr("xScale"));
-   let yScale = parseFloat(countryBox.attr("yScale"));      
+   let yScale = parseFloat(countryBox.attr("yScale"));
    let n_avg = parseFloat(countryBox.attr("n_avg"));
    let timeShift = parseFloat(countryBox.attr("timeShift"));
    let xcut = parseInt(countryBox.attr("xcut"));
@@ -147,7 +147,7 @@ function updateData(countryBox){ //countryBox should be a jquery object
    myLineChart.update();
 }
 
-var options = { 
+var options = {
     responsive: true,
     maintainAspectRatio: false
 }
@@ -194,7 +194,7 @@ function xScaleSliderInput(selfDOM){
    let yScaleMax = parseFloat(selfCountryBox.find(".sliderRangeField.max")[1].value);
    
    let xScale = (selfDOM.value/selfDOM.max)*xScaleMax;
-   let yScale;      
+   let yScale;
    
    
    if(selfCountryBox.attr("lockScales") == "true"){
@@ -210,7 +210,7 @@ function xScaleSliderInput(selfDOM){
       
       let yScaleSlider = selfCountryBox.find(".slider.yScale")[0]
       
-      yScaleSlider.value = 
+      yScaleSlider.value =
       (yScale / yScaleMax) * yScaleSlider.max;
       selfCountryBox.find(".yScaleValue")[0].innerHTML = yScale.toFixed(1);
       
@@ -235,7 +235,7 @@ function yScaleSliderInput(selfDOM){
    
    let xScale;
    
-   let yScale = selfDOM.value*yScaleMax/selfDOM.max;     
+   let yScale = selfDOM.value*yScaleMax/selfDOM.max;
    
    
    if(selfCountryBox.attr("lockScales") == "true"){
@@ -249,7 +249,7 @@ function yScaleSliderInput(selfDOM){
       
       let xScaleSlider = selfCountryBox.find(".slider.xScale")[0]
       
-      xScaleSlider.value = 
+      xScaleSlider.value =
       (xScale / xScaleMax) * xScaleSlider.max;
       selfCountryBox.find(".xScaleValue")[0].innerHTML = xScale.toFixed(1);
       
@@ -260,7 +260,7 @@ function yScaleSliderInput(selfDOM){
    
    selfCountryBox.attr("yScale",yScale);
    
-   updateData(selfCountryBox);     
+   updateData(selfCountryBox);
 }
 
 
@@ -281,7 +281,7 @@ function timeShiftSliderInput(selfDOM){
    let timeShiftSlider = selfCountryBox.find(".slider.timeShift")[0];
    let timeShiftMax = parseFloat(selfCountryBox.find(".sliderRangeField.max")[2].value);
    let timeShift = selfDOM.value*timeShiftMax/selfDOM.max;
-    timeShiftSlider.value = 
+    timeShiftSlider.value =
       (timeShift / timeShiftMax) * timeShiftSlider.max;
    selfCountryBox.attr("timeShift",timeShift);
    updateData(selfCountryBox);
@@ -319,7 +319,7 @@ function dateRangeclick(selfDOM){
 	
 	ycut = Math.round((times[idx][times[idx].length-1] - times[idx][0])/864e5)-CountryBoxContainer.attr("ycut")
 	if(selfCountryBox.attr("lockDatesAll") == "true"){
-	    $(selfCountryBox).find(".dateRange").slider({  
+	    $(selfCountryBox).find(".dateRange").slider({
       values: [xcut,ycut],
    });
 	 	  
@@ -376,7 +376,7 @@ function casesCheckBoxClick(selfDOM){
       myLineChart.data.datasets[idx_node].pointBackgroundColor = 'rgba(0,0,0,0)'
    } else {
       selfCountryBox.attr("displayData","cases");
-      myLineChart.data.datasets[idx_node].pointBackgroundColor 
+      myLineChart.data.datasets[idx_node].pointBackgroundColor
       = myLineChart.data.datasets[idx_node].borderColor;
    }
    
@@ -392,14 +392,14 @@ function scaleMaxInput(selfDOM){
    let xScaleMax = parseFloat(selfCountryBox.find(".sliderRangeField.max")[0].value);
    let yScaleMax = parseFloat(selfCountryBox.find(".sliderRangeField.max")[1].value);
    
-   let xScale = selfCountryBox.attr("xScale");   
-   let yScale = selfCountryBox.attr("yScale"); 
+   let xScale = selfCountryBox.attr("xScale");
+   let yScale = selfCountryBox.attr("yScale");
    
    let xScaleSlider = selfCountryBox.find(".slider.xScale")[0]
    let yScaleSlider = selfCountryBox.find(".slider.yScale")[0]
    
    xScaleSlider.value = (xScale / xScaleMax) * xScaleSlider.max;
-   yScaleSlider.value = (yScale / yScaleMax) * yScaleSlider.max;   
+   yScaleSlider.value = (yScale / yScaleMax) * yScaleSlider.max;
 }
 
 /*function timeMaxInput(selfDOM){
@@ -409,12 +409,12 @@ function scaleMaxInput(selfDOM){
    
    let timeShiftMax = parseFloat(selfCountryBox.find(".sliderRangeField.max")[2].value);
    
-   let timeShift = selfCountryBox.attr("timeShift");   
+   let timeShift = selfCountryBox.attr("timeShift");
   
    
    let timeShiftSlider = selfCountryBox.find(".slider.timeShift")[0]
    
-   timeShiftSlider.value = (timeShift / timeShiftMax) * timeShiftSlider.max;  
+   timeShiftSlider.value = (timeShift / timeShiftMax) * timeShiftSlider.max;
 }*/
 
 function updateAxes(){
@@ -446,7 +446,7 @@ function updateAxes(){
                scaleLabel: {
                   display: true,
                   labelString: "Time"
-               }   
+               }
             }
    } else if (xAxMode == "total"){
       
@@ -460,10 +460,10 @@ function updateAxes(){
                
                scaleLabel: {
                   display: true,
-                  labelString: "Total Confirmed Cases / Deaths" + perPopStrX
-               }   
+                  labelString: "Total Cases / Deaths" + perPopStrX
+               }
             }
-   } 
+   }
    // The whole thing for the y axis...
    if(yAxMode == "time"){
       
@@ -477,7 +477,7 @@ function updateAxes(){
                scaleLabel: {
                   display: true,
                   labelString: "Time"
-               }   
+               }
             }
    } else if (yAxMode == "total" && selfCountryBox.getAttribute("logscale") == "false"){
       
@@ -491,8 +491,8 @@ function updateAxes(){
                
                scaleLabel: {
                   display: true,
-                  labelString: "Total Confirmed Cases / Deaths" + perPopStrY
-               }   
+                  labelString: "Total Cases / Deaths" + perPopStrY
+               }
             }
    }   else if (yAxMode == "total" && selfCountryBox.getAttribute("logscale") == "true" ){
       
@@ -503,23 +503,23 @@ function updateAxes(){
                time: {
                   unit: 'day'
                },
-			      ticks: { 
+			      ticks: {
           maxTicksLimit: 8 ,
-          callback: function (value, index, values) { 
-           var remain = Math.floor(Math.log(value)); 
-            if (value === 0) { 
-             return '0'; 
-           } else if (remain === -4 || remain === -3 || remain === -2 || remain === -1 || remain === 0 ||remain === 1 || remain === 2 || remain === 3 || remain === 4 || remain === 5 || remain === 6 || remain === 7 
-		   || remain === 8 || remain === 9 || remain === 10 || remain === 11 || remain === 12 || remain === 13 || remain === 14 || remain === 15 || remain === 16 ||index === 0 ) { 
-            return value; 
+          callback: function (value, index, values) {
+           var remain = Math.floor(Math.log(value));
+            if (value === 0) {
+             return '0';
+           } else if (remain === -4 || remain === -3 || remain === -2 || remain === -1 || remain === 0 ||remain === 1 || remain === 2 || remain === 3 || remain === 4 || remain === 5 || remain === 6 || remain === 7
+		   || remain === 8 || remain === 9 || remain === 10 || remain === 11 || remain === 12 || remain === 13 || remain === 14 || remain === 15 || remain === 16 ||index === 0 ) {
+            return value;
            }
-           return ''; 
+           return '';
 				},
           min: 0  },
                scaleLabel: {
                   display: true,
-                  labelString: "Total Confirmed Cases / Deaths" + perPopStrY
-               }   
+                  labelString: "Total Cases / Deaths" + perPopStrY
+               }
             }
    
    }else if (yAxMode == "daily" && selfCountryBox.getAttribute("logscale") == "false"){
@@ -534,7 +534,7 @@ function updateAxes(){
                scaleLabel: {
                   display: true,
                   labelString: "Daily Cases / Deaths" + perPopStrY
-               }   
+               }
             }
    }
    else if (yAxMode == "daily" && selfCountryBox.getAttribute("logscale") == "true"){
@@ -545,27 +545,27 @@ function updateAxes(){
                time: {
                   unit: 'day'
                },
-			    ticks: { 
+			    ticks: {
 				 maxTicksLimit: 8 ,
-          callback: function (value, index, values) { 
-           var remain = Math.floor(Math.log(value)); 
-            if (value === 0) { 
-             return '0'; 
-           } else if (remain === -4 || remain === -3 || remain === -2 || remain === -1 || remain === 0 ||remain === 0 || remain === 1 || remain === 2 || remain === 3 || remain === 4 || remain === 5 || remain === 6 || remain === 7 
-		   || remain === 8 || remain === 9 || remain === 10 || remain === 11 || remain === 12 || remain === 13 || remain === 14 || remain === 15 || remain === 16 ||index === 0 ) { 
-            return value; 
+          callback: function (value, index, values) {
+           var remain = Math.floor(Math.log(value));
+            if (value === 0) {
+             return '0';
+           } else if (remain === -4 || remain === -3 || remain === -2 || remain === -1 || remain === 0 ||remain === 0 || remain === 1 || remain === 2 || remain === 3 || remain === 4 || remain === 5 || remain === 6 || remain === 7
+		   || remain === 8 || remain === 9 || remain === 10 || remain === 11 || remain === 12 || remain === 13 || remain === 14 || remain === 15 || remain === 16 ||index === 0 ) {
+            return value;
            }
-           return ''; 
+           return '';
 				},
           min: 0  },
                scaleLabel: {
                   display: true,
                   labelString: "Daily Cases / Deaths" + perPopStrY
-               }   
+               }
             }
     
    }
-   myLineChart.update(); 
+   myLineChart.update();
 }
 
 $.cssHooks.backgroundColor = {
