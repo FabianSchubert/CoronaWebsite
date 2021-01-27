@@ -264,6 +264,7 @@ top: 10%;" >
    <h2>Terms</h2>
    <ul>
    <li> The Goethe Interactive COVID-19 Analyzer is free to use.
+   <li> The source code is maintained on <a href="https://github.com/FabianSchubert/CoronaWebsite">GitHub</a>.
    <li> Graphics produced can be used both for private and commercial purposes,<br>
      when including the disclaimer "Produced using the Goethe Interactive COVID-19 Analyzer".
    <li> Online publications need to include a link to this website.
