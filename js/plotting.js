@@ -429,8 +429,8 @@ function updateAxes(){
    $(".dataTypeButton.xAx").attr("style","background-color: #777777;");
    $(".dataTypeButton.yAx").attr("style","background-color: #777777;");
    
-   let perPopStrX = showPopRel ? " per 100.000 Inhabitants" : "";
-   let perPopStrY = showPopRel ? " per 100.000 Inh." : "";
+   let perPopStrX = showPopRel ? " per 10⁵ Inhabitants" : "";
+   let perPopStrY = showPopRel ? " per 10⁵ Inh." : "";
    
    // Update the x axis...
    if(xAxMode == "time"){

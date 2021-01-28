@@ -383,7 +383,7 @@ function setup() {
                type: 'linear',
                scaleLabel: {
                   display: true,
-                  labelString: "Daily new Cases / Deaths per 100000 Inh."
+                  labelString: "Daily new Cases / Deaths per 10⁵ Inh."
                }
             }],
             
@@ -395,7 +395,7 @@ function setup() {
                
                scaleLabel: {
                   display: true,
-                  labelString: "Total Cases / Deaths per 100000 Inhabitants"
+                  labelString: "Total Cases / Deaths per 10⁵ Inhabitants"
                }
             }]
          }

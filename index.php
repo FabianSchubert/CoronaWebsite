@@ -82,7 +82,7 @@ margin-bottom: 20px; font-weight: 600;">Goethe Interactive COVID-19 Analyzer</h1
 	  
 	       <div id="totalPopSwitchContainer" title="how to display the data" style="right: 4%;
 top: 10%;" >
-      <span>Per 100.000 Inh.</span>
+      <span>Per 10⁵ Inh.</span>
       <label class="switch" id="totalPopSwitch">
          <input type="checkbox"
          onclick="totalPopCheckBoxClick(this);"  >
@@ -215,13 +215,13 @@ top: 10%;" >
    <li> n-day centered moving averages are provided; examples: <br>
      n=3: mean of previous-, current- and subsequent day<br>
      n=1: raw data
-   <li> Examine total or per capita data. Per 100,000 Inh. (inhabitants) means
-        (per capita) x 10⁵.
+   <li> Examine total or per capita data. Per 10⁵ Inh. (inhabitants) means
+        (per capita) x 100000.
    <li> Pick a custom color by clicking the color wheel  &nbsp;
         <img src="./img/colorwheel.png" style="height: 15px; margin-bottom: 0;">.
    <li> Download the data currently displayed as a csv file using &nbsp;
         <img src="./img/download_data.svg" style="height: 20px; margin-bottom: 0;">.
-        The downloaded data includes all manual data modifications, as well as whether "Per 100.000 Inh."
+        The downloaded data includes all manual data modifications, as well as whether "Per 10⁵ Inh."
         or "Absolute" is selected in the plot. Note that you can either choose to download the
         data of all graphs/countries currently shown using the download button at the bottom
         right of the graph, as well as data for a single graph by clicking the download button
