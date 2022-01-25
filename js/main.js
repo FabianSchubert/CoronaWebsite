@@ -6,6 +6,8 @@ const linkJohnsHopkinsDeathsUS = 'https://raw.githubusercontent.com/CSSEGISandDa
 
 const linkECDC = './dat/ecdc.csv';
 const linkWHO = './dat/who.csv';
+const linkWHOVacc = './dat/who_vacc.csv'
+const linkOWID = './dat/owid.csv'
 const linkPop = './dat/population_who.csv'
 
 var countries = [];
@@ -18,6 +20,7 @@ var countries_ecdc;
 var times_ecdc;
 var tabArr_ecdc;
 var tabArrDeaths_ecdc;
+var tabArrVacc;
 var population_ecdc;
 
 var usstates;
@@ -122,7 +125,7 @@ function preload() {
    tab = loadTable(linkWHO,'csv','header');
    tab2 = loadTable(linkECDC,'csv','header');
    tabPop = loadTable(linkPop,'csv','header');
-   
+   tabOWID = loadTable(linkOWID,'csv','header');
    tab_us_states_confirmed = loadTable(linkJohnsHopkinsConfirmedUS,'csv','header');
    tab_us_states_deaths = loadTable(linkJohnsHopkinsDeathsUS,'csv','header');
    
@@ -143,10 +146,15 @@ function preload() {
 function setup() {
    //console.log(table.columns);
    
-   [countries_ecdc, times_ecdc, tabArr_ecdc, tabArrDeaths_ecdc, population_ecdc] = processDataECDC(tab,tabPop);
+   //processDataOWID(tabOWID);
+
+   //[countries_ecdc, times_ecdc, tabArr_ecdc, tabArrDeaths_ecdc, population_ecdc] = processDataECDC(tab,tabPop);
+   [countries_ecdc, times_ecdc, tabArr_ecdc, tabArrDeaths_ecdc, tabArrVacc, population_ecdc] = processDataOWID(tabOWID);
    [usstates_johns_hopkins, times_usstates, tabArr_usstates_confirmed] = processDataJohnsHopkinsConfirmed(tab_us_states_confirmed);
    [usstates_johns_hopkins, times_usstates, tabArr_usstates_deaths, population_usstates] = processDataJohnsHopkinsDeaths(tab_us_states_deaths);
    
+   tabArrDeaths_ecdc = tabArrVacc;
+
    //merge...
    for(let i=0;i<countries_ecdc.length;i++){
       if((!isNaN(population_ecdc[i])) && (population_ecdc[i] != 0)){
@@ -223,7 +231,7 @@ function setup() {
    countries.push("EU28");
    times.push(times_ecdc);
    
-   let idx_UK = countries_ecdc.indexOf("The United Kingdom");
+   let idx_UK = countries_ecdc.indexOf("United Kingdom");
    
    for(let j=0;j<times_ecdc.length;j++){
       eu28_total_conf[j] += tabArr_ecdc[idx_UK][j];
@@ -266,7 +274,7 @@ function setup() {
    
    
    // Change United States of America to "USA \\ Aggregate"
-   us_idx = countries.indexOf("United States of America");
+   us_idx = countries.indexOf("United States");
    countries[us_idx] = "USA / Aggregate";
    
    let len = countries.length;

@@ -113,7 +113,136 @@ function processDataJohnsHopkinsDeaths(tab){
 }
 
 
+function processDataOWID(tab){
 
+   /*
+   columns:
+   2: Country Name
+   5: new cases
+   8: new deaths
+   48: population
+   36: People fully vaccinated
+
+   */
+
+   let tabArr = tab.getArray();
+   let tabArrTransp = transpose(tabArr)
+
+   let nRows = tabArr.length;
+   let nCols = tabArr[0].length;
+
+   let countries = [];
+   let times = [];
+   let population = [];
+
+   let country;
+   let pop;
+
+   let cases = [];
+   let deaths = [];
+   let fullvacc = [];
+   let dates_local = [];
+
+   let caseinst;
+   let deathinst;
+   let fullvacc_inst = [];
+
+   for(let i=0;i<nRows;i++){
+      country = tabArr[i][2];
+      if(!(countries.includes(country))){
+         countries.push(country);
+         population.push(parseFloat(tabArr[i][48]));
+         cases.push([]);
+         deaths.push([]);
+         fullvacc.push([]);
+         dates_local.push([]);
+      } 
+         
+      caseinst = tabArr[i][5];
+      if(caseinst == ""){
+         caseinst = 0.0;
+      } else {
+         caseinst = parseFloat(caseinst);
+      }
+      cases[cases.length-1].push(caseinst);
+      
+      deathinst = tabArr[i][8];
+      if(deathinst == ""){
+         deathinst = 0.0;
+      } else {
+         deathinst = parseFloat(deathinst);
+      }
+      deaths[deaths.length-1].push(deathinst);
+
+      fullvacc_inst = tabArr[i][36];
+      if(fullvacc_inst == ""){
+         fullvacc_inst = 0.0;
+      } else {
+         fullvacc_inst = parseFloat(fullvacc_inst);
+      }
+      fullvacc[fullvacc.length-1].push(fullvacc_inst);
+
+
+      date = (parseInt(tabArr[i][3].slice(0,4))).pad(4) + "/" + (parseInt(tabArr[i][3].slice(5,7))).pad(2) + "/" + (parseInt(tabArr[i][3].slice(8,10))).pad(2);
+      
+      dates_local[dates_local.length-1].push(date);
+
+      if(!(times.includes(date))){
+         times.push(date);
+      }
+      //console.log(date);
+   }
+
+   times.sort();
+
+   nCountries = countries.length;
+   nTimes = times.length;
+   
+   let procArr = []; 
+   let procArrDeaths = [];
+   let procArrVacc = [];
+
+   let idxtime;
+
+   for(let i=0;i<nCountries;i++){
+      procArr.push([]);
+      procArrDeaths.push([]);
+      procArrVacc.push([]);
+      for(let j=0;j<nTimes;j++){
+         idxtime = dates_local[i].indexOf(times[j]);
+         if(idxtime == -1){
+            procArr[i].push(0.0);
+            procArrDeaths[i].push(0.0);
+            procArrVacc[i].push(0.0);
+         } else {
+            procArr[i].push(cases[i][idxtime]);
+            procArrDeaths[i].push(deaths[i][idxtime]);
+            procArrVacc[i].push(fullvacc[i][idxtime]);
+         }
+         
+         //procArr[i].push(0.0);
+      }
+      //console.log(procArr[i].length);
+   }
+   
+   //console.log(nCountries);
+   console.log(times);
+   // convert times to list of integers denoting absolute time
+   for(let i=0;i<times.length;i++){
+      times[i] = Math.abs(new Date(times[i]));
+     
+   }
+
+   for(let i=0; i<nCountries;i++){
+      for(let j=1; j<nTimes;j++){
+         procArr[i][j] = procArr[i][j-1] + procArr[i][j];
+         procArrDeaths[i][j] = procArrDeaths[i][j-1] + procArrDeaths[i][j];
+      }
+   }
+
+   return [countries, times, procArr, procArrDeaths, procArrVacc, population];
+
+}
 
 
 function processDataECDC(tab,tab2){
