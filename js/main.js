@@ -155,6 +155,14 @@ function setup() {
    
    tabArrDeaths_ecdc = tabArrVacc;
 
+   let indexEurope = countries_ecdc.indexOf("Europe");
+
+   countries_ecdc.splice(indexEurope, 1);
+   tabArr_ecdc.splice(indexEurope, 1);
+   tabArrDeaths_ecdc.splice(indexEurope, 1);
+   tabArrVacc.splice(indexEurope, 1);
+   population_ecdc.splice(indexEurope, 1);
+
    //merge...
    for(let i=0;i<countries_ecdc.length;i++){
       if((!isNaN(population_ecdc[i])) && (population_ecdc[i] != 0)){
