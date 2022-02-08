@@ -143,14 +143,13 @@ top: 10%;" >
       onclick="xAxMode = 'total';
             updateAxes();">Total</button>--><!--
       --><button class="dataTypeButton xAx Right"
-      onclick="xAxMode = 'time';
-            updateAxes();">Time</button><!--
+      onclick="xAxTimeClick();">Time</button><!--
       <button class="dataTypeButton xAx Right"
       onclick="xAxMode = 'daily';
             updateAxes();">Daily</button>-->
       
 
-      <!-- switch between cases /deaths -->
+      <!-- switch between cases /deaths 
           <div style="border-style: transparent;">
             <span 
             style="position: relative;
@@ -175,7 +174,7 @@ top: 10%;" >
             left: 0px;
             margin-left: 5px;
             margin-right: 15px;"> Total</span>
-          </div>
+          </div>-->
             
 
 
@@ -334,13 +333,13 @@ top: 10%;" >
             
             <input type="image"
             src="./img/download_data_white.svg"
-      id = "DownloadCSV"
-      title = "export files as csv "
-      style="
-      border-style: none;
-      position: absolute;
-      right: 30px; top: 10px; height: 40px;"
-	  onclick="downloadCSV1(this)">
+            id = "DownloadCSV"
+            title = "export files as csv "
+            style="
+            border-style: none;
+            position: absolute;
+            right: 30px; top: 10px; height: 40px;"
+            onclick="downloadCSV1(this)">
             
             <!-- close button -->
             <input type="image"
@@ -348,134 +347,156 @@ top: 10%;" >
             class="closeCountryBox"
             onclick="closeButtonClick(this);">
             
-            <input type="color" style='opacity:0;width:100px;position:absolute;'
+            <input type="color"
             class="colorPicker"
-            onchange="setColor(this);" />
+            onchange="setColor(this);"
+            style="
+            width:100px;
+            position:absolute;
+            visibility: hidden;">
             <input type="image"
             src="./img/colorwheel.png"
             class="colorWheel"
             onclick="openColorPicker(this);">
             
-            <!-- x-scale -->
-            <span>x-Scale: </span>
+            <button class="switchExtrasCountryBox" type="button" data-toggle="collapse"
+            id="switchExtrasCountryBoxButton"
+            data-target="#switchExtrasCountryBox" 
+            aria-expanded="false" 
+            aria-controls="switchExtrasCountryBox"
+            style="border-style: none;
+            background-color: transparent;
+            margin-top: 5px;
+            margin-bottom: 15px;"
+            onclick="toggleExtrasCountryBox(this);">&#9656; more</button>  
+            <!-- down triangle: &#9660; -->
+
+            <div class="collapse ExtrasCountryBox"
+            id="switchExtrasCountryBoxDiv">
+              <!-- x-scale -->
+              <span>x-Scale: </span>
+              
+              <span class="xScaleValue">1</span>
+              <div class="rangeContainer">
+                 <span >
+                    <input type="range"
+                    min="1"
+                    max="50"
+                    value="2"
+                    class="slider xScale"
+                    oninput="xScaleSliderInput(this);">
+                    </span>
+                 <input type="text"
+                 class="sliderRangeField max"
+                 value="25"
+                 style=" position: absolute; top: 25px; right: 20px; color:black"
+                 oninput="scaleMaxInput(this)" style ="color: black;">
+              </div>
+              
+              
+              <!-- y-scale -->
+              <span>y-Scale: </span>
+              
+              <span class="yScaleValue">1</span>
+              
+              <br>
+              <div class="rangeContainer">
+                 <span>
+                    <input type="range"
+                    min="1"
+                    max="50"
+                    value="2"
+                    class="slider yScale"
+                    oninput="yScaleSliderInput(this);">
+                 </span>
+                 <input type="text"
+                 class="sliderRangeField max"
+                 value="25"
+                  style=" position: absolute; top: 72px; right: 20px; color:black"
+                 oninput="scaleMaxInput(this)" style ="color: black ;">
+              </div>
+              
+              <!-- time shift -->
+              <span>Time Shift (Days): </span>
+              
+              <span class="timeShiftValue">0</span>
+              
+              <br>
+              <div class="rangeContainer">
+                 <span>
+                    <input type="range"
+                    min="-60"
+                    max="60"
+                    value="0"
+                    class="slider timeShift"
+                    oninput="timeShiftSliderInput(this);">
+                 </span>
+           <input type="text"
+                 class="sliderRangeField max"
+                 value="365"
+           style=" position: absolute; top: 120px; right: 20px; width: 11%; color:black"
+                 oninput="timeMaxInput(this)" style ="color: black ;">
+
+              </div>
+              
+              
+              <!-- lock scale button 
+              <input type="image"
+              src="./img/lock_open.svg"
+              class="scaleLock"
+              onclick="scaleLockClick(this);" style="width: 11%;">-->
+                           
+              <!-- averaging window-->
+              <span>Averaging Window (Days): </span>
+              
+              <span class="averageWindowValue">7</span>
+              
+              <div class="rangeContainer">
+              <span>
+                 <input type="range"
+                 min="0"
+                 max="10"
+                 value="3"
+                 class="slider averageWindow"
+                 oninput="averageWindowSliderInput(this);">
+              </span>
+              </div>
+
+              
+              <!--
+              <span>Select Start/End Date</span>
+              
+              <div id="datelock" class="rangeContainer">
+                 <span >
+                    <div id="daterange" class="dateRange" style ="height: 6.5px;" 
+                    onmouseover="dateRangeclick(this);" ></div>
+                 </span>
+              </div>-->
+
+              <span>Select Start/End Date</span>
+              
+              <div id="datelock" class="rangeContainer">
+                 <span >
+                    <div id="daterange" class="dateRange" style ="height: 6.5px;"></div>
+                 </span>
+              </div>
+
+              
             
-            <span class="xScaleValue">1</span>
-            <div class="rangeContainer">
-               <span >
-                  <input type="range"
-                  min="1"
-                  max="50"
-                  value="2"
-                  class="slider xScale"
-                  oninput="xScaleSliderInput(this);">
-                  </span>
-               <input type="text"
-               class="sliderRangeField max"
-               value="25"
-			   style=" position: absolute; top: 67px; right: 40px; color:black"
-               oninput="scaleMaxInput(this)" style ="color: black;">
             </div>
-            
-            
-            <!-- y-scale -->
-            <span>y-Scale: </span>
-            
-            <span class="yScaleValue">1</span>
-            
+
             <br>
-            <div class="rangeContainer">
-               <span>
-                  <input type="range"
-                  min="1"
-                  max="50"
-                  value="2"
-                  class="slider yScale"
-                  oninput="yScaleSliderInput(this);">
-               </span>
-               <input type="text"
-               class="sliderRangeField max"
-               value="25"
-			   style=" position: absolute; top: 122px; right: 40px; color:black"
-               oninput="scaleMaxInput(this)" style ="color: black ;">
-            </div>
-            
-            <!-- time shift -->
-            <span>Time Shift (Days): </span>
-            
-            <span class="timeShiftValue">0</span>
-            
-            <br>
-            <div class="rangeContainer">
-               <span>
-                  <input type="range"
-                  min="-60"
-                  max="60"
-                  value="0"
-                  class="slider timeShift"
-                  oninput="timeShiftSliderInput(this);">
-               </span>
-			   <input type="text"
-               class="sliderRangeField max"
-               value="365"
-			   style=" position: absolute; top: 172px; right: 40px; width: 11%; color:black"
-               oninput="timeMaxInput(this)" style ="color: black ;">
-
-            </div>
-            
-            
-            <!-- lock scale button 
-            <input type="image"
-            src="./img/lock_open.svg"
-            class="scaleLock"
-            onclick="scaleLockClick(this);" style="width: 11%;">-->
-                         
-            <!-- averaging window-->
-            <span>Averaging Window (Days): </span>
-            
-            <span class="averageWindowValue">7</span>
-            
-            <div class="rangeContainer">
-            <span>
-               <input type="range"
-               min="0"
-               max="10"
-               value="3"
-               class="slider averageWindow"
-               oninput="averageWindowSliderInput(this);">
-            </span>
-            </div>
-
-            
-            <!--
-            <span>Select Start/End Date</span>
-            
-            <div id="datelock" class="rangeContainer">
-               <span >
-                  <div id="daterange" class="dateRange" style ="height: 6.5px;" 
-                  onmouseover="dateRangeclick(this);" ></div>
-               </span>
-            </div>-->
-
-            <span>Select Start/End Date</span>
-            
-            <div id="datelock" class="rangeContainer">
-               <span >
-                  <div id="daterange" class="dateRange" style ="height: 6.5px;"></div>
-               </span>
-            </div>
 
             <div class="dropdown"
-                title = "Choose Data">
-            
-            <button class="dropbtn switchData"  type="button" data-toggle="dropdown" >Choose&nbsp;Data</button>
-            <div style = "padding-top: 0px;" class="dropdown-menu dropdown-content dropdown-data">
-            <li><a href="javascript:void(0)" onclick ="DataTypeClick(this,'cases')">Cases</a></li>
-            <li><a href="javascript:void(0)" onclick ="DataTypeClick(this,'deaths')">Deaths</a></li>
-            <li><a href="javascript:void(0)" onclick ="DataTypeClick(this,'vaccines')">Fully Vaccinated</a></li>             
-           </div>
-           </div>
-
-
+                  title = "Choose Data">
+              
+              <button class="dropbtn switchData"  type="button" data-toggle="dropdown" >Choose&nbsp;Data</button>
+              <div style = "padding-top: 0px;" class="dropdown-menu dropdown-content dropdown-data">
+              <li><a href="javascript:void(0)" onclick ="DataTypeClick(this,'cases')">Cases</a></li>
+              <li><a href="javascript:void(0)" onclick ="DataTypeClick(this,'deaths')">Deaths</a></li>
+              <li><a href="javascript:void(0)" onclick ="DataTypeClick(this,'vaccines')">Fully Vaccinated</a></li>             
+             </div>
+             </div>
 
          </div>
       </template>

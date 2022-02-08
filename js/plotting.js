@@ -76,7 +76,18 @@ function addPlot_callback(idx){
       change: changeRangeSlider,
       slide: changeRangeSlider
    });
-  
+
+   let toggleExtrasButton = $("#switchExtrasCountryBoxButton");
+   toggleExtrasButton.attr("id","switchExtrasCountryBoxButton"+addPlotCounter);
+   toggleExtrasButton.attr("data-target","#switchExtrasCountryBoxDiv"+addPlotCounter);
+   toggleExtrasButton.attr("aria-controls","switchExtrasCountryBoxDiv"+addPlotCounter);
+
+   let extrasDiv = $("#switchExtrasCountryBoxDiv");
+   extrasDiv.attr("id","switchExtrasCountryBoxDiv"+addPlotCounter);
+   //console.log(extrasDiv.attr("id"));
+   //console.log(toggleExtrasButton.attr("data-target"));
+   //console.log(toggleExtrasButton.attr("aria-controls"));
+
   //newCountryBox.setAttribute("xcut",box.getAttribute("xcut"));
    //newCountryBox.setAttribute("ycut",Math.round((times[idx][times[idx].length-1] - times[idx][0])/864e5));
 	
@@ -92,7 +103,7 @@ function addPlot_callback(idx){
 
 function changeRangeSlider(event, ui){
    
-   let countryBoxTemp = $(ui.handle).parent().parent().parent().parent();
+   let countryBoxTemp = $(ui.handle).parent().parent().parent().parent().parent();
    
    //console.log(countryBoxTemp) 
 
@@ -149,8 +160,8 @@ function updateData(countryBox){ //countryBox should be a jquery object
    myLineChart.data.datasets[idx_node].data = new_data;
    myLineChart.data.datasets[idx_node].label = countries[idx] + " - " + countryBox.attr("displayData");
 
- 
-   myLineChart.update();
+   updateAxes();
+   //myLineChart.update();
 
    let countryBoxList = $('.countryBox');
 
@@ -299,7 +310,7 @@ function updatexDataList(){
 function xScaleSliderInput(selfDOM){
    
    let self = $(selfDOM);
-   let selfCountryBox = self.parent().parent().parent();
+   let selfCountryBox = self.parent().parent().parent().parent();
    
    let xScaleMax = parseFloat(selfCountryBox.find(".sliderRangeField.max")[0].value);
    let yScaleMax = parseFloat(selfCountryBox.find(".sliderRangeField.max")[1].value);
@@ -339,7 +350,7 @@ function xScaleSliderInput(selfDOM){
 function yScaleSliderInput(selfDOM){
       
    let self = $(selfDOM);
-   let selfCountryBox = self.parent().parent().parent();
+   let selfCountryBox = self.parent().parent().parent().parent();
    
    let xScaleMax = parseFloat(selfCountryBox.find(".sliderRangeField.max")[0].value);
    let yScaleMax = parseFloat(selfCountryBox.find(".sliderRangeField.max")[1].value);
@@ -378,7 +389,7 @@ function yScaleSliderInput(selfDOM){
 
 function averageWindowSliderInput(selfDOM){
    let self = $(selfDOM);
-   let selfCountryBox = self.parent().parent().parent();
+   let selfCountryBox = self.parent().parent().parent().parent();
    selfCountryBox.attr("n_avg",selfDOM.value);
    updateData(selfCountryBox);
    selfCountryBox.find(".averageWindowValue")[0].innerHTML = selfDOM.value*2+1;
@@ -387,7 +398,7 @@ function averageWindowSliderInput(selfDOM){
 
 function timeShiftSliderInput(selfDOM){
    let self = $(selfDOM);
-   let selfCountryBox = self.parent().parent().parent();
+   let selfCountryBox = self.parent().parent().parent().parent();
    
    let timeShiftSlider = selfCountryBox.find(".slider.timeShift")[0];
    let timeShiftMax = parseFloat(selfCountryBox.find(".sliderRangeField.max")[2].value);
@@ -565,7 +576,7 @@ function updateAxes(){
    countryBoxList = $('.countryBox');
    
    for(let k=0;k<countryBoxList.length;k++){
-      updateData($(countryBoxList[k]));
+      //updateData($(countryBoxList[k]));
       if(xAxMode == "time"){
          myLineChart.data.datasets[k].hidden = false;
       } else {
@@ -579,6 +590,20 @@ function updateAxes(){
    let perPopStrX = showPopRel ? " per 10⁵ Inhabitants" : "";
    let perPopStrY = showPopRel ? " per 10⁵ Inh." : "";
    
+
+   let countryBoxX;
+   let datatypeX;
+   let datatypeXLabel
+
+   if((countryBoxList.length > 0) && xAxMode != "time"){
+      
+      countryBoxX = $(countryBoxList[xAxDataIdx]);
+      datatypeX = countryBoxX.attr("displayData");
+      datatypeXLabel = datatypeX.charAt(0).toUpperCase() + datatypeX.slice(1);
+   }
+
+   //console.log(datatypeXLabel);
+
    // Update the x axis...
    if(xAxMode == "time"){
 
@@ -598,8 +623,6 @@ function updateAxes(){
             }
    } else if (xAxMode == "total"){
       
-      $(".dataTypeButton.xAx.Left").attr("style","background-color: #333333;");
-      
       myLineChart.options.scales.xAxes[0] = {
                type: 'linear',
                time: {
@@ -608,9 +631,24 @@ function updateAxes(){
                
                scaleLabel: {
                   display: true,
-                  labelString: "Total Cases / Deaths" + perPopStrX
+                  labelString: "Total " + datatypeXLabel + perPopStrX
                }
-            }
+            };
+
+   } else if (xAxMode == "daily"){
+
+      myLineChart.options.scales.xAxes[0] = {
+               type: 'linear',
+               time: {
+                  unit: 'day'
+               },
+               
+               scaleLabel: {
+                  display: true,
+                  labelString: "Daily " + datatypeXLabel + perPopStrX
+               }
+            };
+            
    }
    // The whole thing for the y axis...
    if(yAxMode == "time"){
@@ -748,4 +786,24 @@ function totalPopCheckBoxClick(selfDOM){
 function showExampleClick(selfDOM){
    selfDOM.style.display = "none";
    $.loadScript('./presets/preset.js', function(){});
+}
+
+function xAxTimeClick(){
+
+   xAxMode = 'time';
+
+   let countryBoxList = $('.countryBox');
+   for(let i=0;i<countryBoxList.length;i++){
+      updateData($(countryBoxList[i]));
+   }
+}
+
+function toggleExtrasCountryBox(selfDOM){
+   let button = $(selfDOM);
+   if(button.attr("aria-expanded")!="true"){
+      //console.log(button.html())
+      button.html("&#9660; less");
+   } else {
+      button.html("&#9656; more");
+   }
 }

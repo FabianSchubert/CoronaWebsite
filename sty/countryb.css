@@ -85,6 +85,13 @@
   border-style: none;
   text-align: center;
 }
+
+.collapse.ExtrasCountryBox {
+  position: relative;
+  /*display: inline-block;*/
+  /*border-style: solid;*/
+}
+
 /*
 .sliderRangeField.min{
   float: left;
