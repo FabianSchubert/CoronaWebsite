@@ -13,6 +13,20 @@
   background-color: #444444;
 }
 
+.switchData {
+  padding: 5px;
+  background-color: transparent;
+  border-style: solid;
+  /*border:  white;*/
+}
+
+.switchData {
+  padding: 5px;
+  background-color: #777777;
+  border: none;
+  /*border:  white;*/
+}
+
 #myInput {
   box-sizing: border-box;
   background-image: url('../img/searchicon.svg');
@@ -81,4 +95,8 @@
 
 .show {display: block;}
 
-
+.dropbtn.xAxData.Left{
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  color: "blue";
+}

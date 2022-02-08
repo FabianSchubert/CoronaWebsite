@@ -240,6 +240,10 @@ function processDataOWID(tab){
       }
    }
 
+   console.log(procArr.length);
+   console.log(procArrDeaths.length);
+   console.log(procArrVacc.length);
+
    return [countries, times, procArr, procArrDeaths, procArrVacc, population];
 
 }
@@ -460,6 +464,7 @@ function convertPointData(pointList){
 
 // calculate backward difference (difference to previous day)
 function getDailyChange(timeseries){
+   //console.log(timeseries);
    let n = timeseries.length;
    
    change = Array(n-1);
@@ -519,11 +524,46 @@ function addArrScal(x,s){
    return res;
 }
 
-function processDataDailyVsTotal(idx,tabArr,times_list,population,smooth_n,xscale,yscale,xcut,ycut,timeShift,xMode,yMode){
-   let total=tabArr[idx].slice(xcut,tabArr[idx].length - ycut);
-   let total_cut = total.slice(1,total.length);
+function shiftArray(arr,nshift){
+   let n = arr.length;
+   let shiftarr = Array(n).fill(0);
+
+   if(abs(nshift) < n){
+      if(nshift >= 0){
+         for(let i=nshift;i<n;i++){
+            shiftarr[i] = arr[i-nshift];
+         }
+      } else {
+         for(let i=0;i<n+nshift;i++){
+            shiftarr[i] = arr[i-nshift];
+         }
+      }
+   }
+
+   return shiftarr;   
+   
+}
+
+
+function processDataDailyVsTotal(datatype,idx,times,population,smooth_n,xscale,yscale,timeShift,dateSlideMin,dateSlideMax,xMode,yMode){
+
+   let total;
+
+   switch(datatype){
+      case "cases":
+         total=tabArr[idx].slice();
+         break;
+      case "deaths":
+         total=tabArrDeaths[idx].slice();
+         break;
+      case "vaccines":
+         total=tabArrVacc[idx].slice();
+         break;
+   }
+   
+   let total_cut = total.slice(1);
+
    let daily_change = getDailyChange(total)
-   let times = times_list[idx].slice(xcut,times_list[idx].length-ycut);
    
    // find negative daily changes and remove
    // running loop backwards to avoid having to change
@@ -534,18 +574,82 @@ function processDataDailyVsTotal(idx,tabArr,times_list,population,smooth_n,xscal
          daily_change.splice(i,1);
       }
    }
+
+   let countryBoxList = $('.countryBox');
+
+   let totalX;
+
+   let xscaleX;
+   let yscaleX;
+   let smooth_nX;
+   let timeShiftX;
+   let idxX;
+   let datatypeX;
+
+   let total_cutX;
+
+   let daily_changeX;
+
+   // idxStart is the last element to be removed
+   // from the beginning
+   let idxStart = Math.round(dateSlideMin*nDays);
+   //idxEnd is the first index to be removed from
+   //at the end
+   let idxEnd = Math.round(dateSlideMax*nDays)
+
+   if(xAxMode != "time"){
+      countryBoxX = $(countryBoxList[xAxDataIdx]);
+
+      xscaleX = parseFloat(countryBoxX.attr("xScale"));
+      yscaleX = parseFloat(countryBoxX.attr("yScale"));
+      smooth_nX = parseFloat(countryBoxX.attr("n_avg"));
+      timeShiftX = parseFloat(countryBoxX.attr("timeShift"));
+      idxX = parseFloat(countryBoxX.attr("idx"));
+      datatypeX = countryBoxX.attr("displayData");
+      //let xcut = parseInt(countryBoxX.attr("xcut"));
+      //let ycut = parseInt(countryBoxX.attr("ycut"));
+      
+      switch(datatypeX){
+         case "cases":
+            totalX=tabArr[idxX].slice();
+            break;
+         case "deaths":
+            totalX=tabArrDeaths[idxX].slice();
+            break;
+         case "vaccines":
+            totalX=tabArrVacc[idxX].slice();
+            break;
+      }
+
+      total_cutX = totalX.slice(1);
+
+      daily_changeX = getDailyChange(totalX);
+
+      // find negative daily changes and remove
+      // running loop backwards to avoid having to change
+      // loop length on the fly...
+      for(let i=total_cutX.length-1;i>=0;i--){
+         if(daily_changeX[i] < 0){
+            total_cutX.splice(i,1);
+            daily_changeX.splice(i,1);
+         }
+      }
+
+   }
+
    let xData;
    let yData;
-   
+
    // 1 day = 86 400 000 ms
    
-   if(xMode == "daily"){
-      xData = showPopRel ? scaleArr(smooth_filter(daily_change,smooth_n),xscale*1e5/population[idx])
-      : scaleArr(smooth_filter(daily_change,smooth_n),xscale);
-   } else if(xMode == "total"){
-      xData = showPopRel ? scaleArr(smooth_filter(total_cut,smooth_n),xscale*1e5/population[idx])
-      : scaleArr(smooth_filter(total_cut,smooth_n),xscale);
-   } else if(xMode == "time"){
+   if(xAxMode == "daily"){
+
+      xData = showPopRel ? shiftArray(scaleArr(smooth_filter(daily_changeX,smooth_nX),xscaleX*1e5/population[idxX]),-round(timeShiftX))
+      : shiftArray(scaleArr(smooth_filter(daily_changeX,smooth_nX),xscaleX),-round(timeShiftX));
+   } else if(xAxMode == "total"){
+      xData = showPopRel ? shiftArray(scaleArr(smooth_filter(total_cutX,smooth_nX),xscaleX*1e5/population[idxX]),-round(timeShiftX))
+      : shiftArray(scaleArr(smooth_filter(total_cutX,smooth_nX),xscaleX),-round(timeShiftX));
+   } else if(xAxMode == "time"){
       xData = addArrScal(scaleArr(smooth_filter(times.slice(1,times.length),
                      smooth_n),
                      xscale,times[1]),timeShift*864e5);
@@ -575,8 +679,13 @@ function processDataDailyVsTotal(idx,tabArr,times_list,population,smooth_n,xscal
    } else{
       console.log("Error: Wrong y-axis mode specified");
    }
-   
-   
+
+   xData.splice(idxEnd);
+   xData.splice(0,idxStart);
+
+   yData.splice(idxEnd);
+   yData.splice(0,idxStart);
+
    let datapoints = convert2dData(
       transpose([xData,yData]));
 	

@@ -20,12 +20,12 @@
    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
    
    
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-   <link rel="stylesheet" type="text/css" href="./sty/main.css">
-   <link rel="stylesheet" type="text/css" href="./sty/dropdown.css">
-   <link rel="stylesheet" type="text/css" href="./sty/countryb.css">
-   <link rel="stylesheet" type="text/css" href="./sty/slider.css">
-   <link rel="stylesheet" type="text/css" href="./sty/switch.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" type="text/css" href="./sty/main.css">
+  <link rel="stylesheet" type="text/css" href="./sty/dropdown.css">
+  <link rel="stylesheet" type="text/css" href="./sty/countryb.css">
+  <link rel="stylesheet" type="text/css" href="./sty/slider.css">
+  <link rel="stylesheet" type="text/css" href="./sty/switch.css">
 
   
 	 
@@ -68,18 +68,7 @@ margin-bottom: 20px; font-weight: 600;">Goethe Interactive COVID-19 Analyzer</h1
 		
       
       <div id = "chartcontainer">
-	  
-		       <div id="totalPopSwitchContainer" title="how to display the data" style="right: 65%;
-	top: 10%;">
-      <span>normal</span>
-      <label class="switch" id="totalPopSwitch">
-         <input type="checkbox"
-         onclick="totalPopCheckBoxClicklog(this);"  >
-         <span class="switchSlider round" id ="switchSlider"  ></span>
-      </label>
-      <span> log</span>
-      </div>
-	  
+	  	  
 	       <div id="totalPopSwitchContainer" title="how to display the data" style="right: 4%;
 top: 10%;" >
       <span>Per 10⁵ Inh.</span>
@@ -112,6 +101,7 @@ top: 10%;" >
       <div  style="width:calc(100% - 70px); float: right;">
          <canvas id="chart" width="1280" height="720" ></canvas>
       </div>
+      
       </div>
       
       <div class="dropdown" id="countryDropdown"
@@ -135,9 +125,23 @@ top: 10%;" >
       
       
       <div class="axDataTypeSwitch xAx">
-         <button class="dataTypeButton xAx Left"
+
+        <div class="dropdown"
+                title = "Choose Data">
+            
+            <button class="dropbtn xAxData Left"  type="button" data-toggle="dropdown" 
+            onclick="updatexDataList();">Choose&nbsp;x-Data</button>
+            <div id="xDataDropdown" style = "padding-top: 0px;" class="dropdown-menu dropdown-content dropdown-data">
+            <!--<li><a href="javascript:void(0)" onclick ="DataTypeClick(this,'cases')">Cases</a></li>
+            <li><a href="javascript:void(0)" onclick ="DataTypeClick(this,'deaths')">Deaths</a></li>
+            <li><a href="javascript:void(0)" onclick ="DataTypeClick(this,'vaccines')">Fully Vaccinated</a></li>-->             
+           </div>
+           </div>
+
+
+        <!-- <button class="dataTypeButton xAx Left"
       onclick="xAxMode = 'total';
-            updateAxes();">Total</button><!--
+            updateAxes();">Total</button>--><!--
       --><button class="dataTypeButton xAx Right"
       onclick="xAxMode = 'time';
             updateAxes();">Time</button><!--
@@ -145,6 +149,36 @@ top: 10%;" >
       onclick="xAxMode = 'daily';
             updateAxes();">Daily</button>-->
       
+
+      <!-- switch between cases /deaths -->
+          <div style="border-style: transparent;">
+            <span 
+            style="position: relative;
+            top: -5px;
+            left: 0px;
+            margin-left: 15px;
+            margin-right: 5px;">Daily</span>
+            
+            <label class="switch" 
+            style="position: relative;
+            top: 7px;
+            left: 0px;">
+               <input type="checkbox"
+               class="checkbox switchCasesDeaths"
+               onclick="casesCheckBoxClick(this);">
+               <span class="switchSlider round"></span>
+            </label>
+            
+            <span
+            style="position: relative;
+            top: -5px;
+            left: 0px;
+            margin-left: 5px;
+            margin-right: 15px;"> Total</span>
+          </div>
+            
+
+
       <input type="image"
             src="./img/download.svg"
       id = "downloadButton"
@@ -190,10 +224,7 @@ top: 10%;" >
    </div>
    
    
-   <div id="countryBoxContainer" xcut="0"
-         ycut="0" lockDatesAll="true"  lockDatesAlle="true" logscale="false"  >
-	
-  
+   <div id="countryBoxContainer">
     
    </div>
    
@@ -289,20 +320,15 @@ top: 10%;" >
          xyScaleRatio="1"
          xScale="1.0"
          yScale="1.0"
-         xcut="0"
-         ycut="0"
          timeShift="0"
          n_avg="3"
-         lockScales="false"
-		 lockDatesall="true"
          displayData="cases"
          idx="0"
-		 o="0"
+		     o="0"
+         dateSlideMin="0"
+         dateSlideMax="1"
          style="padding-right: 17px; background-color: #ff0000;">
-		 <input id="datelocks" type="image" src="./img/lock_closeddate.svg"
-            class="dateLock"
-            onclick="dateLockClick(this);"
-			style = "display: inline-Block ; position: absolute; top: 271px; right: 7px;">
+		 
             <p class="countryBoxHeader">TemplateCountry</p>
 			
             
@@ -397,11 +423,11 @@ top: 10%;" >
             </div>
             
             
-            <!-- lock scale button -->
+            <!-- lock scale button 
             <input type="image"
             src="./img/lock_open.svg"
             class="scaleLock"
-            onclick="scaleLockClick(this);" style="width: 11%;">
+            onclick="scaleLockClick(this);" style="width: 11%;">-->
                          
             <!-- averaging window-->
             <span>Averaging Window (Days): </span>
@@ -418,27 +444,39 @@ top: 10%;" >
                oninput="averageWindowSliderInput(this);">
             </span>
             </div>
+
             
+            <!--
             <span>Select Start/End Date</span>
             
             <div id="datelock" class="rangeContainer">
                <span >
-                  <div id="daterange" class="dateRange" style ="height: 6.5px;" onmouseover="dateRangeclick(this);" ></div>
+                  <div id="daterange" class="dateRange" style ="height: 6.5px;" 
+                  onmouseover="dateRangeclick(this);" ></div>
+               </span>
+            </div>-->
+
+            <span>Select Start/End Date</span>
+            
+            <div id="datelock" class="rangeContainer">
+               <span >
+                  <div id="daterange" class="dateRange" style ="height: 6.5px;"></div>
                </span>
             </div>
+
+            <div class="dropdown"
+                title = "Choose Data">
             
-			
-            <!-- switch between cases /deaths -->
-            <span>Display: Cases </span>
-            
-            <label class="switch">
-               <input type="checkbox"
-               class="checkbox switchCasesDeaths"
-               onclick="casesCheckBoxClick(this);">
-               <span class="switchSlider round"></span>
-            </label>
-            
-            <span> Deaths</span>
+            <button class="dropbtn switchData"  type="button" data-toggle="dropdown" >Choose&nbsp;Data</button>
+            <div style = "padding-top: 0px;" class="dropdown-menu dropdown-content dropdown-data">
+            <li><a href="javascript:void(0)" onclick ="DataTypeClick(this,'cases')">Cases</a></li>
+            <li><a href="javascript:void(0)" onclick ="DataTypeClick(this,'deaths')">Deaths</a></li>
+            <li><a href="javascript:void(0)" onclick ="DataTypeClick(this,'vaccines')">Fully Vaccinated</a></li>             
+           </div>
+           </div>
+
+
+
          </div>
       </template>
       

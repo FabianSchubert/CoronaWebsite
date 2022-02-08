@@ -55,10 +55,11 @@ for country in countries:
 
     row_selector = dfproto.date.isin(dfinst.date)
 
-    dfproto.loc[row_selector,"total_cases"] = dfinst["total_cases"]
-    dfproto.loc[row_selector,"total_deaths"] = dfinst["total_deaths"]
-    dfproto.loc[row_selector,"people_fully_vaccinated"] = dfinst["people_fully_vaccinated"]
+    dfproto.loc[row_selector,"total_cases"] = dfinst["total_cases"].tolist()
+    dfproto.loc[row_selector,"total_deaths"] = dfinst["total_deaths"].tolist()
+    dfproto.loc[row_selector,"people_fully_vaccinated"] = dfinst["people_fully_vaccinated"].tolist()
 
+    #linear interpolation
     dfproto.loc[:,datay] = dfproto[datay].interpolate()
 
     dfcountry = dfproto.fillna(0)
@@ -68,7 +69,7 @@ for country in countries:
 
 
     dfcountry.to_csv(f"../dat/country_data/{country}.csv",index=False)
-    #linear interpolation
+    
 
 with open("../dat/population.csv","w") as f:
     for d in population:
@@ -237,7 +238,7 @@ for state in states:
 with open("../dat/countries.csv","a") as f:
     for d in states[:-1]:
         f.write(f'{d} (US State),')
-    f.write(states[-1])
+    f.write(f'{states[-1]} (US State)')
 
 with open("../dat/population.csv","a") as f:
     for d in population[:-1]:

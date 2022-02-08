@@ -1,12 +1,39 @@
 function addPlot(idx){
-   window.nPlots++;
+   //console.log(idx);
+   let country = countries[idx];
+   let fcallbackdata = function(data){
+      addDataCallback(data,idx);
+      //console.log("data loaded");
+   };
+   loadTable(linkCountryFold+country+".csv","csv","header",callback=fcallbackdata);
+}
+
+function addDataCallback(data,idx){
+   let dataArray = data.getArray();
+   for(let i=0;i<dataArray.length;i++){
+      for(let j=0;j<dataArray[i].length;j++){
+         dataArray[i][j] = parseFloat(dataArray[i][j]);
+      }
+   }
+
+   dataArray = transpose(dataArray);
+   tabArr[idx] = dataArray[0];
+   tabArrDeaths[idx] = dataArray[1];
+   tabArrVacc[idx] = dataArray[2];
+
+   addPlot_callback(idx);
+}
+
+
+function addPlot_callback(idx){
+   nPlots++;
    
-   window.addPlotCounter++;
+   addPlotCounter++;
    
    $('#exampleDropdown')[0].style.display = "none";
    
    let plotdata = {
-         label: countries[idx],
+         label: countries[idx] + " - cases",
          data: [],
          lineTension: 0.,
          backgroundColor: 'rgba(0,0,0,.0)',
@@ -19,37 +46,39 @@ function addPlot(idx){
    
    let newCountryBoxCont = countryBoxTmpl.content.cloneNode(true);
    $("#countryBoxContainer").append(newCountryBoxCont);
-   
-   let datelocks = $("#datelocks")[0];
+
+   //let datelocks = $("#datelocks")[0];
    let newCountryBox = $("#countryBox_Init")[0];
    let daterange = $("#daterange")[0];
    let DownloadCSV = $("#DownloadCSV")[0]
-      
+   
    newCountryBox.style.backgroundColor = colCicle[colCicleState];
    newCountryBox.setAttribute("id","countryBox" + addPlotCounter);
    newCountryBox.setAttribute("idx",String(idx));
-   datelocks.setAttribute("id","datelocks" + addPlotCounter);
+   //datelocks.setAttribute("id","datelocks" + addPlotCounter);
    newCountryBox.setAttribute("o", addPlotCounter);
    
    DownloadCSV.setAttribute("id","DownloadCSV" + addPlotCounter);
    daterange.setAttribute("id","daterange" + addPlotCounter);
    
-   $(newCountryBox).children(".countryBoxHeader")[0].innerHTML = countries[idx];
-   var box = document.getElementById("countryBoxContainer")
-	  xcut =box.getAttribute("xcut")
-	  ycut =  Math.round((times[idx][times[idx].length-1] - times[idx][0])/864e5)-box.getAttribute("ycut")
+   $(newCountryBox).children(".countryBoxHeader")[0].innerHTML = countries[idx] + " - " + $(newCountryBox).attr("displayData");
+   //var box = document.getElementById("countryBoxContainer")
+	//  xcut =box.getAttribute("xcut")
+	//  ycut =  Math.round((times[times.length-1] - times[0])/864e5)-box.getAttribute("ycut")
+  //console.log(ycut);
+
   
    $(countryBoxContainer).find("#daterange"+addPlotCounter).slider({
       range: true,
       min: 0,
-      max: Math.round((times[idx][times[idx].length-1] - times[idx][0])/864e5),
-      values: [xcut,ycut],
+      max: nDays,
+      values: [0,nDays],
       change: changeRangeSlider,
       slide: changeRangeSlider
    });
   
-  newCountryBox.setAttribute("xcut",box.getAttribute("xcut"));
-   newCountryBox.setAttribute("ycut",box.getAttribute("ycut"));
+  //newCountryBox.setAttribute("xcut",box.getAttribute("xcut"));
+   //newCountryBox.setAttribute("ycut",Math.round((times[idx][times[idx].length-1] - times[idx][0])/864e5));
 	
    colCicleState++;
    colCicleState = colCicleState%nColors;
@@ -62,70 +91,33 @@ function addPlot(idx){
 }
 
 function changeRangeSlider(event, ui){
-  
-
-  let countryBoxT = $(ui.handle).parent().parent().parent().parent().parent();
+   
    let countryBoxTemp = $(ui.handle).parent().parent().parent().parent();
-   let max = $(ui.handle).parent().slider("option","max");
    
-	
-	//function range(start, end) {
-	/* generate a range : [start, start+1, ..., end-1, end] */
-	var len = addPlotCounter;
-	var a = new Array(len);
-	for (let i = 0; i < len; i++) {a[i] = 1 + i;
-}
-   
-   countryBoxTemp.attr("xcut",Math.round(ui.values[0]));
-       countryBoxTemp.attr("ycut",Math.round(max - ui.values[1]));
-   
-  if (countryBoxTemp.attr("lockDatesAll")=="true"){
-	   countryBoxT.attr("xcut",Math.round(ui.values[0]));
-       countryBoxT.attr("ycut",Math.round(max - ui.values[1]));
-	  let countryBox1 =$(ui.handle).parent()
-   
-	var x = countryBox1.children()[0].getAttribute("style")
-	var y = countryBox1.children()[1].getAttribute("style")
-	var z = countryBox1.children()[2].getAttribute("style")
-  
-	for (i in a) {
-		 
-	  let allCountryBox = $(countryBoxT).children("#countryBox"+a[i]);
-	  var dateSlider = allCountryBox.children().children().children("#daterange"+a[i])
-		
-  if(countryBoxT.attr("lockDatesAll")=="true"){
-   if(countryBoxTemp.attr("lockDatesAll")=="true"){
-	if(allCountryBox.attr("lockDatesAll")=="true"){
-		
-		
-		 allCountryBox.attr("xcut",countryBoxT.attr("xcut"));
-		 allCountryBox.attr("ycut",countryBoxT.attr("ycut"));
-	
-  		  dateSlider.children()[0].style = x
-		  dateSlider.children()[1].style = y
-		  dateSlider.children()[2].style = z
-	 
-	
-		  updateData(allCountryBox);
-		  
-	   }
-   }
- }}
-	}
-	
-	
-	
-  updateData(countryBoxTemp);
+   //console.log(countryBoxTemp) 
+
+   let SlideMin = ui.values[0]/nDays;
+   let SlideMax = ui.values[1]/nDays;
+
+
+   countryBoxTemp.attr("dateSlideMin",SlideMin);
+   countryBoxTemp.attr("dateSlideMax",SlideMax);
+
+   updateData(countryBoxTemp);
+   //console.log(countryBoxTemp.attr("dateSlideMin"));
+   //updateData(countryBoxTemp);
    
 }
+
+
 function updateData(countryBox){ //countryBox should be a jquery object
       
    let xScale = parseFloat(countryBox.attr("xScale"));
    let yScale = parseFloat(countryBox.attr("yScale"));
    let n_avg = parseFloat(countryBox.attr("n_avg"));
    let timeShift = parseFloat(countryBox.attr("timeShift"));
-   let xcut = parseInt(countryBox.attr("xcut"));
-   let ycut = parseInt(countryBox.attr("ycut"));
+   let dateSlideMin = parseFloat(countryBox.attr("dateSlideMin"));
+   let dateSlideMax = parseFloat(countryBox.attr("dateSlideMax"));
    
    
    
@@ -133,18 +125,46 @@ function updateData(countryBox){ //countryBox should be a jquery object
    
    let idx = parseFloat(countryBox.attr("idx"))
    
+
+
    let new_data
-   if(countryBox.attr("displayData") == "cases"){
-      new_data = processDataDailyVsTotal(idx,tabArr,times,population,n_avg,xScale,yScale,
-         xcut,ycut,timeShift,xAxMode,yAxMode);
-   } else {
-      new_data = processDataDailyVsTotal(idx,tabArrDeaths,times,population,n_avg,xScale,yScale,
-         xcut,ycut,timeShift,xAxMode,yAxMode);
-   }
+   new_data = processDataDailyVsTotal(countryBox.attr("displayData"),idx,times,population,n_avg,xScale,yScale,
+         timeShift,dateSlideMin,dateSlideMax,xAxMode,yAxMode);
+   /*
+   switch(countryBox.attr("displayData")){
+      case "cases":
+         new_data = processDataDailyVsTotal("cases",idx,tabArr,times,population,n_avg,xScale,yScale,
+         timeShift,xAxMode,yAxMode);
+         break;
+      case "deaths":
+         new_data = processDataDailyVsTotal("cases",idx,tabArrDeaths,times,population,n_avg,xScale,yScale,
+         timeShift,xAxMode,yAxMode);
+         break;
+      case "vaccines":
+         new_data = processDataDailyVsTotal(idx,tabArrVacc,times,population,n_avg,xScale,yScale,
+         timeShift,xAxMode,yAxMode);
+         break;
+   }*/
    
    myLineChart.data.datasets[idx_node].data = new_data;
+   myLineChart.data.datasets[idx_node].label = countries[idx] + " - " + countryBox.attr("displayData");
+
  
    myLineChart.update();
+
+   let countryBoxList = $('.countryBox');
+
+   //console.log(countryBox.attr("o"));
+
+   if((xAxMode != "time") && ((countryBox.attr("o")-1) == xAxDataIdx)){
+      for(let i=0;i<countryBoxList.length;i++){
+         if(i!= xAxDataIdx){
+            updateData($(countryBoxList[i]));
+         }
+         
+      }
+      
+   }
 }
 
 var options = {
@@ -158,6 +178,10 @@ function closeButtonClick(self){
    var z = Number(y);
    let idx_node = selfCountryBox.index(); // The first element is the example button
     myLineChart.data.datasets.splice(idx_node,1);
+
+
+
+
 
 	 if (addPlotCounter>z){
 	  for (i=0; i<(addPlotCounter-z); i++){
@@ -183,7 +207,94 @@ function closeButtonClick(self){
    if(nPlots==0){
       $('#exampleDropdown')[0].style.display = "inline-block";
    }
+
+   let countryBoxList = $('.countryBox');
+
+   if((y-1 == xAxDataIdx) && xAxMode != "time"){
+      xAxMode = "time";
+      
+      for(let i=0;i<countryBoxList.length;i++){
+         updateData($(countryBoxList[i]));
+      }
+
+   }
+
 }
+
+function updatexDataList(){
+
+   let countryBoxList = $('.countryBox');
+   let xDataDropdown = $('#xDataDropdown')[0];
+
+   //<li><a href="javascript:void(0)" onclick ="DataTypeClick(this,'cases')">Cases</a></li>
+
+   $('.xDataDropdownEntry').remove()
+
+   for(let i=0;i<countryBoxList.length;i++){
+      
+      let idx = $(countryBoxList[i]).attr("idx");
+      
+      // Daily Entry
+      let newEntryDaily = document.createElement('a');
+      newEntryDaily.innerHTML = countries[idx] + " - " + $(countryBoxList[i]).attr("displaydata") + " - Daily";
+      newEntryDaily.href = "#undefined1"
+      newEntryDaily.id = "xDataDropdown"+i.toString();
+      newEntryDaily.style.color = countryBoxList[i].style.backgroundColor;
+
+      newEntryDaily.onclick = function(){
+         xAxMode = "daily";
+
+         xAxDataIdx = i;
+
+         for(let j=0;j<countryBoxList.length;j++){
+            
+            updateData($(countryBoxList[j]));   
+         }
+
+
+         updateAxes();
+         
+      }
+
+      // Total Entry
+      let newEntryTotal = document.createElement('a');
+      newEntryTotal.innerHTML = countries[idx] + " - " + $(countryBoxList[i]).attr("displaydata") + " - Total";
+      newEntryTotal.href = "#undefined1"
+      newEntryTotal.id = "xDataDropdown"+i.toString();
+      newEntryTotal.style.color = countryBoxList[i].style.backgroundColor;
+
+      newEntryTotal.onclick = function(){
+         xAxMode = "total";
+
+         xAxDataIdx = i;
+
+         for(let j=0;j<countryBoxList.length;j++){
+            
+            updateData($(countryBoxList[j]));   
+         }
+
+
+         updateAxes();
+         
+      }
+
+
+
+      //onclick ="DataTypeClick(this,'cases')"
+
+      let newEntryListeDaily = document.createElement('li');
+      $(newEntryListeDaily).attr("class","xDataDropdownEntry");
+      newEntryListeDaily.appendChild(newEntryDaily);
+      xDataDropdown.appendChild(newEntryListeDaily);
+
+      let newEntryListeTotal = document.createElement('li');
+      $(newEntryListeTotal).attr("class","xDataDropdownEntry");
+      newEntryListeTotal.appendChild(newEntryTotal);
+      xDataDropdown.appendChild(newEntryListeTotal);
+   }
+
+}
+
 
 function xScaleSliderInput(selfDOM){
    
@@ -310,7 +421,8 @@ function scaleLockClick(selfDOM){
 
 
 function dateRangeclick(selfDOM){
-   
+   console.log("click");
+   /*
    let self = $(selfDOM);
    let selfCountryBox = self.parent().parent().parent();
    let CountryBoxContainer = selfCountryBox.parent();
@@ -323,7 +435,7 @@ function dateRangeclick(selfDOM){
       values: [xcut,ycut],
    });
 	 	  
-   }
+   }*/
 }
 
 function dateLockClick(selfDOM){
@@ -342,7 +454,7 @@ function dateLockClick(selfDOM){
 	  
    }
 }
- 
+/* 
 document.getElementById("buttonDropdown").addEventListener("click", function() {
 	var box = document.getElementById("countryBoxContainer")
 	if(box.getAttribute("lockDatesAll") == "true"){
@@ -351,8 +463,9 @@ document.getElementById("buttonDropdown").addEventListener("click", function() {
 	if(box.getAttribute("lockDatesAll") == "false"){
 	box.setAttribute("lockDatesAll","true"); }});
 	
-	}});
-
+	}}
+   );
+*/
 
 document.getElementById("buttonExampleDropdown").addEventListener("click", function() {
 	var box = document.getElementById("countryBoxContainer")
@@ -379,9 +492,38 @@ function casesCheckBoxClick(selfDOM){
       myLineChart.data.datasets[idx_node].pointBackgroundColor
       = myLineChart.data.datasets[idx_node].borderColor;
    }
-   
    updateData(selfCountryBox);
    
+}
+
+function DataTypeClick(selfDOM,datatype){
+   
+   let selfCountryBox = $(selfDOM).parent().parent().parent().parent();
+
+   let idx_node = selfCountryBox.index();
+
+
+   selfCountryBox.attr("displayData",datatype);
+
+   switch (datatype) {
+     case "cases":
+         myLineChart.data.datasets[idx_node].pointBackgroundColor = myLineChart.data.datasets[idx_node].borderColor;
+         myLineChart.data.datasets[idx_node].pointStyle = 'circle';
+         break;
+     case "deaths":
+         myLineChart.data.datasets[idx_node].pointBackgroundColor = 'rgba(0,0,0,0)'
+         myLineChart.data.datasets[idx_node].pointStyle = 'circle';
+         break;
+     case "vaccines":
+         myLineChart.data.datasets[idx_node].pointStyle = 'cross';
+         break;
+   }
+
+   selfCountryBox.children(".countryBoxHeader")[0].innerHTML = countries[selfCountryBox.attr("idx")] + " - " + selfCountryBox.attr("displayData");
+
+   updateData(selfCountryBox);
+   
+
 }
 
 function scaleMaxInput(selfDOM){
@@ -402,7 +544,7 @@ function scaleMaxInput(selfDOM){
    yScaleSlider.value = (yScale / yScaleMax) * yScaleSlider.max;
 }
 
-/*function timeMaxInput(selfDOM){
+function timeMaxInput(selfDOM){
      
    let self = $(selfDOM);
    let selfCountryBox = self.parent().parent();
@@ -415,7 +557,7 @@ function scaleMaxInput(selfDOM){
    let timeShiftSlider = selfCountryBox.find(".slider.timeShift")[0]
    
    timeShiftSlider.value = (timeShift / timeShiftMax) * timeShiftSlider.max;
-}*/
+}
 
 function updateAxes(){
    selfCountryBox = document.getElementById("countryBoxContainer")
@@ -424,6 +566,11 @@ function updateAxes(){
    
    for(let k=0;k<countryBoxList.length;k++){
       updateData($(countryBoxList[k]));
+      if(xAxMode == "time"){
+         myLineChart.data.datasets[k].hidden = false;
+      } else {
+         myLineChart.data.datasets[k].hidden = (k==xAxDataIdx);
+      }
    }
    
    $(".dataTypeButton.xAx").attr("style","background-color: #777777;");
@@ -434,7 +581,8 @@ function updateAxes(){
    
    // Update the x axis...
    if(xAxMode == "time"){
-      
+
+
       $(".dataTypeButton.xAx.Right").attr("style","background-color: #333333;");
       
       myLineChart.options.scales.xAxes[0] = {
@@ -479,7 +627,7 @@ function updateAxes(){
                   labelString: "Time"
                }
             }
-   } else if (yAxMode == "total" && selfCountryBox.getAttribute("logscale") == "false"){
+   } else if (yAxMode == "total"){
       
       $(".dataTypeButton.yAx.Middle").attr("style","background-color: #333333;");
       
@@ -494,35 +642,7 @@ function updateAxes(){
                   labelString: "Total Cases / Deaths" + perPopStrY
                }
             }
-   }   else if (yAxMode == "total" && selfCountryBox.getAttribute("logscale") == "true" ){
-      
-      $(".dataTypeButton.yAx.Middle").attr("style","background-color: #333333;");
-      
-      myLineChart.options.scales.yAxes[0] = {
-               type: 'logarithmic',
-               time: {
-                  unit: 'day'
-               },
-			      ticks: {
-          maxTicksLimit: 8 ,
-          callback: function (value, index, values) {
-           var remain = Math.floor(Math.log(value));
-            if (value === 0) {
-             return '0';
-           } else if (remain === -4 || remain === -3 || remain === -2 || remain === -1 || remain === 0 ||remain === 1 || remain === 2 || remain === 3 || remain === 4 || remain === 5 || remain === 6 || remain === 7
-		   || remain === 8 || remain === 9 || remain === 10 || remain === 11 || remain === 12 || remain === 13 || remain === 14 || remain === 15 || remain === 16 ||index === 0 ) {
-            return value;
-           }
-           return '';
-				},
-          min: 0  },
-               scaleLabel: {
-                  display: true,
-                  labelString: "Total Cases / Deaths" + perPopStrY
-               }
-            }
-   
-   }else if (yAxMode == "daily" && selfCountryBox.getAttribute("logscale") == "false"){
+   }  else if (yAxMode == "daily"){
       
       $(".dataTypeButton.yAx.Left").attr("style","background-color: #333333;");
       
@@ -536,34 +656,6 @@ function updateAxes(){
                   labelString: "Daily Cases / Deaths" + perPopStrY
                }
             }
-   }
-   else if (yAxMode == "daily" && selfCountryBox.getAttribute("logscale") == "true"){
-      
-      $(".dataTypeButton.yAx.Left").attr("style","background-color: #333333;");
-      myLineChart.options.scales.yAxes[0] = {
-               type: 'logarithmic',
-               time: {
-                  unit: 'day'
-               },
-			    ticks: {
-				 maxTicksLimit: 8 ,
-          callback: function (value, index, values) {
-           var remain = Math.floor(Math.log(value));
-            if (value === 0) {
-             return '0';
-           } else if (remain === -4 || remain === -3 || remain === -2 || remain === -1 || remain === 0 ||remain === 0 || remain === 1 || remain === 2 || remain === 3 || remain === 4 || remain === 5 || remain === 6 || remain === 7
-		   || remain === 8 || remain === 9 || remain === 10 || remain === 11 || remain === 12 || remain === 13 || remain === 14 || remain === 15 || remain === 16 ||index === 0 ) {
-            return value;
-           }
-           return '';
-				},
-          min: 0  },
-               scaleLabel: {
-                  display: true,
-                  labelString: "Daily Cases / Deaths" + perPopStrY
-               }
-            }
-    
    }
    myLineChart.update();
 }
