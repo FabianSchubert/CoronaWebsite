@@ -71,7 +71,7 @@ margin-bottom: 20px; font-weight: 600;">Goethe Interactive COVID-19 Analyzer</h1
 	  	  
 	       <div id="totalPopSwitchContainer" title="how to display the data" style="right: 4%;
 top: 10%;" >
-      <span>Per 10⁵ Inh.</span>
+      <span>Normalized</span>
       <label class="switch" id="totalPopSwitch">
          <input type="checkbox"
          onclick="totalPopCheckBoxClick(this);"  >
@@ -82,12 +82,10 @@ top: 10%;" >
 	  
       <div class="axDataTypeSwitch yAx"><!--
       --><button class="dataTypeButton yAx Left"
-      onclick="yAxMode = 'daily';
-            updateAxes();"><span
+      onclick="yAxDailyClick();"><span
       style="font-size: 15px; margin: 20px 5px 17px 0px;">Daily</span></button><!--
       --><button class="dataTypeButton yAx Middle"
-      onclick="yAxMode = 'total';
-            updateAxes();"><span
+      onclick="yAxTotalClick();"><span
       style="margin: 17px 3.65px 17px 1px;">Total</span></button><!--
 	  <button class="dataTypeButton yAx Right"
       onclick="yAxMode = 'time';

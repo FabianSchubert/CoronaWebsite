@@ -798,6 +798,24 @@ function xAxTimeClick(){
    }
 }
 
+function yAxDailyClick(){
+   yAxMode = 'daily';
+
+   let countryBoxList = $('.countryBox');
+   for(let i=0;i<countryBoxList.length;i++){
+      updateData($(countryBoxList[i]));
+   }  
+}
+
+function yAxTotalClick(){
+   yAxMode = 'total';
+
+   let countryBoxList = $('.countryBox');
+   for(let i=0;i<countryBoxList.length;i++){
+      updateData($(countryBoxList[i]));
+   }  
+}
+
 function toggleExtrasCountryBox(selfDOM){
    let button = $(selfDOM);
    if(button.attr("aria-expanded")!="true"){

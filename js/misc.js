@@ -180,43 +180,93 @@ function convertChartDataToCSV1(args) {
   indexZahl = args.data._meta[0].index+1
   keys = Object.keys(data[0]);
   
-  attrs = document.getElementById("countryBox"+indexZahl).attributes
+  attrs = document.getElementById("countryBox"+indexZahl).attributes;
   selfCountryBox = document.getElementById("countryBox"+indexZahl)
   
-  result = '';
-  result += columnDelimiter;
-  result += document.getElementsByClassName("countryBoxHeader")[indexZahl-1].innerHTML
-  result += lineDelimiter;
-  result += lineDelimiter;
-  result += keys.join(columnDelimiter);
-  result += lineDelimiter;
-  var anzahlAttribute = [3,4,7,8,11]
- for (i in anzahlAttribute){
-   if (i == 3){
-     result += columnDelimiter;
-   result += lineDelimiter;
-  result +=  "Averaging Window (Days) : " + (attrs[anzahlAttribute[i]].value*2+1)
-    
-   }else {
-     result += columnDelimiter;
-    result += lineDelimiter;
-      result +=  attrs[anzahlAttribute[i]].name + " : " + attrs[anzahlAttribute[i]].value
-    
- }} result += lineDelimiter;
-  for (var i =0; i<args.data.data.length; i++){
-  xDaten = (args.data.data[i].x)
-  yDaten = (args.data.data[i].y)
-  if (myLineChart.options.scales.xAxes[0].type == 'linear'){
-  xDatum[i]= Math.round(xDaten*100)/100
-  }else if (myLineChart.options.scales.xAxes[0].type == 'time'){
-  d[i] = new Date(xDaten)
-  xDatum[i] = d[i].toDateString().slice(3, 10)}
-  result += xDatum[i]
-  result += columnDelimiter;
-  result += Math.round(yDaten*100)/100
-  result += lineDelimiter;
+  /*
+  # xscale: <...>
+  # yscale: <...>
+  # averaging window x (days): <...>
+  # averaging window y (days):
+  # time shift x: <...>
+  # time shift y: <...>
+  <Dataset x Name>,<Dataset y Name>
+  <...>,<...>
+  <...>,<...>
+  .
+  .
+  */
+
+  let attrsX;
+
+  let yscale = attrs["yscale"].value;
+  let avgWindowY = attrs["n_avg"].value*2 + 1;
+  let timeShiftY;
+
+  let xscale;
+  let avgWindowX;
+  let timeShiftX;
+
+  if(xAxMode == "time"){
+    xscale = attrs["xscale"].value;
+    avgWindowX = "-";
+    timeShiftX = attrs["timeshift"].value;
+    timeShiftY = "-";
+  } else {
+    attrsX = document.getElementById("countryBox"+(xAxDataIdx+1)).attributes;
+    xscale = attrsX["xscale"].value;
+    avgWindowX = attrsX["n_avg"].value*2 + 1;
+    timeShiftX = attrsX["timeshift"].value;
+    timeShiftY = attrs["timeshift"].value;
   }
+
+  result = '';
+  // Meta Data
+  let metaDataFmtString = (
+    `% xscale: ${xscale}${lineDelimiter}`+
+    `% yscale: ${yscale}${lineDelimiter}`+
+    `% averaging window x (days): ${avgWindowX}${lineDelimiter}`+
+    `% averaging window y (days): ${avgWindowY}${lineDelimiter}`+
+    `% time shift x (days): ${timeShiftX}${lineDelimiter}`+
+    `% time shift y (days): ${timeShiftY}${lineDelimiter}` );
+
+  result += metaDataFmtString;
+  
+  let xColumn;
+  let yColumn = document.getElementsByClassName("countryBoxHeader")[indexZahl-1].innerHTML + " " + yAxMode;
+
+  if(xAxMode == "time"){
+    xColumn = "time";
+  } else {
+    xColumn = document.getElementsByClassName("countryBoxHeader")[xAxDataIdx].innerHTML + " " + xAxMode;
+  }
+
+  // Header
+  let headerFmtString = `${xColumn}${columnDelimiter}${yColumn}${lineDelimiter}`;
+
+  result += headerFmtString;
+
+  for (var i =0; i<args.data.data.length; i++){
+    
+    xDaten = (args.data.data[i].x)
+    yDaten = (args.data.data[i].y)
+    
+    if (myLineChart.options.scales.xAxes[0].type == 'linear'){
+      xDatum[i]= Math.round(xDaten*100)/100;
+    }else if (myLineChart.options.scales.xAxes[0].type == 'time'){
+      d[i] = new Date(xDaten);
+      xDatum[i] = d[i].toDateString().slice(4);//.slice(3, 10);
+    }
+    
+    result += xDatum[i];
+    result += columnDelimiter;
+    result += Math.round(yDaten*100)/100;
+    result += lineDelimiter;
+  
+  }
+  
   return result;
+
 }
 
 function downloadCSV1(args) {
@@ -224,11 +274,12 @@ function downloadCSV1(args) {
   var csv = "";
   let self = $(args);
   let selfCountryBox = self.parent()
-  neu = selfCountryBox.attr("o")-1
+  let datasetIdx = selfCountryBox.attr("o")-1
  
     csv += convertChartDataToCSV1({
-      data: myLineChart.data.datasets[neu]
+      data: myLineChart.data.datasets[datasetIdx]
     });
+
   
   if (csv == null) return;
 
@@ -237,8 +288,10 @@ function downloadCSV1(args) {
   if (!csv.match(/^data:text\/csv/i)) {
     csv = 'data:text/csv;charset=utf-8,' + csv;
   }
+
   
   data = encodeURI(csv);
+  //console.log(data);
   link = document.createElement('a');
   link.setAttribute('href', data);
   link.setAttribute('download', filename);
