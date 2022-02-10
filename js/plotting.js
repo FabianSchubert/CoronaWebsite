@@ -192,8 +192,9 @@ function closeButtonClick(self){
 
 
 
+   let countryBoxIdx = parseFloat(selfCountryBox.attr("o"))-1;
 
-
+   /*
 	 if (addPlotCounter>z){
 	  for (i=0; i<(addPlotCounter-z); i++){
 		  var h = i+z+1
@@ -207,9 +208,37 @@ function closeButtonClick(self){
 		  date.attr("id","daterange"+(h-1))
 		  datelock.attr("id","datelocks"+(h-1))
 	}
-	}
+	}*/
  
 	selfCountryBox.remove();
+
+   let countryBoxListTemp = $(".countryBox");
+   let countryBoxInst;
+
+   for(let i=0; i < countryBoxListTemp.length;i++){
+      countryBoxInst = $(countryBoxListTemp[i]);
+      
+      countryBoxInst.attr("id","countryBox"+(i+1));
+      countryBoxInst.attr("o",(i+1));
+
+      countryBoxInst.find('.switchExtrasCountryBox').attr("id","switchExtrasCountryBoxButton"+(i+1));
+      countryBoxInst.find('.switchExtrasCountryBox').attr("data-target","#switchExtrasCountryBoxDiv"+(i+1));
+      countryBoxInst.find('.switchExtrasCountryBox').attr("aria-controls","switchExtrasCountryBoxDiv"+(i+1));
+
+      countryBoxInst.find('.collapse.ExtrasCountryBox').attr("id","switchExtrasCountryBoxDiv"+(i+1));
+
+      countryBoxInst.find('.downloadCountryCSV').attr("id","DownloadCSV"+(i+1));
+
+      countryBoxInst.find('.dateRange').attr("id","daterange"+(i+1));
+
+     /* let toggleExtrasButton = $("#switchExtrasCountryBoxButton");
+   toggleExtrasButton.attr("id","switchExtrasCountryBoxButton"+addPlotCounter);
+   toggleExtrasButton.attr("data-target","#switchExtrasCountryBoxDiv"+addPlotCounter);
+   toggleExtrasButton.attr("aria-controls","switchExtrasCountryBoxDiv"+addPlotCounter);
+
+   let extrasDiv = $("#switchExtrasCountryBoxDiv");
+   extrasDiv.attr("id","switchExtrasCountryBoxDiv"+addPlotCounter);*/
+   }
 
     addPlotCounter -=1
     myLineChart.update();

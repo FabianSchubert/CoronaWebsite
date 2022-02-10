@@ -332,6 +332,7 @@ top: 10%;" >
             <input type="image"
             src="./img/download_data_white.svg"
             id = "DownloadCSV"
+            class = "downloadCountryCSV"
             title = "export files as csv "
             style="
             border-style: none;
