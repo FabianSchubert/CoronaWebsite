@@ -17,6 +17,7 @@
   margin-right: 10px;
   /*float: left;*/
   display: inline-block;
+  vertical-align:top;
 }
 
 .countryBox p {

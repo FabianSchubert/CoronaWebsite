@@ -587,7 +587,7 @@ function scaleMaxInput(selfDOM){
 function timeMaxInput(selfDOM){
      
    let self = $(selfDOM);
-   let selfCountryBox = self.parent().parent();
+   let selfCountryBox = self.parent().parent().parent();
    
    let timeShiftMax = parseFloat(selfCountryBox.find(".sliderRangeField.max")[2].value);
    
@@ -616,9 +616,11 @@ function updateAxes(){
    $(".dataTypeButton.xAx").attr("style","background-color: #777777;");
    $(".dataTypeButton.yAx").attr("style","background-color: #777777;");
    
-   let perPopStrX = showPopRel ? " per 10⁵ Inhabitants" : "";
+
+
    let perPopStrY = showPopRel ? " per 10⁵ Inh." : "";
    
+   let perPopStrYVacc = showPopRel ? "% " : "";
 
    let countryBoxX;
    let datatypeX;
@@ -629,6 +631,22 @@ function updateAxes(){
       countryBoxX = $(countryBoxList[xAxDataIdx]);
       datatypeX = countryBoxX.attr("displayData");
       datatypeXLabel = datatypeX.charAt(0).toUpperCase() + datatypeX.slice(1);
+      if(datatypeXLabel == "Vaccines"){
+         datatypeXLabel = "Fully Vacc.";
+      }
+   } else {
+      datatypeX = "time";
+      datatypeXLabel = "Time"
+   }
+
+   let perPopStrX;
+   let perPopStrXVacc;
+   if(datatypeX == "vaccines"){
+      perPopStrXVacc = "% ";
+      perPopStrX = "";
+   } else {
+      perPopStrX = " per 10⁵ Inh.";
+      perPopStrXVacc = "";
    }
 
    //console.log(datatypeXLabel);
@@ -660,7 +678,7 @@ function updateAxes(){
                
                scaleLabel: {
                   display: true,
-                  labelString: "Total " + datatypeXLabel + perPopStrX
+                  labelString: "Total " + perPopStrXVacc + datatypeXLabel + perPopStrX
                }
             };
 
@@ -674,7 +692,7 @@ function updateAxes(){
                
                scaleLabel: {
                   display: true,
-                  labelString: "Daily " + datatypeXLabel + perPopStrX
+                  labelString: "Daily " + perPopStrXVacc + datatypeXLabel + perPopStrX
                }
             };
             
@@ -706,7 +724,7 @@ function updateAxes(){
                
                scaleLabel: {
                   display: true,
-                  labelString: "Total Cases / Deaths" + perPopStrY
+                  labelString: "Total Cases/Deaths" + perPopStrY + ", " + perPopStrYVacc + "Fully Vacc."
                }
             }
    }  else if (yAxMode == "daily"){
@@ -720,7 +738,7 @@ function updateAxes(){
                },
                scaleLabel: {
                   display: true,
-                  labelString: "Daily Cases / Deaths" + perPopStrY
+                  labelString: "Daily Cases / Deaths" + perPopStrY + ", " + perPopStrYVacc + "Fully Vacc."
                }
             }
    }

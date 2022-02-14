@@ -19,12 +19,15 @@ function downloadFileTempLink(url, fileName) {
 }
 
 function convertChartDataToCSV(args) {
-  var result, columnDelimiter, lineDelimiter, data;
+  let result, columnDelimiter, lineDelimiter,data;
   
-  data = args.data[0]
-  if (data == null ) {
+  data = args.data;
+
+  if (data[0] == null ) {
     return null;
   }
+  console.log(args.data[0]);
+
   var d = []
   var xDatum = []
   var xDatenTotalalle = []
@@ -163,6 +166,73 @@ function downloadCSV(args) {
   document.body.removeChild(link);
 }
 
+function convertTabToCSV(tab,columnDelimiter=",",lineDelimiter="\n"){
+  
+  let m = tab.length;
+  if(m==0){
+    return '';
+  }
+  let n = tab[0].length;
+
+  let result = '';
+
+  for(let i=0;i<m;i++){
+    for(let j=0;j<n;j++){
+      result += tab[i][j];
+      if(j<(n-1)){
+        result += columnDelimiter;
+      }
+    }
+    if(i<(m-1)){
+      result += lineDelimiter;
+    }
+  }
+  return result;
+}
+
+function convertDatasetToTab(dataset){
+  let data = dataset.data;
+  let idx = dataset._meta[0].index;
+  let count = idx + 1;
+
+  let attrs = document.getElementById("countryBox"+count).attributes;
+  let selfCountryBox = document.getElementById("countryBox"+count);
+
+  let attrsX;
+
+  let yscale = attrs["yscale"].value;
+  let avgWindowY = attrs["n_avg"].value*2 + 1;
+  let timeShiftY;
+
+  let xscale;
+  let avgWindowX;
+  let timeShiftX;
+
+  if(xAxMode == "time"){
+    xscale = attrs["xscale"].value;
+    avgWindowX = "-";
+    timeShiftX = attrs["timeshift"].value;
+    timeShiftY = "-";
+  } else {
+    attrsX = document.getElementById("countryBox"+(xAxDataIdx+1)).attributes;
+    xscale = attrsX["xscale"].value;
+    avgWindowX = attrsX["n_avg"].value*2 + 1;
+    timeShiftX = attrsX["timeshift"].value;
+    timeShiftY = attrs["timeshift"].value;
+  }
+
+  let result = [];
+
+  result.push(["Data",title]);
+  result.push(["xscale",xscale]);
+  result.push(["yscale",yscale]);
+  result.push(["averaging window x (days)",avgWindowX]);
+  result.push(["averaging window y (days)",avgWindowY]);
+  result.push(["time shift x (days)",timeShiftX]);
+  result.push(["time shift y (days)",timeShiftY]);
+
+}
+
 function convertChartDataToCSV1(args) {
   var result, ctr, keys, columnDelimiter, lineDelimiter, data;
   
@@ -170,10 +240,6 @@ function convertChartDataToCSV1(args) {
   if (data == null ) {
     return 2;
   }
-  var d = []
-  var xDatum = []
-  var yNachkomma = []
-  
 
   columnDelimiter = args.columnDelimiter || ',';
   lineDelimiter = args.lineDelimiter || '\n';

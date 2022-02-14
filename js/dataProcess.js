@@ -579,10 +579,10 @@ function processDataDailyVsTotal(datatype,idx,times,population,smooth_n,xscale,y
 
    switch(datatype){
       case "cases":
-         normfactY = 7e5;
+         normfactY = 1e5;
          break;
       case "deaths":
-         normfactY = 7e5;
+         normfactY = 1e5;
          break;
       case "vaccines":
          normfactY = 100;
@@ -632,11 +632,11 @@ function processDataDailyVsTotal(datatype,idx,times,population,smooth_n,xscale,y
       switch(datatypeX){
          case "cases":
             totalX=tabArr[idxX].slice();
-            normfactX = 7e5;
+            normfactX = 1e5;
             break;
          case "deaths":
             totalX=tabArrDeaths[idxX].slice();
-            normfactX = 7e5;
+            normfactX = 1e5;
             break;
          case "vaccines":
             totalX=tabArrVacc[idxX].slice();
@@ -692,11 +692,22 @@ function processDataDailyVsTotal(datatype,idx,times,population,smooth_n,xscale,y
       console.log("Error: Wrong x-axis mode specified");
    }
    if(yMode == "daily"){
-      yData = showPopRel ? shiftArray(scaleArr(smooth_filter(daily_change,smooth_n),yscale*normfactY/population[idx]),round(timeShift))
-      : shiftArray(scaleArr(smooth_filter(daily_change,smooth_n),yscale),round(timeShift));
+      if(xAxMode != "time"){
+         yData = showPopRel ? shiftArray(scaleArr(smooth_filter(daily_change,smooth_n),yscale*normfactY/population[idx]),round(timeShift))
+         : shiftArray(scaleArr(smooth_filter(daily_change,smooth_n),yscale),round(timeShift));
+      } else {
+         yData = showPopRel ? scaleArr(smooth_filter(daily_change,smooth_n),yscale*normfactY/population[idx])
+         : scaleArr(smooth_filter(daily_change,smooth_n),yscale);
+      }
+      
    } else if(yMode == "total"){
-      yData = showPopRel ? shiftArray(scaleArr(smooth_filter(total_cut,smooth_n),yscale*normfactY/population[idx]),round(timeShift))
-      : shiftArray(scaleArr(smooth_filter(total_cut,smooth_n),yscale),round(timeShift));
+      if(xAxMode != "time"){
+         yData = showPopRel ? shiftArray(scaleArr(smooth_filter(total_cut,smooth_n),yscale*normfactY/population[idx]),round(timeShift))
+         : shiftArray(scaleArr(smooth_filter(total_cut,smooth_n),yscale),round(timeShift));
+      } else {
+         yData = showPopRel ? scaleArr(smooth_filter(total_cut,smooth_n),yscale*normfactY/population[idx])
+         : scaleArr(smooth_filter(total_cut,smooth_n),yscale);
+      }
    } else if(yMode == "time"){
       yData = addArrScal(scaleArr(smooth_filter(times.slice(1,times.length),
                      smooth_n),
