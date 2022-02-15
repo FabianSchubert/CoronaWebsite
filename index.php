@@ -315,6 +315,7 @@ top: 10%;" >
          <div class="countryBox"
          id="countryBox_Init"
          xyScaleRatio="1"
+         lockScales="false"
          xScale="1.0"
          yScale="1.0"
          timeShift="0"
@@ -324,6 +325,7 @@ top: 10%;" >
 		     o="0"
          dateSlideMin="0"
          dateSlideMax="1"
+         lockDate="false"
          style="padding-right: 17px; background-color: #ff0000;">
 		 
             <p class="countryBoxHeader">TemplateCountry</p>
@@ -439,12 +441,7 @@ top: 10%;" >
               </div>
               
               
-              <!-- lock scale button 
-              <input type="image"
-              src="./img/lock_open.svg"
-              class="scaleLock"
-              onclick="scaleLockClick(this);" style="width: 11%;">-->
-                           
+                                        
               <!-- averaging window-->
               <span>Averaging Window (Days): </span>
               
@@ -461,6 +458,11 @@ top: 10%;" >
               </span>
               </div>
 
+              <!-- lock scale button -->
+              <input type="image"
+              src="./img/lock_open.svg"
+              class="scaleLock"
+              onclick="scaleLockClick(this);" style="width: 11%;">
               
               <!--
               <span>Select Start/End Date</span>
@@ -472,19 +474,31 @@ top: 10%;" >
                  </span>
               </div>-->
 
-              <span>Select Start/End Date</span>
+              
+              
+            
+            </div>
+
+            <br>
+
+            <span>Select Start/End Date</span>
+
+            <br>
               
               <div id="datelock" class="rangeContainer">
                  <span >
                     <div id="daterange" class="dateRange" style ="height: 6.5px;"></div>
                  </span>
               </div>
-
               
-            
-            </div>
+            <!-- lock range button -->
+              <input type="image"
+              src="./img/lock_closeddate.svg"
+              class="dateLock"
+              onclick="dateRangeclick(this);">
 
             <br>
+            
 
             <div class="dropdown"
                   title = "Choose Data">
@@ -493,7 +507,8 @@ top: 10%;" >
               <div style = "padding-top: 0px;" class="dropdown-menu dropdown-content dropdown-data">
               <li><a href="javascript:void(0)" onclick ="DataTypeClick(this,'cases')">Cases</a></li>
               <li><a href="javascript:void(0)" onclick ="DataTypeClick(this,'deaths')">Deaths</a></li>
-              <li><a href="javascript:void(0)" onclick ="DataTypeClick(this,'vaccines')">Fully Vaccinated</a></li>             
+              <li><a href="javascript:void(0)" onclick ="DataTypeClick(this,'vaccines')">Fully Vaccinated</a></li>
+              <li><a href="javascript:void(0)" onclick ="DataTypeClick(this,'r')">Eff. Repr. Number R</a></li>               
              </div>
              </div>
 

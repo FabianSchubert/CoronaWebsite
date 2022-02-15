@@ -515,6 +515,36 @@ function scaleArr(x,s,x0=0){
    return res;
 }
 
+function multArr(x,y){
+   let nx = x.length;
+   let ny = y.length;
+
+   let result = Array(nx);
+   if(nx == ny){
+      for(let i=0;i<nx;i++){
+         result[i] = x[i] * y[i];
+      }
+   } else {
+      return null;
+   }
+   return result;
+}
+
+function divArr(x,y){
+   let nx = x.length;
+   let ny = y.length;
+
+   let result = Array(nx);
+   if(nx == ny){
+      for(let i=0;i<nx;i++){
+         result[i] = x[i] / y[i];
+      }
+   } else {
+      return null;
+   }
+   return result;
+}
+
 function addArrScal(x,s){
    let res = Array(x.length);
    for(let i=0;i<x.length;i++){
@@ -559,6 +589,9 @@ function processDataDailyVsTotal(datatype,idx,times,population,smooth_n,xscale,y
       case "vaccines":
          total=tabArrVacc[idx].slice();
          break;
+      case "r":
+         total=tabArr[idx].slice();
+         break;
    }
    
    let total_cut = total.slice(1);
@@ -586,6 +619,9 @@ function processDataDailyVsTotal(datatype,idx,times,population,smooth_n,xscale,y
          break;
       case "vaccines":
          normfactY = 100;
+         break;
+      case "r":
+         normfactY = 1;
          break;
    }
 
@@ -642,6 +678,10 @@ function processDataDailyVsTotal(datatype,idx,times,population,smooth_n,xscale,y
             totalX=tabArrVacc[idxX].slice();
             normfactX = 100;
             break;
+         case "r":
+            totalX=tabArr[idx].slice();
+            normfactX = 1;
+            break;
       }
 
       total_cutX = totalX.slice(1);
@@ -665,56 +705,76 @@ function processDataDailyVsTotal(datatype,idx,times,population,smooth_n,xscale,y
 
    // 1 day = 86 400 000 ms
    
+   let shift_r_days = 4;
 
+   if(datatypeX != "r"){
+      if(xAxMode == "daily"){
 
-   if(xAxMode == "daily"){
-
-      xData = showPopRel ? shiftArray(scaleArr(smooth_filter(daily_changeX,smooth_nX),xscaleX*normfactX/population[idxX]),round(timeShiftX))
-      : shiftArray(scaleArr(smooth_filter(daily_changeX,smooth_nX),xscaleX),round(timeShiftX));
-   } else if(xAxMode == "total"){
-      xData = showPopRel ? shiftArray(scaleArr(smooth_filter(total_cutX,smooth_nX),xscaleX*normfactX/population[idxX]),round(timeShiftX))
-      : shiftArray(scaleArr(smooth_filter(total_cutX,smooth_nX),xscaleX),round(timeShiftX));
-   } else if(xAxMode == "time"){
-      xData = addArrScal(scaleArr(smooth_filter(times.slice(1,times.length),
-                     smooth_n),
-                     xscale,times[1]),timeShift*864e5);
-      //times.slice(1+smooth_n,times.length-smooth_n);
-      /*
-      console.log("length of sliced time array:")
-      console.log(xData.length);
-      console.log("length it should have:")
-      console.log(smooth_filter(total_cut,smooth_n).length);
-      console.log("length of initial total_arr:");
-      console.log(total.length);
-      console.log("length of initial time_arr:");
-      console.log(times.length);*/
-   } else{
-      console.log("Error: Wrong x-axis mode specified");
-   }
-   if(yMode == "daily"){
-      if(xAxMode != "time"){
-         yData = showPopRel ? shiftArray(scaleArr(smooth_filter(daily_change,smooth_n),yscale*normfactY/population[idx]),round(timeShift))
-         : shiftArray(scaleArr(smooth_filter(daily_change,smooth_n),yscale),round(timeShift));
-      } else {
-         yData = showPopRel ? scaleArr(smooth_filter(daily_change,smooth_n),yscale*normfactY/population[idx])
-         : scaleArr(smooth_filter(daily_change,smooth_n),yscale);
+         xData = showPopRel ? shiftArray(scaleArr(smooth_filter(daily_changeX,smooth_nX),xscaleX*normfactX/population[idxX]),round(timeShiftX))
+         : shiftArray(scaleArr(smooth_filter(daily_changeX,smooth_nX),xscaleX),round(timeShiftX));
+      } else if(xAxMode == "total"){
+         xData = showPopRel ? shiftArray(scaleArr(smooth_filter(total_cutX,smooth_nX),xscaleX*normfactX/population[idxX]),round(timeShiftX))
+         : shiftArray(scaleArr(smooth_filter(total_cutX,smooth_nX),xscaleX),round(timeShiftX));
+      } else if(xAxMode == "time"){
+         xData = addArrScal(scaleArr(smooth_filter(times.slice(1,times.length),
+                        smooth_n),
+                        xscale,times[1]),timeShift*864e5);
+      } else{
+         console.log("Error: Wrong x-axis mode specified");
       }
-      
-   } else if(yMode == "total"){
-      if(xAxMode != "time"){
-         yData = showPopRel ? shiftArray(scaleArr(smooth_filter(total_cut,smooth_n),yscale*normfactY/population[idx]),round(timeShift))
-         : shiftArray(scaleArr(smooth_filter(total_cut,smooth_n),yscale),round(timeShift));
+   } else {
+      if(xAxMode == "time"){
+         xData = addArrScal(scaleArr(smooth_filter(times.slice(1,times.length),
+                        smooth_n),
+                        xscale,times[1]),timeShift*864e5);
       } else {
-         yData = showPopRel ? scaleArr(smooth_filter(total_cut,smooth_n),yscale*normfactY/population[idx])
-         : scaleArr(smooth_filter(total_cut,smooth_n),yscale);
+         xData = shiftArray(scaleArr(divArr(smooth_filter(shiftArray(daily_changeX,smooth_n),smooth_nX),shiftArray(smooth_filter(shiftArray(daily_changeX,smooth_n),smooth_nX),shift_r_days)),xscaleX),
+            round(timeShiftX));
       }
-   } else if(yMode == "time"){
-      yData = addArrScal(scaleArr(smooth_filter(times.slice(1,times.length),
-                     smooth_n),
-                     yscale,times[1]),timeShift*864e5);
-   } else{
-      console.log("Error: Wrong y-axis mode specified");
    }
+
+   
+   if(datatype != "r"){
+      if(yMode == "daily"){
+         if(xAxMode != "time"){
+            yData = showPopRel ? shiftArray(scaleArr(smooth_filter(daily_change,smooth_n),yscale*normfactY/population[idx]),round(timeShift))
+            : shiftArray(scaleArr(smooth_filter(daily_change,smooth_n),yscale),round(timeShift));
+         } else {
+            yData = showPopRel ? scaleArr(smooth_filter(daily_change,smooth_n),yscale*normfactY/population[idx])
+            : scaleArr(smooth_filter(daily_change,smooth_n),yscale);
+         }
+         
+      } else if(yMode == "total"){
+         if(xAxMode != "time"){
+            yData = showPopRel ? shiftArray(scaleArr(smooth_filter(total_cut,smooth_n),yscale*normfactY/population[idx]),round(timeShift))
+            : shiftArray(scaleArr(smooth_filter(total_cut,smooth_n),yscale),round(timeShift));
+         } else {
+            yData = showPopRel ? scaleArr(smooth_filter(total_cut,smooth_n),yscale*normfactY/population[idx])
+            : scaleArr(smooth_filter(total_cut,smooth_n),yscale);
+         }
+      } else if(yMode == "time"){
+         yData = addArrScal(scaleArr(smooth_filter(times.slice(1,times.length),
+                        smooth_n),
+                        yscale,times[1]),timeShift*864e5);
+      } else{
+         console.log("Error: Wrong y-axis mode specified");
+      }
+   } else {
+      if(yMode == "time"){
+         yData = addArrScal(scaleArr(smooth_filter(times.slice(1,times.length),
+                        smooth_n),
+                        yscale,times[1]),timeShift*864e5);
+      } else {
+         if(xAxMode != "time"){
+            yData = shiftArray(scaleArr(divArr(smooth_filter(shiftArray(daily_change,smooth_n),smooth_n),shiftArray(smooth_filter(shiftArray(daily_change,smooth_n),smooth_n),shift_r_days)),yscale),
+            round(timeShift));
+         } else {
+            yData = scaleArr(divArr(smooth_filter(shiftArray(daily_change,smooth_n),smooth_n),shiftArray(smooth_filter(shiftArray(daily_change,smooth_n),smooth_n),shift_r_days)),yscale);
+         }
+      }
+   }
+
+   
 
    xData.splice(idxEnd);
    xData.splice(0,idxStart);

@@ -57,10 +57,16 @@ function addPlot_callback(idx){
    newCountryBox.setAttribute("idx",String(idx));
    //datelocks.setAttribute("id","datelocks" + addPlotCounter);
    newCountryBox.setAttribute("o", addPlotCounter);
+
+   idxLockCountries.push(addPlotCounter-1);
+
+
    
    DownloadCSV.setAttribute("id","DownloadCSV" + addPlotCounter);
    daterange.setAttribute("id","daterange" + addPlotCounter);
    
+
+
    $(newCountryBox).children(".countryBoxHeader")[0].innerHTML = countries[idx] + " - " + $(newCountryBox).attr("displayData");
    //var box = document.getElementById("countryBoxContainer")
 	//  xcut =box.getAttribute("xcut")
@@ -73,9 +79,11 @@ function addPlot_callback(idx){
       min: 0,
       max: nDays,
       values: [0,nDays],
-      change: changeRangeSlider,
+      //change: changeRangeSlider,
       slide: changeRangeSlider
    });
+
+   dateRangeclick($(newCountryBox).find(".dateLock"));
 
    let toggleExtrasButton = $("#switchExtrasCountryBoxButton");
    toggleExtrasButton.attr("id","switchExtrasCountryBoxButton"+addPlotCounter);
@@ -103,7 +111,7 @@ function addPlot_callback(idx){
 
 function changeRangeSlider(event, ui){
    
-   let countryBoxTemp = $(ui.handle).parent().parent().parent().parent().parent();
+   let countryBoxTemp = $(ui.handle).parent().parent().parent().parent();
    
    //console.log(countryBoxTemp) 
 
@@ -113,6 +121,31 @@ function changeRangeSlider(event, ui){
 
    countryBoxTemp.attr("dateSlideMin",SlideMin);
    countryBoxTemp.attr("dateSlideMax",SlideMax);
+
+   let countryBoxList;
+
+   
+   if(countryBoxTemp.attr("lockDate")=="true"){
+      
+      globalDateRangeMin = SlideMin;
+      globalDateRangeMax = SlideMax;      
+
+      
+
+      countryBoxList = $('.countryBox');
+      for(let i=0;i<countryBoxList.length;i++){
+         if($(countryBoxList[i]).attr("o")!=countryBoxTemp.attr("o")){
+            $(countryBoxList[i]).attr("dateSlideMin",globalDateRangeMin);
+            $(countryBoxList[i]).attr("dateSlideMax",globalDateRangeMax);
+            //debugger;
+            $(countryBoxList[i]).find('.dateRange').slider("values",[globalDateRangeMin*nDays,globalDateRangeMax*nDays]);
+            updateData($(countryBoxList[i]));
+         }
+      }
+
+   }
+
+   
 
    updateData(countryBoxTemp);
    //console.log(countryBoxTemp.attr("dateSlideMin"));
@@ -273,64 +306,96 @@ function updatexDataList(){
    for(let i=0;i<countryBoxList.length;i++){
       
       let idx = $(countryBoxList[i]).attr("idx");
-      
-      // Daily Entry
-      let newEntryDaily = document.createElement('a');
-      newEntryDaily.innerHTML = countries[idx] + " - " + $(countryBoxList[i]).attr("displaydata") + " - Daily";
-      newEntryDaily.href = "#undefined1"
-      newEntryDaily.id = "xDataDropdown"+i.toString();
-      newEntryDaily.style.color = countryBoxList[i].style.backgroundColor;
 
-      newEntryDaily.onclick = function(){
-         xAxMode = "daily";
+      if($(countryBoxList[i]).attr("displaydata") != "r"){
 
-         xAxDataIdx = i;
+         // Daily Entry
+         let newEntryDaily = document.createElement('a');
+         newEntryDaily.innerHTML = countries[idx] + " - " + $(countryBoxList[i]).attr("displaydata") + " - Daily";
+         newEntryDaily.href = "#undefined1"
+         newEntryDaily.id = "xDataDropdown"+i.toString();
+         newEntryDaily.style.color = countryBoxList[i].style.backgroundColor;
 
-         for(let j=0;j<countryBoxList.length;j++){
+         newEntryDaily.onclick = function(){
+            xAxMode = "daily";
+
+            xAxDataIdx = i;
+
+            for(let j=0;j<countryBoxList.length;j++){
+               
+               updateData($(countryBoxList[j]));   
+            }
+
+
+            updateAxes();
             
-            updateData($(countryBoxList[j]));   
          }
 
+         // Total Entry
+         let newEntryTotal = document.createElement('a');
+         newEntryTotal.innerHTML = countries[idx] + " - " + $(countryBoxList[i]).attr("displaydata") + " - Total";
+         newEntryTotal.href = "#undefined1"
+         newEntryTotal.id = "xDataDropdown"+i.toString();
+         newEntryTotal.style.color = countryBoxList[i].style.backgroundColor;
 
-         updateAxes();
-         
-      }
+         newEntryTotal.onclick = function(){
+            xAxMode = "total";
 
-      // Total Entry
-      let newEntryTotal = document.createElement('a');
-      newEntryTotal.innerHTML = countries[idx] + " - " + $(countryBoxList[i]).attr("displaydata") + " - Total";
-      newEntryTotal.href = "#undefined1"
-      newEntryTotal.id = "xDataDropdown"+i.toString();
-      newEntryTotal.style.color = countryBoxList[i].style.backgroundColor;
+            xAxDataIdx = i;
 
-      newEntryTotal.onclick = function(){
-         xAxMode = "total";
+            for(let j=0;j<countryBoxList.length;j++){
+               
+               updateData($(countryBoxList[j]));   
+            }
 
-         xAxDataIdx = i;
 
-         for(let j=0;j<countryBoxList.length;j++){
+            updateAxes();
             
-            updateData($(countryBoxList[j]));   
          }
 
+         //onclick ="DataTypeClick(this,'cases')"
 
-         updateAxes();
-         
+         let newEntryListeDaily = document.createElement('li');
+         $(newEntryListeDaily).attr("class","xDataDropdownEntry");
+         newEntryListeDaily.appendChild(newEntryDaily);
+         xDataDropdown.appendChild(newEntryListeDaily);
+
+         let newEntryListeTotal = document.createElement('li');
+         $(newEntryListeTotal).attr("class","xDataDropdownEntry");
+         newEntryListeTotal.appendChild(newEntryTotal);
+         xDataDropdown.appendChild(newEntryListeTotal);
+
+      } else {
+
+         // R Entry
+         let newEntryR = document.createElement('a');
+         newEntryR.innerHTML = countries[idx] + " - " + $(countryBoxList[i]).attr("displaydata");
+         newEntryR.href = "#undefined1"
+         newEntryR.id = "xDataDropdown"+i.toString();
+         newEntryR.style.color = countryBoxList[i].style.backgroundColor;
+
+         newEntryR.onclick = function(){
+            xAxMode = "daily";
+
+            xAxDataIdx = i;
+
+            for(let j=0;j<countryBoxList.length;j++){
+               
+               updateData($(countryBoxList[j]));   
+            }
+
+
+            updateAxes();
+            
+         }
+
+         let newEntryListeR = document.createElement('li');
+         $(newEntryListeR).attr("class","xDataDropdownEntry");
+         newEntryListeR.appendChild(newEntryR);
+         xDataDropdown.appendChild(newEntryListeR);
+
       }
-
-
-
-      //onclick ="DataTypeClick(this,'cases')"
-
-      let newEntryListeDaily = document.createElement('li');
-      $(newEntryListeDaily).attr("class","xDataDropdownEntry");
-      newEntryListeDaily.appendChild(newEntryDaily);
-      xDataDropdown.appendChild(newEntryListeDaily);
-
-      let newEntryListeTotal = document.createElement('li');
-      $(newEntryListeTotal).attr("class","xDataDropdownEntry");
-      newEntryListeTotal.appendChild(newEntryTotal);
-      xDataDropdown.appendChild(newEntryListeTotal);
+       
    }
 
 }
@@ -338,6 +403,8 @@ function updatexDataList(){
 
 function xScaleSliderInput(selfDOM){
    
+   console.log("xscale");
+
    let self = $(selfDOM);
    let selfCountryBox = self.parent().parent().parent().parent();
    
@@ -442,8 +509,8 @@ function timeShiftSliderInput(selfDOM){
 function scaleLockClick(selfDOM){
    
    let self = $(selfDOM);
-   let selfCountryBox = self.parent();
-   
+   let selfCountryBox = self.parent().parent();
+
    if(selfCountryBox.attr("lockScales") == "false"){
       self.attr("src","./img/lock_closed.svg");
       selfCountryBox.attr("lockScales","true");
@@ -461,10 +528,34 @@ function scaleLockClick(selfDOM){
 
 
 function dateRangeclick(selfDOM){
-   console.log("click");
-   /*
    let self = $(selfDOM);
-   let selfCountryBox = self.parent().parent().parent();
+   let selfCountryBox = self.parent();
+
+   if(selfCountryBox.attr("lockDate") == "false"){
+      selfCountryBox.attr("lockDate","true");
+      self.attr("src","./img/lock_closeddate.svg");
+      self.css("width","7%");
+      self.css("margin-left","20px");
+
+      if(idxLockCountries.length > 0){
+         selfCountryBox.attr("dateSlideMin",globalDateRangeMin);
+         selfCountryBox.attr("dateSlideMax",globalDateRangeMax);
+         selfCountryBox.find('.dateRange').slider("values",[globalDateRangeMin*nDays,globalDateRangeMax*nDays]);
+         updateData(selfCountryBox);
+      } else {
+         globalDateRangeMin = selfCountryBox.attr("dateSlideMin");
+         globalDateRangeMax = selfCountryBox.attr("dateSlideMax");
+      }
+      idxLockCountries.push(selfCountryBox.attr("o")-1);
+
+   } else {
+      selfCountryBox.attr("lockDate","false");
+      self.attr("src","./img/lock_opendate.svg");
+      self.css("width","11.5%");
+      self.css("margin-left","7px");
+      idxLockCountries.splice(idxLockCountries.indexOf(selfCountryBox.attr("o")-1), 1);
+   }
+   /*
    let CountryBoxContainer = selfCountryBox.parent();
    idx= selfCountryBox.attr("idx")
 	xcut = CountryBoxContainer.attr("xcut")
@@ -477,7 +568,7 @@ function dateRangeclick(selfDOM){
 	 	  
    }*/
 }
-
+/*
 function dateLockClick(selfDOM){
    
    let self = $(selfDOM);
@@ -493,7 +584,7 @@ function dateLockClick(selfDOM){
 	  
 	  
    }
-}
+}*/
 /* 
 document.getElementById("buttonDropdown").addEventListener("click", function() {
 	var box = document.getElementById("countryBoxContainer")
@@ -551,12 +642,15 @@ function DataTypeClick(selfDOM,datatype){
          myLineChart.data.datasets[idx_node].pointStyle = 'circle';
          break;
      case "deaths":
-         myLineChart.data.datasets[idx_node].pointBackgroundColor = 'rgba(0,0,0,0)'
+         myLineChart.data.datasets[idx_node].pointBackgroundColor = 'rgba(0,0,0,0)';
          myLineChart.data.datasets[idx_node].pointStyle = 'circle';
          break;
      case "vaccines":
          myLineChart.data.datasets[idx_node].pointStyle = 'cross';
          break;
+     case "r":
+         myLineChart.data.datasets[idx_node].pointBackgroundColor = 'rgba(0,0,0,0)';
+         myLineChart.data.datasets[idx_node].pointStyle = 'rect';
    }
 
    selfCountryBox.children(".countryBoxHeader")[0].innerHTML = countries[selfCountryBox.attr("idx")] + " - " + selfCountryBox.attr("displayData");
@@ -569,7 +663,7 @@ function DataTypeClick(selfDOM,datatype){
 function scaleMaxInput(selfDOM){
      
    let self = $(selfDOM);
-   let selfCountryBox = self.parent().parent();
+   let selfCountryBox = self.parent().parent().parent();
    
    let xScaleMax = parseFloat(selfCountryBox.find(".sliderRangeField.max")[0].value);
    let yScaleMax = parseFloat(selfCountryBox.find(".sliderRangeField.max")[1].value);
@@ -577,11 +671,12 @@ function scaleMaxInput(selfDOM){
    let xScale = selfCountryBox.attr("xScale");
    let yScale = selfCountryBox.attr("yScale");
    
-   let xScaleSlider = selfCountryBox.find(".slider.xScale")[0]
-   let yScaleSlider = selfCountryBox.find(".slider.yScale")[0]
+   let xScaleSlider = selfCountryBox.find(".slider.xScale")[0];
+   let yScaleSlider = selfCountryBox.find(".slider.yScale")[0];
    
    xScaleSlider.value = (xScale / xScaleMax) * xScaleSlider.max;
    yScaleSlider.value = (yScale / yScaleMax) * yScaleSlider.max;
+
 }
 
 function timeMaxInput(selfDOM){
@@ -644,9 +739,24 @@ function updateAxes(){
    if(datatypeX == "vaccines"){
       perPopStrXVacc = "% ";
       perPopStrX = "";
+   } else if(datatypeX == "r"){
+      perPopStrXVacc = "";
+      perPopStrX = "";
    } else {
       perPopStrX = " per 10⁵ Inh.";
       perPopStrXVacc = "";
+   }
+
+   let TotalDailyStrX;
+
+   if(datatypeX == "r"){
+      TotalDailyStrX = "";
+   } else {
+      if(xAxMode == "total"){
+         TotalDailyStrX = "Total ";
+      } else {
+         TotalDailyStrX = "Daily ";
+      }
    }
 
    //console.log(datatypeXLabel);
@@ -668,7 +778,7 @@ function updateAxes(){
                   labelString: "Time"
                }
             }
-   } else if (xAxMode == "total"){
+   } else {
       
       myLineChart.options.scales.xAxes[0] = {
                type: 'linear',
@@ -678,24 +788,10 @@ function updateAxes(){
                
                scaleLabel: {
                   display: true,
-                  labelString: "Total " + perPopStrXVacc + datatypeXLabel + perPopStrX
+                  labelString: TotalDailyStrX + perPopStrXVacc + datatypeXLabel + perPopStrX
                }
             };
 
-   } else if (xAxMode == "daily"){
-
-      myLineChart.options.scales.xAxes[0] = {
-               type: 'linear',
-               time: {
-                  unit: 'day'
-               },
-               
-               scaleLabel: {
-                  display: true,
-                  labelString: "Daily " + perPopStrXVacc + datatypeXLabel + perPopStrX
-               }
-            };
-            
    }
    // The whole thing for the y axis...
    if(yAxMode == "time"){

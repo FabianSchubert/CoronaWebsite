@@ -34,11 +34,6 @@
   cursor: pointer;
 }
 
-/* jquery slider */
-.dateRange {
-  
-}
-
 .ui-slider {
     margin-top: 5px;
     margin-right: 5px;
@@ -59,7 +54,7 @@
 }
 
 .ui-slider-horizontal .ui-slider-range {
-    background: #e9ecf1
+    background: #e9ecf1;
 }
 
 .ui-slider-handle{

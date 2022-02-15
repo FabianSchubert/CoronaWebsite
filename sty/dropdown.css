@@ -100,3 +100,8 @@
   border-bottom-right-radius: 0px;
   color: "blue";
 }
+
+.dropbtn.switchData{
+  background-color: transparent;
+  border-style: solid;
+}

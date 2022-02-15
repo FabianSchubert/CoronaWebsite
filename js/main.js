@@ -28,6 +28,11 @@ var populationTab;
 
 var BlockData = [];
 
+var idxLockCountries = [];
+
+var globalDateRangeMin = 0;
+var globalDateRangeMax = 1;
+
 var nDays;
 
 //var xData;
@@ -297,7 +302,7 @@ function setup() {
 	myLineChart.render();
 
 document.getElementById("downloadCSV").addEventListener("click", function(){
-  downloadCSV({ filename: "chart-data.csv", chart: myLineChart })
+  downloadCSV();
 });
 
   

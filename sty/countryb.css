@@ -57,25 +57,26 @@
 
 .scaleLock {
   position: absolute;
-  top: 69px;
-  right: 2px;
+  top: 25px;
+  right: -13px;
 }
 
 
 .dateLock {
-  position: absolute !important;
-  top: 271px !important;
-  right: 27px !important;
+  display: inline-block;
+  width: 7%;
+  margin-left: 20px;
 }
 
 
 .rangeContainer {
-  width: 90%;
+  width: 80%;
+  display: inline-block;
 }
 
 .rangeContainer span{
   display: inline-block;
-  width:87%;
+  width:100%;
 }
 
 .sliderRangeField {
