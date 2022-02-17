@@ -148,7 +148,12 @@ function convertDatasetToTab(dataset){
   result.push([title_x,title_y]);
  
   for(let i=0;i<data.length;i++){
-    result.push([data[i].x,data[i].y]);
+    if(xAxMode == "time"){
+      result.push([(new Date(data[i].x)).toLocaleDateString(),data[i].y]);
+    } else {
+      result.push([data[i].x,data[i].y]);
+    }
+    
   }
 
   return result;

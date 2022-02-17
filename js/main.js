@@ -35,6 +35,10 @@ var globalDateRangeMax = 1;
 
 var nDays;
 
+var normmodeCasesDeaths = 2;
+var normmodeVacc = 1;
+var normmodeR = 0;
+
 //var xData;
 
 var usstates;
@@ -189,7 +193,7 @@ function setup() {
 
    //xData = times.slice();
    
-   $('#totalPopSwitch').children()[0].checked = false;
+   //$('#totalPopSwitch').children()[0].checked = false;
    
   
    

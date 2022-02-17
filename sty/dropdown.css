@@ -105,3 +105,30 @@
   background-color: transparent;
   border-style: solid;
 }
+
+.dropbtn.normswitch{
+  width: 100%;
+  background-color: rgba(0,0,0,0.35);
+  border-style: solid;
+  border-color: rgba(0,0,0,0.4);
+}
+
+.dropdown.normswitch{
+  width:  37%;
+  position: absolute;
+}
+
+.dropdown.normswitch.casesdeaths{
+  top: 10%;
+  left: 22%;
+}
+
+.dropdown.normswitch.vacc{
+  top: 10%;
+  right: 3%;
+}
+
+.dropdown.normswitch.r{
+  top: 20%;
+  right: 22%;
+}

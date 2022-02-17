@@ -66,8 +66,8 @@ function addPlot_callback(idx){
    daterange.setAttribute("id","daterange" + addPlotCounter);
    
 
-
-   $(newCountryBox).children(".countryBoxHeader")[0].innerHTML = countries[idx] + " - " + $(newCountryBox).attr("displayData");
+   let capitalDisplayData = $(newCountryBox).attr("displayData").charAt(0).toUpperCase() + $(newCountryBox).attr("displayData").slice(1);
+   $(newCountryBox).children(".countryBoxHeader")[0].innerHTML = countries[idx] + " - " + capitalDisplayData;
    //var box = document.getElementById("countryBoxContainer")
 	//  xcut =box.getAttribute("xcut")
 	//  ycut =  Math.round((times[times.length-1] - times[0])/864e5)-box.getAttribute("ycut")
@@ -191,7 +191,8 @@ function updateData(countryBox){ //countryBox should be a jquery object
    }*/
    
    myLineChart.data.datasets[idx_node].data = new_data;
-   myLineChart.data.datasets[idx_node].label = countries[idx] + " - " + countryBox.attr("displayData");
+   let capitalDisplayData = $(countryBox).attr("displayData").charAt(0).toUpperCase() + $(countryBox).attr("displayData").slice(1);
+   myLineChart.data.datasets[idx_node].label = countries[idx] + " - " + capitalDisplayData;
 
    updateAxes();
    //myLineChart.update();
@@ -303,15 +304,19 @@ function updatexDataList(){
 
    $('.xDataDropdownEntry').remove()
 
+   let capitalDisplayData;
+
    for(let i=0;i<countryBoxList.length;i++){
       
       let idx = $(countryBoxList[i]).attr("idx");
+
+      capitalDisplayData = $(countryBoxList[i]).attr("displayData").charAt(0).toUpperCase() + $(countryBoxList[i]).attr("displayData").slice(1);
 
       if($(countryBoxList[i]).attr("displaydata") != "r"){
 
          // Daily Entry
          let newEntryDaily = document.createElement('a');
-         newEntryDaily.innerHTML = countries[idx] + " - " + $(countryBoxList[i]).attr("displaydata") + " - Daily";
+         newEntryDaily.innerHTML = countries[idx] + " - " + capitalDisplayData + " - Daily";
          newEntryDaily.href = "#undefined1"
          newEntryDaily.id = "xDataDropdown"+i.toString();
          newEntryDaily.style.color = countryBoxList[i].style.backgroundColor;
@@ -333,7 +338,7 @@ function updatexDataList(){
 
          // Total Entry
          let newEntryTotal = document.createElement('a');
-         newEntryTotal.innerHTML = countries[idx] + " - " + $(countryBoxList[i]).attr("displaydata") + " - Total";
+         newEntryTotal.innerHTML = countries[idx] + " - " + capitalDisplayData + " - Total";
          newEntryTotal.href = "#undefined1"
          newEntryTotal.id = "xDataDropdown"+i.toString();
          newEntryTotal.style.color = countryBoxList[i].style.backgroundColor;
@@ -369,7 +374,7 @@ function updatexDataList(){
 
          // R Entry
          let newEntryR = document.createElement('a');
-         newEntryR.innerHTML = countries[idx] + " - " + $(countryBoxList[i]).attr("displaydata");
+         newEntryR.innerHTML = countries[idx] + " - " + capitalDisplayData;
          newEntryR.href = "#undefined1"
          newEntryR.id = "xDataDropdown"+i.toString();
          newEntryR.style.color = countryBoxList[i].style.backgroundColor;
@@ -653,7 +658,8 @@ function DataTypeClick(selfDOM,datatype){
          myLineChart.data.datasets[idx_node].pointStyle = 'rect';
    }
 
-   selfCountryBox.children(".countryBoxHeader")[0].innerHTML = countries[selfCountryBox.attr("idx")] + " - " + selfCountryBox.attr("displayData");
+   let capitalDisplayData = $(selfCountryBox).attr("displayData").charAt(0).toUpperCase() + $(selfCountryBox).attr("displayData").slice(1);
+   selfCountryBox.children(".countryBoxHeader")[0].innerHTML = countries[selfCountryBox.attr("idx")] + " - " + capitalDisplayData;
 
    updateData(selfCountryBox);
    
@@ -808,9 +814,9 @@ function updateAxes(){
                   labelString: "Time"
                }
             }
-   } else if (yAxMode == "total"){
+   } else {
       
-      $(".dataTypeButton.yAx.Middle").attr("style","background-color: #333333;");
+      
       
       myLineChart.options.scales.yAxes[0] = {
                type: 'linear',
@@ -820,26 +826,21 @@ function updateAxes(){
                
                scaleLabel: {
                   display: true,
-                  labelString: "Total Cases/Deaths" + perPopStrY + ", " + perPopStrYVacc + "Fully Vacc."
-               }
-            }
-   }  else if (yAxMode == "daily"){
-      
-      $(".dataTypeButton.yAx.Left").attr("style","background-color: #333333;");
-      
-      myLineChart.options.scales.yAxes[0] = {
-               type: 'linear',
-               time: {
-                  unit: 'day'
-               },
-               scaleLabel: {
-                  display: true,
-                  labelString: "Daily Cases / Deaths" + perPopStrY + ", " + perPopStrYVacc + "Fully Vacc."
+                  labelString: "Data / Units as Selected"
                }
             }
    }
+
+   if(yAxMode == "total"){
+      $(".dataTypeButton.yAx.Middle").attr("style","background-color: #333333;");
+   } else if(yAxMode = "daily"){
+      $(".dataTypeButton.yAx.Left").attr("style","background-color: #333333;");
+   }
+
+
    myLineChart.update();
 }
+
 
 $.cssHooks.backgroundColor = {
     get: function(elem) {
@@ -967,4 +968,32 @@ function toggleExtrasCountryBox(selfDOM){
    } else {
       button.html("&#9656; more");
    }
+}
+
+function setNormmodeCasesDeaths(selfDOM,mode){
+   normmodeCasesDeaths = mode;
+   let countryBoxList = $('.countryBox');
+   for(let i=0;i<countryBoxList.length;i++){
+      updateData($(countryBoxList[i]));
+   }
+   let buttonstr = "Cases / Deaths: " + selfDOM.innerHTML;
+   $('.dropbtn.normswitch.switchNormCasesDeaths').html(buttonstr);
+}
+
+function setNormmodeVacc(selfDOM,mode){
+   normmodeVacc = mode;
+   for(let i=0;i<countryBoxList.length;i++){
+      updateData($(countryBoxList[i]));
+   }
+   let buttonstr = "Full. Vacc.: " + selfDOM.innerHTML;
+   $('.dropbtn.normswitch.switchNormVacc').html(buttonstr);
+}
+
+function setNormmodeR(selfDOM,mode){
+   normmodeR= mode;
+   for(let i=0;i<countryBoxList.length;i++){
+      updateData($(countryBoxList[i]));
+   }
+   let buttonstr = "R: " + selfDOM.innerHTML;
+   $('.dropbtn.normswitch.switchNormR').html(buttonstr);
 }

@@ -579,18 +579,58 @@ function processDataDailyVsTotal(datatype,idx,times,population,smooth_n,xscale,y
 
    let total;
 
+   let normfactY;
+
    switch(datatype){
       case "cases":
          total=tabArr[idx].slice();
+         switch(normmodeCasesDeaths){
+            case 0:
+               normfactY = 1;
+               break;
+            case 1:
+               normfactY = 1e5/population[idx];
+               break;
+            case 2:
+               normfactY = 7e5/population[idx];
+               break;
+         }
          break;
       case "deaths":
          total=tabArrDeaths[idx].slice();
+         switch(normmodeCasesDeaths){
+            case 0:
+               normfactY = 1;
+               break;
+            case 1:
+               normfactY = 1e5/population[idx];
+               break;
+            case 2:
+               normfactY = 7e5/population[idx];
+               break;
+         }
          break;
       case "vaccines":
          total=tabArrVacc[idx].slice();
+         switch(normmodeVacc){
+            case 0:
+               normfactY = 1;
+               break;
+            case 1:
+               normfactY = 100/population[idx];
+               break;
+         }
          break;
       case "r":
          total=tabArr[idx].slice();
+         switch(normmodeR){
+            case 0:
+               normfactY = 1;
+               break;
+            case 1:
+               normfactY = 100;
+               break;
+         }
          break;
    }
    
@@ -607,24 +647,7 @@ function processDataDailyVsTotal(datatype,idx,times,population,smooth_n,xscale,y
          daily_change.splice(i,1);
       }
    }
-
-   let normfactY;
-
-   switch(datatype){
-      case "cases":
-         normfactY = 1e5;
-         break;
-      case "deaths":
-         normfactY = 1e5;
-         break;
-      case "vaccines":
-         normfactY = 100;
-         break;
-      case "r":
-         normfactY = 1;
-         break;
-   }
-
+   
 
    let countryBoxList = $('.countryBox');
 
@@ -668,19 +691,53 @@ function processDataDailyVsTotal(datatype,idx,times,population,smooth_n,xscale,y
       switch(datatypeX){
          case "cases":
             totalX=tabArr[idxX].slice();
-            normfactX = 1e5;
+            switch(normmodeCasesDeaths){
+               case 0:
+                  normfactX = 1;
+                  break;
+               case 1:
+                  normfactX = 1e5/population[idxX];
+                  break;
+               case 2:
+                  normfactX = 7e5/population[idxX];
+                  break;
+            }            
             break;
          case "deaths":
             totalX=tabArrDeaths[idxX].slice();
-            normfactX = 1e5;
+            switch(normmodeCasesDeaths){
+               case 0:
+                  normfactX = 1;
+                  break;
+               case 1:
+                  normfactX = 1e5/population[idxX];
+                  break;
+               case 2:
+                  normfactX = 7e5/population[idxX];
+                  break;
+            }
             break;
          case "vaccines":
             totalX=tabArrVacc[idxX].slice();
-            normfactX = 100;
+            switch(normmodeVacc){
+               case 0:
+                  normfactX = 1;
+                  break;
+               case 1:
+                  normfactX = 100/population[idxX];
+                  break;
+            }
             break;
          case "r":
             totalX=tabArr[idx].slice();
-            normfactX = 1;
+            switch(normmodeR){
+               case 0:
+                  normfactX = 1;
+                  break;
+               case 1:
+                  normfactX = 100;
+                  break;
+            }
             break;
       }
 
@@ -709,12 +766,9 @@ function processDataDailyVsTotal(datatype,idx,times,population,smooth_n,xscale,y
 
    if(datatypeX != "r"){
       if(xAxMode == "daily"){
-
-         xData = showPopRel ? shiftArray(scaleArr(smooth_filter(daily_changeX,smooth_nX),xscaleX*normfactX/population[idxX]),round(timeShiftX))
-         : shiftArray(scaleArr(smooth_filter(daily_changeX,smooth_nX),xscaleX),round(timeShiftX));
+         xData = shiftArray(scaleArr(smooth_filter(daily_changeX,smooth_nX),xscaleX*normfactX),round(timeShiftX));
       } else if(xAxMode == "total"){
-         xData = showPopRel ? shiftArray(scaleArr(smooth_filter(total_cutX,smooth_nX),xscaleX*normfactX/population[idxX]),round(timeShiftX))
-         : shiftArray(scaleArr(smooth_filter(total_cutX,smooth_nX),xscaleX),round(timeShiftX));
+         xData = shiftArray(scaleArr(smooth_filter(total_cutX,smooth_nX),xscaleX*normfactX),round(timeShiftX));
       } else if(xAxMode == "time"){
          xData = addArrScal(scaleArr(smooth_filter(times.slice(1,times.length),
                         smooth_n),
@@ -728,7 +782,8 @@ function processDataDailyVsTotal(datatype,idx,times,population,smooth_n,xscale,y
                         smooth_n),
                         xscale,times[1]),timeShift*864e5);
       } else {
-         xData = shiftArray(scaleArr(divArr(smooth_filter(shiftArray(daily_changeX,smooth_n),smooth_nX),shiftArray(smooth_filter(shiftArray(daily_changeX,smooth_n),smooth_nX),shift_r_days)),xscaleX),
+         xData = shiftArray(scaleArr(divArr(smooth_filter(shiftArray(daily_changeX,smooth_n),smooth_nX),
+            shiftArray(smooth_filter(shiftArray(daily_changeX,smooth_n),smooth_nX),shift_r_days)),xscaleX*normfactX),
             round(timeShiftX));
       }
    }
@@ -737,20 +792,16 @@ function processDataDailyVsTotal(datatype,idx,times,population,smooth_n,xscale,y
    if(datatype != "r"){
       if(yMode == "daily"){
          if(xAxMode != "time"){
-            yData = showPopRel ? shiftArray(scaleArr(smooth_filter(daily_change,smooth_n),yscale*normfactY/population[idx]),round(timeShift))
-            : shiftArray(scaleArr(smooth_filter(daily_change,smooth_n),yscale),round(timeShift));
+            yData = hiftArray(scaleArr(smooth_filter(daily_change,smooth_n),yscale*normfactY),round(timeShift));
          } else {
-            yData = showPopRel ? scaleArr(smooth_filter(daily_change,smooth_n),yscale*normfactY/population[idx])
-            : scaleArr(smooth_filter(daily_change,smooth_n),yscale);
+            yData = scaleArr(smooth_filter(daily_change,smooth_n),yscale*normfactY);
          }
          
       } else if(yMode == "total"){
          if(xAxMode != "time"){
-            yData = showPopRel ? shiftArray(scaleArr(smooth_filter(total_cut,smooth_n),yscale*normfactY/population[idx]),round(timeShift))
-            : shiftArray(scaleArr(smooth_filter(total_cut,smooth_n),yscale),round(timeShift));
+            yData = shiftArray(scaleArr(smooth_filter(total_cut,smooth_n),yscale*normfactY),round(timeShift));
          } else {
-            yData = showPopRel ? scaleArr(smooth_filter(total_cut,smooth_n),yscale*normfactY/population[idx])
-            : scaleArr(smooth_filter(total_cut,smooth_n),yscale);
+            yData = scaleArr(smooth_filter(total_cut,smooth_n),yscale*normfactY);
          }
       } else if(yMode == "time"){
          yData = addArrScal(scaleArr(smooth_filter(times.slice(1,times.length),
@@ -766,10 +817,12 @@ function processDataDailyVsTotal(datatype,idx,times,population,smooth_n,xscale,y
                         yscale,times[1]),timeShift*864e5);
       } else {
          if(xAxMode != "time"){
-            yData = shiftArray(scaleArr(divArr(smooth_filter(shiftArray(daily_change,smooth_n),smooth_n),shiftArray(smooth_filter(shiftArray(daily_change,smooth_n),smooth_n),shift_r_days)),yscale),
+            yData = shiftArray(scaleArr(divArr(smooth_filter(shiftArray(daily_change,smooth_n),smooth_n),
+               shiftArray(smooth_filter(shiftArray(daily_change,smooth_n),smooth_n),shift_r_days)),yscale*normfactY),
             round(timeShift));
          } else {
-            yData = scaleArr(divArr(smooth_filter(shiftArray(daily_change,smooth_n),smooth_n),shiftArray(smooth_filter(shiftArray(daily_change,smooth_n),smooth_n),shift_r_days)),yscale);
+            yData = scaleArr(divArr(smooth_filter(shiftArray(daily_change,smooth_n),smooth_n),
+               shiftArray(smooth_filter(shiftArray(daily_change,smooth_n),smooth_n),shift_r_days)),yscale*normfactY);
          }
       }
    }

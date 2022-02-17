@@ -69,6 +69,38 @@ margin-bottom: 20px; font-weight: 600;">Goethe Interactive COVID-19 Analyzer</h1
       
       <div id = "chartcontainer">
 	  	  
+        <div class="dropdown normswitch casesdeaths"
+              title = "Switch Norm CasesDeaths" >
+          
+          <button class="dropbtn normswitch switchNormCasesDeaths"  type="button" data-toggle="dropdown">Cases / Deaths: per 10⁵ Inh.</button>
+          <div style = "padding-top: 0px;" class="dropdown-menu dropdown-content dropdown-data">
+          <li><a href="javascript:void(0)" onclick ="setNormmodeCasesDeaths(this,0);">Absolute</a></li>
+          <li><a href="javascript:void(0)" onclick ="setNormmodeCasesDeaths(this,1);">per 10⁵ Inh.</a></li>
+          <li><a href="javascript:void(0)" onclick ="setNormmodeCasesDeaths(this,2);">7 Days Incidence per 10⁵ Inh.</a></li>               
+         </div>
+        </div>
+
+        <div class="dropdown normswitch vacc"
+              title = "Switch Norm Vacc" >
+          
+          <button class="dropbtn normswitch switchNormVacc"  type="button" data-toggle="dropdown">Full. Vacc.: Perc. of Population</button>
+          <div style = "padding-top: 0px;" class="dropdown-menu dropdown-content dropdown-data">
+          <li><a href="javascript:void(0)" onclick ="setNormmodeVacc(this,0);">Absolute</a></li>
+          <li><a href="javascript:void(0)" onclick ="setNormmodeVacc(this,1);">Perc. of Population</a></li>              
+         </div>
+        </div>
+
+        <div class="dropdown normswitch r"
+              title = "Switch Norm R" >
+          
+          <button class="dropbtn normswitch switchNormR"  type="button" data-toggle="dropdown">R: New Infections per Inf. Person</button>
+          <div style = "padding-top: 0px;" class="dropdown-menu dropdown-content dropdown-data">
+          <li><a href="javascript:void(0)" onclick ="setNormmodeR(this,0);">New Infections per Inf. Person</a></li>
+          <li><a href="javascript:void(0)" onclick ="setNormmodeR(this,1);">New Infections per 100</a></li>              
+         </div>
+        </div>
+
+        <!--
 	       <div id="totalPopSwitchContainer" title="how to display the data" style="right: 4%;
 top: 10%;" >
       <span>Normalized</span>
@@ -78,7 +110,7 @@ top: 10%;" >
          <span class="switchSlider round" id ="switchSlider"  ></span>
       </label>
       <span> Absolute</span>
-      </div>
+      </div>-->
 	  
       <div class="axDataTypeSwitch yAx"><!--
       --><button class="dataTypeButton yAx Left"
@@ -393,7 +425,7 @@ top: 10%;" >
                  style=" position: absolute; top: 25px; right: 20px; color:black"
                  oninput="scaleMaxInput(this)" style ="color: black;">
               </div>
-              
+              <br>
               
               <!-- y-scale -->
               <span>y-Scale: </span>
@@ -416,7 +448,7 @@ top: 10%;" >
                   style=" position: absolute; top: 72px; right: 20px; color:black"
                  oninput="scaleMaxInput(this)" style ="color: black ;">
               </div>
-              
+              <br>
               <!-- time shift -->
               <span>Time Shift (Days): </span>
               
@@ -510,7 +542,7 @@ top: 10%;" >
               <li><a href="javascript:void(0)" onclick ="DataTypeClick(this,'vaccines')">Fully Vaccinated</a></li>
               <li><a href="javascript:void(0)" onclick ="DataTypeClick(this,'r')">Eff. Repr. Number R</a></li>               
              </div>
-             </div>
+            </div>
 
          </div>
       </template>
