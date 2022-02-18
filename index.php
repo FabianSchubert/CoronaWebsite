@@ -246,7 +246,7 @@ top: 10%;" >
       <li><a href="javascript:void(0)" id="exampleDropdownEntry1" onclick =
          "$.loadScript('./presets/preset1.js', function(){});
          document.getElementById('exampleDropdownContent').classList.remove('show');">Compare daily cases of Germany, Spain and Italy.</a></li>
-     <li><a href= "javascript:void.(0)" id="exampleDropdownEntry2" onclick =
+     <li><a href= "javascript:void(0)" id="exampleDropdownEntry2" onclick =
          "$.loadScript('./presets/preset2.js', function(){});
          document.getElementById('exampleDropdownContent').classList.remove('show');">Compare confirmed cases and deaths in Italy.</a></li>
    </div>
