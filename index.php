@@ -245,7 +245,7 @@ top: 10%;" >
       <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
       <li><a href="javascript:void(0)" id="exampleDropdownEntry1" onclick =
          "$.loadScript('./presets/preset1.js', function(){});
-         document.getElementById('exampleDropdownContent').classList.remove('show');v">Compare daily cases of Germany, Spain and Italy.</a></li>
+         document.getElementById('exampleDropdownContent').classList.remove('show');">Compare daily cases of Germany, Spain and Italy.</a></li>
      <li><a href= "javascript:void.(0)" id="exampleDropdownEntry2" onclick =
          "$.loadScript('./presets/preset2.js', function(){});
          document.getElementById('exampleDropdownContent').classList.remove('show');">Compare confirmed cases and deaths in Italy.</a></li>
@@ -532,7 +532,7 @@ top: 10%;" >
             <br>
             
 
-            <div class="dropdown"
+            <div class="dropdown chooseData"
                   title = "Choose Data">
               
               <button class="dropbtn switchData"  type="button" data-toggle="dropdown" >Choose&nbsp;Data</button>

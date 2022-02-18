@@ -1,3 +1,13 @@
+const loadTablePromise = function(src,extension,header) {
+  return new Promise((resolve, reject) => {
+   loadTable(src,extension,header, (data) => {
+      resolve(data);
+    });
+  });
+};
+
+
+/*
 function addPlot(idx){
    //console.log(idx);
    let country = countries[idx];
@@ -6,6 +16,24 @@ function addPlot(idx){
       //console.log("data loaded");
    };
    loadTable(linkCountryFold+country+".csv","csv","header",callback=fcallbackdata);
+}*/
+
+async function addPlot(idx){
+   let country = countries[idx];
+   let data = await loadTablePromise(linkCountryFold+country+".csv","csv","header");
+   let dataArray = data.getArray();
+   for(let i=0;i<dataArray.length;i++){
+      for(let j=0;j<dataArray[i].length;j++){
+         dataArray[i][j] = parseFloat(dataArray[i][j]);
+      }
+   }
+
+   dataArray = transpose(dataArray);
+   tabArr[idx] = dataArray[0];
+   tabArrDeaths[idx] = dataArray[1];
+   tabArrVacc[idx] = dataArray[2];
+
+   addPlot_callback(idx);
 }
 
 function addDataCallback(data,idx){
@@ -110,7 +138,7 @@ function addPlot_callback(idx){
 }
 
 function changeRangeSlider(event, ui){
-   
+
    let countryBoxTemp = $(ui.handle).parent().parent().parent().parent();
    
    //console.log(countryBoxTemp) 
@@ -408,8 +436,6 @@ function updatexDataList(){
 
 function xScaleSliderInput(selfDOM){
    
-   console.log("xscale");
-
    let self = $(selfDOM);
    let selfCountryBox = self.parent().parent().parent().parent();
    
@@ -775,9 +801,9 @@ function updateAxes(){
       
       myLineChart.options.scales.xAxes[0] = {
                type: 'time',
-               time: {
+               /*time: {
                   unit: 'day'
-               },
+               },*/
                
                scaleLabel: {
                   display: true,
@@ -806,9 +832,9 @@ function updateAxes(){
       
       myLineChart.options.scales.yAxes[0] = {
                type: 'time',
-               time: {
+               /*time: {
                   unit: 'day'
-               },
+               },*/
                scaleLabel: {
                   display: true,
                   labelString: "Time"

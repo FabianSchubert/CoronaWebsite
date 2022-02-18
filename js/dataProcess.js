@@ -792,7 +792,7 @@ function processDataDailyVsTotal(datatype,idx,times,population,smooth_n,xscale,y
    if(datatype != "r"){
       if(yMode == "daily"){
          if(xAxMode != "time"){
-            yData = hiftArray(scaleArr(smooth_filter(daily_change,smooth_n),yscale*normfactY),round(timeShift));
+            yData = shiftArray(scaleArr(smooth_filter(daily_change,smooth_n),yscale*normfactY),round(timeShift));
          } else {
             yData = scaleArr(smooth_filter(daily_change,smooth_n),yscale*normfactY);
          }
