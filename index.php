@@ -263,27 +263,39 @@ top: 10%;" >
 	background: #FFFFFF; padding: 20px;	text-align: left; width: 100%;">
    <h2>How to use / Support</h2>
    <ul>
-   <li> Select the same country multiple times to compare fatalities/case counts.
-        You can simultaneously show both cases/deaths as indicated by the
-        y-axis labeling (cases/deaths).
-   <li> Rescale the y axis to see if the case counts of two or more countries are
-        functionally similar,<br>
-        rescale both x and y axis to compare XI representations
-        (daily vs total case counts);<br>
-        can be done both for case counts and fatalities.
-   <li> Shift the timeline of a country by a few days to match the onset of the outbreak.
-   <li> n-day centered moving averages are provided; examples: <br>
-     n=3: mean of previous-, current- and subsequent day<br>
-     n=1: raw data
-   <li> Examine total or per capita data. Per 10⁵ Inh. (inhabitants) means
-        (per capita) x 100000.
-   <li> Pick a custom color by clicking the color wheel  &nbsp;
-        <img src="./img/colorwheel.png" style="height: 15px; margin-bottom: 0;">.
+   <li> Click on "Add Country" to add data blocks to the graph. Additional
+        options for each data block can then be found within the respective
+        patches listed under the graph.
+   <li> Four types of data can be displayed: case and fatality counts, the number
+        of people having received full vaccination status and the effective
+        reproduction number. Click on "Choose Data" in the data block patch to select the
+        desired data. These quantities can be represented by their
+        daily numbers or their total number from the start of the pandemic
+        in 2020 by clicking on the respective buttons next to the y-axis.
+   <li> You can also select the same country multiple times to compare e.g. cases and
+        deaths, sharing the same y-axis.
+   <li> By clicking on "more" in the patches, you can find additional tweaking options.
+        This includes rescaling the data on the x- and y-axis, shifting the data in time
+        and adjusting the amount of smoothing by setting the averaging window.
+        Furthermore, you can choose the time window that is displayed and adjust
+        the color of the data block and the data points shown in the graph.
+   <li> By default, the x-axis represents time. This can be changed by clicking
+        on "Choose x-Data". Here, you can choose from one of the data-blocks
+        that you added to your graph, using daily or total numbers. Naturally,
+        choosing a data block for the x-axis will exclude it from being displayed
+        on the y-axis, as not doing so would result in a diagonal line mapping the
+        data onto itself.
+   <li> On top of the graph you can find one or more additional buttons (depending
+        on which data types are present in the graph) that specify how the data is normalized.
+        You can choose this normalization for the vaccinations, the reproduction number
+        and cases/deaths by clicking on the buttons, opening a dropdown menu with additional options.
+        For example, a typical choice for cases/deaths would be the total number within the last
+        seven days per 100,000 inhabitants. 
    <li> Download the data currently displayed as a csv file using &nbsp;
         <img src="./img/download_data.svg" style="height: 20px; margin-bottom: 0;">.
-        The downloaded data includes all manual data modifications, as well as whether "Per 10⁵ Inh."
-        or "Absolute" is selected in the plot. Note that you can either choose to download the
-        data of all graphs/countries currently shown using the download button at the bottom
+        The downloaded data includes all metadata on manual data modifications, such as
+        rescaling etc.. Note that you can either choose to download the
+        data of all graphs/countries currently shown within a single csv file using the download button at the bottom
         right of the graph, as well as data for a single graph by clicking the download button
         in the respective adjustment panel.
    <li> Export your plot to a png-image, using &nbsp;
@@ -294,7 +306,6 @@ top: 10%;" >
        document.getElementById('add_2').innerHTML='@';
        document.getElementById('itp_2').innerHTML='itp.uni-frankfurt.de';"
        style="cursor: pointer;">click to show email</span><span id="add_2"></span><span id="itp_2"></span></font>
-   <li> Additional functionalities are planned.
    </ul>
 
    <h2>Representations of an Epidemic Outbreak</h2>
