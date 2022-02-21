@@ -3,6 +3,59 @@
 import numpy as np
 import pandas as pd
 
+eu27 = [
+"Austria",
+"Belgium",
+"Bulgaria",
+"Croatia",
+"Cyprus",
+"Czechia",
+"Denmark",
+"Estonia",
+"Finland",
+"France",
+"Germany",
+"Greece",
+"Hungary",
+"Ireland",
+"Italy",
+"Latvia",
+"Lithuania",
+"Luxembourg",
+"Malta",
+"Netherlands",
+"Poland",
+"Portugal",
+"Romania",
+"Slovakia",
+"Slovenia",
+"Spain",
+"Sweden"
+]
+
+eu19 = [
+"Belgium",
+"Germany",
+"Estonia",
+"Finland",
+"France",
+"Greece",
+"Ireland",
+"Italy",
+"Latvia",
+"Lithuania",
+"Luxembourg",
+"Malta",
+"Netherlands",
+"Austria",
+"Portugal",
+"Slovakia",
+"Slovenia",
+"Spain",
+"Cyprus"
+]
+
+
 ignore_list = ["Europe","European Union",
                 "High income","International",
                 "Lower middle income","Low income",
@@ -39,6 +92,13 @@ datay = dfred.columns[2:].tolist()
 
 population = []
 
+dfeu27 = pd.DataFrame(0, index=np.arange(len(global_dates)), columns=["total_cases","total_deaths","people_fully_vaccinated"])
+
+dfeu19 = pd.DataFrame(0, index=np.arange(len(global_dates)), columns=["total_cases","total_deaths","people_fully_vaccinated"])
+
+popeu27 = 0
+popeu19 = 0
+
 for country in countries:
     
     dfinst = dfred.loc[dfred["location"]==country]
@@ -66,10 +126,15 @@ for country in countries:
 
     dfcountry = dfcountry.drop("date",axis="columns")
 
-
-
     dfcountry.to_csv(f"../dat/country_data/{country}.csv",index=False)
-    
+
+    if country in eu27:
+        dfeu27 = dfcountry.add(dfeu27)
+        popeu27 += population[-1]
+    if country in eu19:
+        dfeu19 = dfcountry.add(dfeu19)
+        popeu19 += population[-1]
+
 
 with open("../dat/population.csv","w") as f:
     for d in population:
@@ -236,14 +301,26 @@ for state in states:
     dfstate.to_csv(f"../dat/country_data/{state} (US State).csv",index=False)
 
 with open("../dat/countries.csv","a") as f:
-    for d in states[:-1]:
+    for d in states:
         f.write(f'{d} (US State),')
-    f.write(f'{states[-1]} (US State)')
 
 with open("../dat/population.csv","a") as f:
-    for d in population[:-1]:
+    for d in population:
         f.write(f'{d},')
-    f.write(f'{population[-1]}')
+
+##################### save eu data #######################
+
+with open("../dat/countries.csv","a") as f:
+    f.write('EU 27,')
+    f.write('EU 19')
+
+with open("../dat/population.csv","a") as f:
+    f.write(f'{popeu27},')
+    f.write(f'{popeu19}')
+
+dfeu27.to_csv("../dat/country_data/EU 27.csv",index=False)
+
+dfeu19.to_csv("../dat/country_data/EU 19.csv",index=False)
 
 import pdb
 pdb.set_trace()

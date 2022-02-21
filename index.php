@@ -323,13 +323,12 @@ top: 10%;" >
 
    <h2>Covid-19 Data Sources</h2>
    <ul>
-   <li> <b>WHO:<a href="https://covid19.who.int/WHO-COVID-19-global-data.csv"
-        target="_blank"
-        class="blackText"> World Health Organization Covid-19 Data Table</a> (world wide countries).<br>
-        WHO data used on this website was last updated on <?php include './php/whoDataSourcesLastDownload.php';?>.
-   <li> <b>JH-CSSE:</b> <a href="https://github.com/CSSEGISandData/COVID-19" target="_blank"
-        class="blackText">John Hopkins Center For Systems Science and Engineering Covid-19 Github repository</a> (US states).
-   <li> World and EU aggregates: calculated from WHO data.
+   <li> <b>Case Counts / Deaths and Vaccination Data for all Countries: <a href="https://github.com/owid/covid-19-data/tree/master/public/data"
+        target="_blank">"Our World In Data" (OWID) Covid 19 Dataset</a>
+   <li> Vaccination Data for US states: <a href="https://data.cdc.gov/Vaccinations/COVID-19-Vaccinations-in-the-United-States-Jurisdi/unsk-b7fc"
+    target="_blank">
+        Centers for Disease Control and Prevention</a>
+   <li> World and EU aggregates: calculated from OWID data.
    </ul>
 
    <h2>Terms</h2>
