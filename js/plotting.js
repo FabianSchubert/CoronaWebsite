@@ -238,6 +238,8 @@ function updateData(countryBox){ //countryBox should be a jquery object
       }
       
    }
+
+   updateNormmodeButtons();
 }
 
 var options = {
@@ -320,6 +322,8 @@ function closeButtonClick(self){
       }
 
    }
+
+   updateNormmodeButtons();
 
 }
 
@@ -1022,4 +1026,88 @@ function setNormmodeR(selfDOM,mode){
    }
    let buttonstr = "R: " + selfDOM.innerHTML;
    $('.dropbtn.normswitch.switchNormR').html(buttonstr);
+}
+
+function updateNormmodeButtons(){
+   let countryBoxList = $('.countryBox');
+
+   let casesdeathsPresent = false;
+   let vaccPresent = false;
+   let rPresent = false;
+
+   let datatype;
+
+   let count = 0;
+
+   let pos = [{top: "10%", left: "22%"},
+         {top: "10%", right: "3%"},
+         {top: "20%", right: "22%"}];
+
+   let pos1 = {top: "10%", left: "22%"};
+
+   for(let i=0;i<countryBoxList.length;i++){
+      datatype = $(countryBoxList[i]).attr("displayData");
+      switch(datatype){
+         case "cases":
+            casesdeathsPresent = true;
+            break;
+         case "deaths":
+            casesdeathsPresent = true;
+            break;
+         case "vaccines":
+            vaccPresent = true;
+            break;
+         case "r":
+            rPresent = true;
+            break;
+      }
+   }
+
+   let posdict;
+   let poskeys;
+   let posvalues;
+
+   if(casesdeathsPresent){
+      $(".dropdown.normswitch.casesdeaths")[0].style.display = "inline-block";
+      posdict = pos[count];
+      poskeys = Object.keys(posdict);
+      posvalues = Object.values(posdict);
+      $(".dropdown.normswitch.casesdeaths")[0].style.left = "";
+      $(".dropdown.normswitch.casesdeaths")[0].style.right = "";
+      $(".dropdown.normswitch.casesdeaths")[0].style.top = "";
+      $(".dropdown.normswitch.casesdeaths")[0].style[poskeys[0]] = posvalues[0];
+      $(".dropdown.normswitch.casesdeaths")[0].style[poskeys[1]] = posvalues[1];
+      count += 1;
+   } else {
+      $(".dropdown.normswitch.casesdeaths")[0].style.display = "none";
+   }
+
+   if(vaccPresent){
+      $(".dropdown.normswitch.vacc")[0].style.display = "inline-block";
+      posdict = pos[count];
+      poskeys = Object.keys(posdict);
+      posvalues = Object.values(posdict);
+      $(".dropdown.normswitch.vacc")[0].style.left = "";
+      $(".dropdown.normswitch.vacc")[0].style.right = "";
+      $(".dropdown.normswitch.vacc")[0].style.top = "";
+      $(".dropdown.normswitch.vacc")[0].style[poskeys[0]] = posvalues[0];
+      $(".dropdown.normswitch.vacc")[0].style[poskeys[1]] = posvalues[1];
+      count += 1;
+   } else {
+      $(".dropdown.normswitch.vacc")[0].style.display = "none";
+   }
+
+   if(rPresent){
+      $(".dropdown.normswitch.r")[0].style.display = "inline-block";
+      posdict = pos[count];
+      poskeys = Object.keys(posdict);
+      posvalues = Object.values(posdict);
+      $(".dropdown.normswitch.r")[0].style.left = "";
+      $(".dropdown.normswitch.r")[0].style.right = "";
+      $(".dropdown.normswitch.r")[0].style.top = "";
+      $(".dropdown.normswitch.r")[0].style[poskeys[0]] = posvalues[0];
+      $(".dropdown.normswitch.r")[0].style[poskeys[1]] = posvalues[1];
+   } else {
+      $(".dropdown.normswitch.r")[0].style.display = "none";
+   }
 }
