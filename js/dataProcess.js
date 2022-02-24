@@ -554,6 +554,21 @@ function addArrScal(x,s){
    return res;
 }
 
+function addArr(x,y){
+   let nx = x.length;
+   let ny = y.length;
+
+   let result = Array(nx);
+   if(nx == ny){
+      for(let i=0;i<nx;i++){
+         result[i] = x[i] + y[i];
+      }
+   } else {
+      return null;
+   }
+   return result;
+}
+
 function shiftArray(arr,nshift){
    let n = arr.length;
    let shiftarr = Array(n);//.fill(0);

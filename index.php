@@ -36,10 +36,7 @@
 </head>
 <body>
    
-   <?php
-      include('./php/downloadData.php')
-   ?>
-      
+         
    <div id="outerFrame" style= "max-width: 1125px;">
    
    <div class="centerBox" style="background:#999999; color:#FFFFFF;"
@@ -323,11 +320,14 @@ top: 10%;" >
 
    <h2>Covid-19 Data Sources</h2>
    <ul>
-   <li> <b>Case Counts / Deaths and Vaccination Data for all Countries: <a href="https://github.com/owid/covid-19-data/tree/master/public/data"
+   <li> <b>Case counts / deaths and vaccination data for all Countries: <a href="https://github.com/owid/covid-19-data/tree/master/public/data"
         target="_blank">"Our World In Data" (OWID) Covid 19 Dataset</a>
-   <li> Vaccination Data for US states: <a href="https://data.cdc.gov/Vaccinations/COVID-19-Vaccinations-in-the-United-States-Jurisdi/unsk-b7fc"
+   <li> Vaccination data for US states: <a href="https://data.cdc.gov/Vaccinations/COVID-19-Vaccinations-in-the-United-States-Jurisdi/unsk-b7fc"
     target="_blank">
         Centers for Disease Control and Prevention</a>
+   <li> Case counts / deaths for US states: <a href="https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series"
+      target="_blank">
+   Johns Hopkins University Covid 19 Time Series</a>
    <li> World and EU aggregates: calculated from OWID data.
    </ul>
 
@@ -344,7 +344,7 @@ top: 10%;" >
    <ul>
    <li> We notify that the used Covid-19 data may contain errors and
      inconsistencies.
-   <li> Please take the note of the
+   <li> Please take note of the
    <a href="https://www.uni-frankfurt.de/72059554/Datenschutz">data privacy statement</a>.
    </ul>
    </div>
