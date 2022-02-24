@@ -2,8 +2,9 @@
 
 import numpy as np
 import pandas as pd
+import os
 
-def data_mod():
+def data_mod(datafold="../dat"):
 
     eu27 = [
     "Austria",
@@ -63,14 +64,14 @@ def data_mod():
                     "Lower middle income","Low income",
                     "Upper middle income"]
 
-    dfraw = pd.read_csv("../dat/owid.csv")
+    dfraw = pd.read_csv(os.path.join(datafold,"owid.csv"))
 
     countries = dfraw["location"].unique().tolist()
 
     for ign in ignore_list:
         countries.remove(ign)
 
-    with open("../dat/countries.csv","w") as f:
+    with open(os.path.join(datafold,"countries.csv"),"w") as f:
         for d in countries:
             f.write(f'{d},')
 
@@ -81,7 +82,7 @@ def data_mod():
 
     global_dates_str = global_dates.strftime("%Y-%m-%d").tolist()
 
-    with open("../dat/global_dates.csv","w") as f:
+    with open(os.path.join(datafold,"global_dates.csv"),"w") as f:
         for d in global_dates_str[:-1]:
             f.write(f'{d},')
         f.write(global_dates_str[-1])
@@ -128,7 +129,7 @@ def data_mod():
 
         dfcountry = dfcountry.drop("date",axis="columns")
 
-        dfcountry.to_csv(f"../dat/country_data/{country}.csv",index=False)
+        dfcountry.to_csv(os.path.join(datafold,f"country_data/{country}.csv"),index=False)
 
         if country in eu27:
             dfeu27 = dfcountry.add(dfeu27)
@@ -138,7 +139,7 @@ def data_mod():
             popeu19 += population[-1]
 
 
-    with open("../dat/population.csv","w") as f:
+    with open(os.path.join(datafold,"population.csv"),"w") as f:
         for d in population:
             f.write(f'{d},')
 
@@ -212,9 +213,9 @@ def data_mod():
 
     abbrev_to_us_state = {v: k for k, v in us_state_to_abbrev.items()}
 
-    dfus_cases = pd.read_csv("../dat/us_states_cases.csv")
-    dfus_deaths = pd.read_csv("../dat/us_states_deaths.csv")
-    dfus_vacc = pd.read_csv("../dat/us_states_vaccines.csv")
+    dfus_cases = pd.read_csv(os.path.join(datafold,"us_states_cases.csv"))
+    dfus_deaths = pd.read_csv(os.path.join(datafold,"us_states_deaths.csv"))
+    dfus_vacc = pd.read_csv(os.path.join(datafold,"us_states_vaccines.csv"))
 
     # aggregate over districts
     dfus_cases = dfus_cases.groupby(["Province_State"]).agg('sum')
@@ -256,7 +257,7 @@ def data_mod():
     dfus_deaths.fillna(0,inplace=True)
     dfus_vacc.fillna(0,inplace=True)
 
-    global_dates = pd.to_datetime(pd.read_csv("../dat/global_dates.csv",header=None).transpose()[0].tolist())
+    global_dates = pd.to_datetime(pd.read_csv(os.path.join(datafold,"global_dates.csv"),header=None).transpose()[0].tolist())
 
     dfus_vacc.rename(abbrev_to_us_state,axis=1,inplace=True)
 
@@ -301,29 +302,29 @@ def data_mod():
 
         dfstate = dfproto.drop("date",axis="columns")
 
-        dfstate.to_csv(f"../dat/country_data/{state} (US State).csv",index=False)
+        dfstate.to_csv(os.path.join(datafold,f"country_data/{state} (US State).csv"),index=False)
 
-    with open("../dat/countries.csv","a") as f:
+    with open(os.path.join(datafold,"countries.csv"),"a") as f:
         for d in states:
             f.write(f'{d} (US State),')
 
-    with open("../dat/population.csv","a") as f:
+    with open(os.path.join(datafold,"population.csv"),"a") as f:
         for d in population:
             f.write(f'{d},')
 
     ##################### save eu data #######################
 
-    with open("../dat/countries.csv","a") as f:
+    with open(os.path.join(datafold,"countries.csv"),"a") as f:
         f.write('EU 27,')
         f.write('EU 19')
 
-    with open("../dat/population.csv","a") as f:
+    with open(os.path.join(datafold,"population.csv"),"a") as f:
         f.write(f'{popeu27},')
         f.write(f'{popeu19}')
 
-    dfeu27.to_csv("../dat/country_data/EU 27.csv",index=False)
+    dfeu27.to_csv(os.path.join(datafold,"country_data/EU 27.csv"),index=False)
 
-    dfeu19.to_csv("../dat/country_data/EU 19.csv",index=False)
+    dfeu19.to_csv(os.path.join(datafold,"country_data/EU 19.csv"),index=False)
 
 
 if __name__ == "__main__":

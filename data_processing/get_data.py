@@ -1,8 +1,9 @@
 #! /usr/bin/env python3
 
 import requests
+import os
 
-def get_data():
+def get_data(datafold="../dat"):
 
     url_owid = "https://covid.ourworldindata.org/data/owid-covid-data.csv"
     url_cdc_vacc_us = "https://data.cdc.gov/api/views/unsk-b7fc/rows.csv?accessType=DOWNLOAD"
@@ -16,7 +17,7 @@ def get_data():
     for k, url in enumerate(urls):
         try:
             r = requests.get(url)
-            with open(f'../dat/{files[k]}.csv',"wb") as f:
+            with open(os.path.join(datafold,f'{files[k]}.csv'),"wb") as f:
                 f.write(r.content)
         except requests.exceptions.RequestException as e:
             raise SystemExit(e)
