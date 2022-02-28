@@ -9,4 +9,4 @@ It allows the user to freely manipulate, adjust, and relate different data sourc
 ## Usage
 
 A description of the included features can be found on the webpage. For local testing purposes,
-you need to run a local php webserver in the root folder of the repository
+you need to run a local php webserver in the root folder of the repository.
