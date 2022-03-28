@@ -1,20 +1,7 @@
-let tab;
-let tab2;
-
-const linkJohnsHopkinsConfirmedUS = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv'
-const linkJohnsHopkinsDeathsUS = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_US.csv';
-
-const linkECDC = './dat/ecdc.csv';
-const linkWHO = './dat/who.csv';
-const linkPop = './dat/population_who.csv'
-const linkOWID = './dat/owid.csv'
-
 const linkCountries = './dat/countries.csv'
 const linkPopulation = './dat/population.csv'
 const linkTimes = './dat/global_dates.csv'
 const linkCountryFold = './dat/country_data/'
-
-var dataTemp;
 
 var countries = [];
 var countriesTab;
@@ -26,8 +13,6 @@ var tabArrVacc = [];
 var population = [];
 var populationTab;
 
-var BlockData = [];
-
 var idxLockCountries = [];
 
 var globalDateRangeMin = 0;
@@ -38,13 +23,6 @@ var nDays;
 var normmodeCasesDeaths = 2;
 var normmodeVacc = 1;
 var normmodeR = 0;
-
-//var xData;
-
-var usstates;
-var times_usstates;
-var tabArr_usstates_confirmed;
-var tabArr_usstates_deaths;
 
 var showPopRel = true; // if true, shows numbers relative to 100000 inhabitants.
 //else, absolute numbers
@@ -142,31 +120,11 @@ const nColors = colCicle.length
 
 function preload() {
    
-   // load table from Johns Hopkins University
-   //tab = loadTable(linkJohnsHopkins,'csv','header');
-   /*
-   tab = loadTable(linkWHO,'csv','header');
-   tab2 = loadTable(linkECDC,'csv','header');
-   tabPop = loadTable(linkPop,'csv','header');
-   tabOWID = loadTable(linkOWID,'csv','header');
-   tab_us_states_confirmed = loadTable(linkJohnsHopkinsConfirmedUS,'csv','header');
-   tab_us_states_deaths = loadTable(linkJohnsHopkinsDeathsUS,'csv','header');
-   */
+   
    countriesTab = loadTable("./dat/countries.csv","csv");
    timesTab = loadTable("./dat/global_dates.csv","csv");
    populationTab = loadTable("./dat/population.csv","csv");
-   
 
-   //https://www.census.gov/data/tables/time-series/demo/popest/2010s-state-total.html
-   //tab_us_states_population = loadTable('./dat/us_states_population.csv','csv','header');
-   
-   /*
-   // load table from European Centre for Disease Prevention and Control
-   table = loadJSON(
-      'https://opendata.ecdc.europa.eu/covid19/casedistribution/json/');
-   
-   // loadTable returns a p5.js - Table object
-   */
 }
 
 
