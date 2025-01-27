@@ -15,7 +15,7 @@ you need to run a local php webserver in the root folder of the repository.
 Hosting by Uni Frankfurt was discontinued after the end of the pandemic, but you can run the application locally by following these steps:
 
 * Clone the repository on your computer.
-* Download a backup of the health data: https://drive.google.com/file/d/13vcSJ4268LoEqjYUZjiMYkPxmXr-Dlw4/view?usp=sharing and extract the `dat` folder into the root folder of the repo.
+* Download a backup of the health data: https://drive.google.com/file/d/13vcSJ4268LoEqjYUZjiMYkPxmXr-Dlw4/view?usp=sharing and copy the `dat` folder into the root folder of the repo.
 * Run a local PHP server from the root folder. Under Linux, this would be done e.g. by
 ```console
 $ php -S localhost:8000
